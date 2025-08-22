@@ -5,6 +5,12 @@ body {
     color: #333;
     background-size: cover;
 }
+p {
+    line-height: 1.5;
+}
+ul {
+    line-height: 1.5;
+}
 header {
     padding: 2rem 2rem 0;
     text-align: center;
