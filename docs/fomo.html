@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FOMO</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .header, .footer {
+            background: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .viewport {
+            position: relative;
+            flex: 1;
+            margin: 1em;
+            min-width: 400px;
+            min-height: 400px;
+        }
+
+        /*noinspection CssUnusedSymbol*/
+        .cell {
+            position: absolute;
+            transform: scale(0.8);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>FOMO</h3>
+    </div>
+    <div class="viewport">
+    </div>
+    <div class="footer">
+        <p>&copy; 2025, Alexander Kitayev.</p>
+    </div>
+
+    <script>
+        function weeksSince(dateStr) {
+            const pastDate = new Date(dateStr);
+            const now = new Date();
+            const diffMs = now - pastDate;
+            const msInWeek = 1000 * 60 * 60 * 24 * 7;
+            const weeks = diffMs / msInWeek;
+
+            return Math.floor(weeks);
+        }
+
+        const weeks = 52 * 80;
+        const currentWeek = weeksSince("1988-05-18");
+
+        function computeCellSize(width, height, cells) {
+            let cols = 1;
+            while(true) {
+                const cellSize = width / cols;
+                const rows = Math.ceil(cells / cols);
+                if (rows * cellSize < height) {
+                    return {
+                        rows : rows,
+                        cols: cols,
+                        cellSize: cellSize,
+                        cells: cells
+                    };
+                }
+                cols += 1;
+            }
+        }
+
+        function reposition() {
+            for (const vp of document.getElementsByClassName("viewport")) {
+                const rect = vp.getBoundingClientRect();
+                const grid = computeCellSize(rect.width, rect.height, weeks);
+                for(let i = 0; i < vp.children.length; i++) {
+                    const cell = vp.children[i];
+
+                    cell.style.width = grid.cellSize + "px";
+                    cell.style.height = grid.cellSize + "px";
+                    cell.style.left = (i % grid.cols)*grid.cellSize + "px";
+                    cell.style.top = (Math.floor(i / grid.cols))*grid.cellSize + "px";
+                    let background = "red";
+                    if (currentWeek < i) {
+                        background = "green";
+                    } else if (currentWeek === i) {
+                        background = "blue";
+
+                    }
+                    cell.style.background = background;
+                }
+            }
+        }
+
+        for (const vp of document.getElementsByClassName("viewport")) {
+            const grid = document.createDocumentFragment();
+            for (let i = 0; i < weeks; i++) {
+                const cell = document.createElement("div");
+                cell.className = "cell";
+                grid.appendChild(cell);
+            }
+            vp.appendChild(grid);
+        }
+
+        reposition();
+
+        let timeout;
+        window.addEventListener("resize", () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(reposition, 50);
+        });
+
+    </script>
+</body>
+</html>
