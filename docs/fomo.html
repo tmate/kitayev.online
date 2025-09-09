@@ -9,6 +9,18 @@
             margin: 0;
             display: flex;
             flex-direction: column;
+            background: #333;
+        }
+        .header {
+            padding-right: 1em;
+            padding-left: 1em;
+            padding-top: 1em;
+        }
+        .footer {
+            padding: 0 1em 1em;
+        }
+        .footer p {
+            margin: 0;
         }
         .header, .footer {
             background: #333;
@@ -28,10 +40,11 @@
             height: 100%;
         }
     </style>
+    <script src="https://unpkg.com/birthdaypicker"></script>
 </head>
 <body>
     <div class="header">
-        <h3>FOMO</h3>
+        <div id="birthday_picker"></div>
     </div>
     <div class="viewport"></div>
     <div class="footer">
@@ -40,6 +53,16 @@
 
     <script>
         const SVG_NS = "http://www.w3.org/2000/svg";
+        const birthdayPicker = new BirthdayPicker("#birthday_picker", {
+            defaultDate: localStorage.getItem("birthday") || "now",
+            placeholder: false
+        });
+
+        birthdayPicker.addEventListener("datechange", () => {
+            const event = new Event("resize");
+            localStorage.setItem("birthday", birthdayPicker.getDateString("yyyy-mm-dd"));
+            window.dispatchEvent(event);
+        });
 
         function weeksSince(dateStr) {
             const pastDate = new Date(dateStr);
@@ -52,7 +75,60 @@
         }
 
         const weeks = 52 * 69;
-        const currentWeek = weeksSince("1977-10-19");
+
+        const prevWeek = (date) => {
+            const prev = new Date(date);
+            prev.setDate(prev.getDate() - 7);
+            return prev;
+        };
+
+        const nextWeek = (date) => {
+            const next = new Date(date);
+            next.setDate(next.getDate() + 7);
+            return next;
+        };
+
+        function* cells(dateOfBirth, prev, next, options={}) {
+
+            const {
+                includeInception=true,
+                includeBeforeInception=1,
+                includeBeforeBirth=1,
+                includeAfterDeath=2
+            } = options;
+
+            const [year, month, day] = dateOfBirth.split("-");
+            const birthDate = new Date(year, month - 1, day);
+            const currentDate = new Date();
+            const inceptionDate = new Date(birthDate);
+            inceptionDate.setDate(birthDate.getDate() - 280);
+            const deathDate =  new Date(birthDate);
+            deathDate.setFullYear(birthDate.getFullYear() + 69);
+
+            let date = prev(inceptionDate);
+            while(true) {
+                const end = next(date);
+                yield {
+                    start: date,
+                    end: end,
+                    isBeforeInception: date.getTime() < inceptionDate.getTime(),
+                    isBeforeBirth: date.getTime() < birthDate.getTime(),
+                    isAfterDeath: date.getTime() > deathDate.getTime(),
+                    isNow: date.getTime() <= currentDate.getTime() && end.getTime() > currentDate.getTime(),
+                };
+                date = end;
+            }
+        }
+
+        let count = 0;
+        for(const c of cells("1977-10-19", prevWeek, nextWeek)) {
+            if (c.isAfterDeath) {
+                break;
+            }
+            count += 1;
+        }
+
+        console.log("weeks", count)
 
         function computeGradientColor(color1, color2, t) {
             const c1 = parseInt(color1.slice(1), 16);
@@ -86,6 +162,8 @@
         }
 
         function reposition() {
+            const currentWeek = weeksSince(birthdayPicker.getDateString("yyyy-mm-dd"));
+
             for (const viewport of document.getElementsByClassName("viewport")) {
                 const svg = document.createElementNS(SVG_NS, "svg");
 
