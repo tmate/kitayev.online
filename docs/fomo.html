@@ -17,12 +17,16 @@
             align-items: center;
             justify-content: center;
         }
-        .viewport {
-            position: relative;
+        .viewport-svg {
+            /*position: relative;*/
             flex: 1;
             margin: 1em;
             min-width: 400px;
             min-height: 400px;
+        }
+        .svg {
+            width: 100%;
+            height: 100%;
         }
 
         /*noinspection CssUnusedSymbol*/
@@ -37,13 +41,16 @@
     <div class="header">
         <h3>FOMO</h3>
     </div>
-    <div class="viewport">
+    <div class="viewport-svg">
+        <svg class="svg"></svg>
     </div>
     <div class="footer">
         <p>&copy; 2025, Alexander Kitayev.</p>
     </div>
 
     <script>
+        const SVG_NS = "http://www.w3.org/2000/svg";
+
         function weeksSince(dateStr) {
             const pastDate = new Date(dateStr);
             const now = new Date();
@@ -55,7 +62,21 @@
         }
 
         const weeks = 52 * 80;
-        const currentWeek = weeksSince("1988-05-18");
+        const currentWeek = weeksSince("1977-10-19");
+
+        function computeGradientColor(color1, color2, t) {
+            const c1 = parseInt(color1.slice(1), 16);
+            const c2 = parseInt(color2.slice(1), 16);
+
+            const r1 = (c1 >> 16) & 0xff, g1 = (c1 >> 8) & 0xff, b1 = c1 & 0xff;
+            const r2 = (c2 >> 16) & 0xff, g2 = (c2 >> 8) & 0xff, b2 = c2 & 0xff;
+
+            const r = Math.round(r1 + (r2 - r1) * t);
+            const g = Math.round(g1 + (g2 - g1) * t);
+            const b = Math.round(b1 + (b2 - b1) * t);
+
+            return `rgb(${r}, ${g}, ${b})`;
+        }
 
         function computeCellSize(width, height, cells) {
             let cols = 1;
@@ -75,33 +96,38 @@
         }
 
         function reposition() {
-            for (const vp of document.getElementsByClassName("viewport")) {
+            for (const vp of document.getElementsByClassName("svg")) {
                 const rect = vp.getBoundingClientRect();
                 const grid = computeCellSize(rect.width, rect.height, weeks);
+                const radius = grid.cellSize / 2;
                 for(let i = 0; i < vp.children.length; i++) {
                     const cell = vp.children[i];
-
-                    cell.style.width = grid.cellSize + "px";
-                    cell.style.height = grid.cellSize + "px";
-                    cell.style.left = (i % grid.cols)*grid.cellSize + "px";
-                    cell.style.top = (Math.floor(i / grid.cols))*grid.cellSize + "px";
-                    let background = "red";
+                    const cx = (i % grid.cols)*grid.cellSize + radius;
+                    const cy = (Math.floor(i / grid.cols))*grid.cellSize + radius;
+                    const r = radius * .85;
+                    cell.setAttribute("cx", cx + "");
+                    cell.setAttribute("cy", cy + "");
+                    cell.setAttribute("r", r + "");
+                    let background;
                     if (currentWeek < i) {
-                        background = "green";
+                        background = computeGradientColor("#00ff00", "#cccccc", (i - currentWeek)/(vp.children.length - currentWeek));
                     } else if (currentWeek === i) {
-                        background = "blue";
-
+                        background = "#ffa500";
+                    } else {
+                        background = computeGradientColor("#cccccc", "#ffa500", i/currentWeek);
+                        // background = "red";
                     }
-                    cell.style.background = background;
+                    // for start from gray to red
+                    // for end - from red to gray
+                    cell.setAttribute("fill", background);
                 }
             }
         }
 
-        for (const vp of document.getElementsByClassName("viewport")) {
+        for (const vp of document.getElementsByClassName("svg")) {
             const grid = document.createDocumentFragment();
             for (let i = 0; i < weeks; i++) {
-                const cell = document.createElement("div");
-                cell.className = "cell";
+                const cell = document.createElementNS(SVG_NS, "circle");
                 grid.appendChild(cell);
             }
             vp.appendChild(grid);
