@@ -17,23 +17,15 @@
             align-items: center;
             justify-content: center;
         }
-        .viewport-svg {
-            /*position: relative;*/
+        .viewport {
             flex: 1;
             margin: 1em;
             min-width: 400px;
             min-height: 400px;
         }
-        .svg {
+        .viewport > * {
             width: 100%;
             height: 100%;
-        }
-
-        /*noinspection CssUnusedSymbol*/
-        .cell {
-            position: absolute;
-            transform: scale(0.8);
-            border-radius: 50%;
         }
     </style>
 </head>
@@ -41,9 +33,7 @@
     <div class="header">
         <h3>FOMO</h3>
     </div>
-    <div class="viewport-svg">
-        <svg class="svg"></svg>
-    </div>
+    <div class="viewport"></div>
     <div class="footer">
         <p>&copy; 2025, Alexander Kitayev.</p>
     </div>
@@ -61,7 +51,7 @@
             return Math.floor(weeks);
         }
 
-        const weeks = 52 * 80;
+        const weeks = 52 * 69;
         const currentWeek = weeksSince("1977-10-19");
 
         function computeGradientColor(color1, color2, t) {
@@ -96,51 +86,56 @@
         }
 
         function reposition() {
-            for (const vp of document.getElementsByClassName("svg")) {
-                const rect = vp.getBoundingClientRect();
+            for (const viewport of document.getElementsByClassName("viewport")) {
+                const svg = document.createElementNS(SVG_NS, "svg");
+
+                const rect = viewport.getBoundingClientRect();
                 const grid = computeCellSize(rect.width, rect.height, weeks);
                 const radius = grid.cellSize / 2;
-                for(let i = 0; i < vp.children.length; i++) {
-                    const cell = vp.children[i];
+
+                for (let i = 0; i < weeks; i++) {
+                    const cell = document.createElementNS(SVG_NS, "circle");
+
                     const cx = (i % grid.cols)*grid.cellSize + radius;
                     const cy = (Math.floor(i / grid.cols))*grid.cellSize + radius;
                     const r = radius * .85;
-                    cell.setAttribute("cx", cx + "");
-                    cell.setAttribute("cy", cy + "");
-                    cell.setAttribute("r", r + "");
+
+                    cell.setAttribute("cx", `${cx}`);
+                    cell.setAttribute("cy", `${cy}`);
+                    cell.setAttribute("r", `${r}`);
+
                     let background;
                     if (currentWeek < i) {
-                        background = computeGradientColor("#00ff00", "#cccccc", (i - currentWeek)/(vp.children.length - currentWeek));
+                        background = computeGradientColor("#00ff00", "#cccccc", (i - currentWeek)/(weeks - currentWeek));
                     } else if (currentWeek === i) {
                         background = "#ffa500";
                     } else {
                         background = computeGradientColor("#cccccc", "#ffa500", i/currentWeek);
-                        // background = "red";
                     }
-                    // for start from gray to red
-                    // for end - from red to gray
                     cell.setAttribute("fill", background);
+                    svg.appendChild(cell);
+                }
+
+                if (viewport.firstChild) {
+                    viewport.firstChild.replaceWith(svg);
+                } else {
+                    viewport.appendChild(svg);
                 }
             }
         }
 
-        for (const vp of document.getElementsByClassName("svg")) {
-            const grid = document.createDocumentFragment();
-            for (let i = 0; i < weeks; i++) {
-                const cell = document.createElementNS(SVG_NS, "circle");
-                grid.appendChild(cell);
-            }
-            vp.appendChild(grid);
-        }
-
-        reposition();
-
         let timeout;
         window.addEventListener("resize", () => {
             clearTimeout(timeout);
-            timeout = setTimeout(reposition, 50);
+            timeout = setTimeout(() => {
+                console.time("generate");
+                reposition();
+                console.timeEnd("generate");
+            }, 50);
         });
 
+        const event = new Event("resize");
+        window.dispatchEvent(event);
     </script>
 </body>
 </html>
