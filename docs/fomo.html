@@ -66,7 +66,7 @@
 </head>
 <body>
     <div class="header">
-        <label for="birthday_picker" style="margin-right: 0.5em;">Birthday:</label>
+        <div style="margin-right: 0.5em;">Birthday:</div>
         <div id="birthday_picker"></div>
 
         <label for="interval_picker" style="margin-left: 1em; margin-right: 0.5em;">Interval:</label>
@@ -104,20 +104,6 @@
             window.dispatchEvent(event);
         });
 
-        function computeGradientColor(color1, color2, t) {
-            const c1 = parseInt(color1.slice(1), 16);
-            const c2 = parseInt(color2.slice(1), 16);
-
-            const r1 = (c1 >> 16) & 0xff, g1 = (c1 >> 8) & 0xff, b1 = c1 & 0xff;
-            const r2 = (c2 >> 16) & 0xff, g2 = (c2 >> 8) & 0xff, b2 = c2 & 0xff;
-
-            const r = Math.round(r1 + (r2 - r1) * t);
-            const g = Math.round(g1 + (g2 - g1) * t);
-            const b = Math.round(b1 + (b2 - b1) * t);
-
-            return `rgb(${r}, ${g}, ${b})`;
-        }
-
         function reposition() {
             // noinspection JSUnresolvedReference
             const birthDate = birthdayPicker.getDateString("yyyy-mm-dd");
@@ -141,29 +127,69 @@
                 }
 
                 const layout = fomo.layout(rect.width, rect.height, numberOfWeeks);
-                const radius = Math.min(layout.width, layout.height) / 2;
+                const s = Math.min(layout.width, layout.height);
+                const radius = s / 2;
 
                 for (let w of fomo[`${intervalType}Intervals`](birthDate)) {
-                    const cell = document.createElementNS(SVG_NS, "circle");
 
-                    const cx = (w.index % layout.cols) * layout.width + radius;
-                    const cy = (Math.floor(w.index / layout.cols)) * layout.height + radius;
-                    const r = radius * .75;
+                    const x = (w.index % layout.cols) * layout.width;
+                    const y = (Math.floor(w.index / layout.cols)) * layout.height;
 
-                    cell.setAttribute("cx", `${cx}`);
-                    cell.setAttribute("cy", `${cy}`);
-                    cell.setAttribute("r", `${r}`);
 
-                    let background;
-                    if (currentWeek < w.index) {
-                        background = computeGradientColor("#00ff00", "#cccccc", (w.index - currentWeek)/(numberOfWeeks - currentWeek));
-                    } else if (currentWeek === w.index) {
-                        background = "#ffa500";
+                    if (currentWeek > w.index || currentWeek < w.index) {
+                        const stroke = "#ccc";
+                        const background = currentWeek > w.index ? "#333" : "#ccc";
+
+                        const cx = x + radius;
+                        const cy = y + radius;
+                        const r = radius * .75;
+
+                        const cell = document.createElementNS(SVG_NS, "circle");
+                        cell.setAttribute("stroke", stroke);
+                        cell.setAttribute("fill", background);
+                        cell.setAttribute("cx", `${cx}`);
+                        cell.setAttribute("cy", `${cy}`);
+                        cell.setAttribute("r", `${r}`);
+                        svg.appendChild(cell);
                     } else {
-                        background = computeGradientColor("#cccccc", "#ffa500", w.index/currentWeek);
+                        const color = "#E53935";
+
+                        const g = document.createElementNS(SVG_NS, "g");
+                        let xGap = 0;
+                        let yGap = 0;
+
+                        if (s === layout.width) {
+                            yGap = Math.abs(layout.height - layout.width)/2;
+                        } else {
+                            xGap = Math.abs(layout.height - layout.width)/2;
+                        }
+
+                        g.setAttribute("transform", `translate(${x + xGap} ${y + yGap}) scale(${s/80}) `);
+
+                        const heart = document.createElementNS(SVG_NS, "path");
+                        heart.setAttribute("d",
+                            "M 0,20 " +
+                            "A 20,20 0,0,1 40,20 " +
+                            "A 20,20 0,0,1 80,20 " +
+                            "Q 80,50 40,80 " +
+                            "Q 0,50 0,20 " +
+                            "z");
+
+                        heart.setAttribute("transform-origin", "40 40")
+                        heart.setAttribute("fill", color);
+
+                        const animation = document.createElementNS(SVG_NS, "animateTransform");
+                        animation.setAttribute("attributeName", "transform");
+                        animation.setAttribute("attributeType", "XML");
+                        animation.setAttribute("type", "scale");
+                        animation.setAttribute("values", "0.8;0.6;0.6;0.6;0.6;0.8");
+                        animation.setAttribute("dur", "4s");
+                        animation.setAttribute("repeatCount", "indefinite");
+
+                        g.appendChild(heart);
+                        heart.appendChild(animation);
+                        svg.appendChild(g);
                     }
-                    cell.setAttribute("fill", background);
-                    svg.appendChild(cell);
                 }
 
                 if (viewport.firstChild) {
