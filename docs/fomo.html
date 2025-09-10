@@ -12,9 +12,7 @@
             background: #333;
         }
         .header {
-            padding-right: 1em;
-            padding-left: 1em;
-            padding-top: 1em;
+            padding: 1em 1em 0;
         }
         .footer {
             padding: 0 1em 1em;
@@ -39,12 +37,44 @@
             width: 100%;
             height: 100%;
         }
+        select {
+            border: none;
+            border-bottom: 1px #ccc dashed;
+            background-color: transparent;
+            outline: none; /* Removes the focus outline */
+            padding: 0; /* Adjust as needed */
+            cursor: pointer;
+            margin-right: 4px; /* Adjust as needed */
+            margin-left: 4px; /* Adjust as needed */
+            font-family: inherit; /* Inherit font from parent */
+            font-size: inherit; /* Inherit font size from parent */
+            color: inherit; /* Inherit color from parent */
+            box-shadow: none;
+            -webkit-appearance: none; /* For consistent styling across browsers */
+            overflow: hidden;
+
+        }
+        select option {
+            overflow: hidden;
+            color: #ccc;
+            padding: 4px;
+            background-color: #333; /* Example color */
+        }
     </style>
-    <script src="https://unpkg.com/birthdaypicker"></script>
+    <script src="js/birthdaypicker.js"></script>
+    <script src="js/fomo.js"></script>
 </head>
 <body>
     <div class="header">
+        <label for="birthday_picker" style="margin-right: 0.5em;">Birthday:</label>
         <div id="birthday_picker"></div>
+
+        <label for="interval_picker" style="margin-left: 1em; margin-right: 0.5em;">Interval:</label>
+        <select id="interval_picker">
+            <option value="week">Weeks</option>
+            <option value="month">Months</option>
+        </select>
+
     </div>
     <div class="viewport"></div>
     <div class="footer">
@@ -58,77 +88,21 @@
             placeholder: false
         });
 
-        birthdayPicker.addEventListener("datechange", () => {
+        const intervalPicker = document.getElementById("interval_picker");
+        defaultInterval = localStorage.getItem("interval") || "month";
+        intervalPicker.value = defaultInterval;
+
+        intervalPicker.addEventListener("change", () => {
+            localStorage.setItem("interval", document.getElementById("interval_picker").value);
             const event = new Event("resize");
-            localStorage.setItem("birthday", birthdayPicker.getDateString("yyyy-mm-dd"));
             window.dispatchEvent(event);
         });
 
-        function weeksSince(dateStr) {
-            const pastDate = new Date(dateStr);
-            const now = new Date();
-            const diffMs = now - pastDate;
-            const msInWeek = 1000 * 60 * 60 * 24 * 7;
-            const weeks = diffMs / msInWeek;
-
-            return Math.floor(weeks);
-        }
-
-        const weeks = 52 * 69;
-
-        const prevWeek = (date) => {
-            const prev = new Date(date);
-            prev.setDate(prev.getDate() - 7);
-            return prev;
-        };
-
-        const nextWeek = (date) => {
-            const next = new Date(date);
-            next.setDate(next.getDate() + 7);
-            return next;
-        };
-
-        function* cells(dateOfBirth, prev, next, options={}) {
-
-            const {
-                includeInception=true,
-                includeBeforeInception=1,
-                includeBeforeBirth=1,
-                includeAfterDeath=2
-            } = options;
-
-            const [year, month, day] = dateOfBirth.split("-");
-            const birthDate = new Date(year, month - 1, day);
-            const currentDate = new Date();
-            const inceptionDate = new Date(birthDate);
-            inceptionDate.setDate(birthDate.getDate() - 280);
-            const deathDate =  new Date(birthDate);
-            deathDate.setFullYear(birthDate.getFullYear() + 69);
-
-            let date = prev(inceptionDate);
-            while(true) {
-                const end = next(date);
-                yield {
-                    start: date,
-                    end: end,
-                    isBeforeInception: date.getTime() < inceptionDate.getTime(),
-                    isBeforeBirth: date.getTime() < birthDate.getTime(),
-                    isAfterDeath: date.getTime() > deathDate.getTime(),
-                    isNow: date.getTime() <= currentDate.getTime() && end.getTime() > currentDate.getTime(),
-                };
-                date = end;
-            }
-        }
-
-        let count = 0;
-        for(const c of cells("1977-10-19", prevWeek, nextWeek)) {
-            if (c.isAfterDeath) {
-                break;
-            }
-            count += 1;
-        }
-
-        console.log("weeks", count)
+        birthdayPicker.addEventListener("datechange", () => {
+            localStorage.setItem("birthday", birthdayPicker.getDateString("yyyy-mm-dd"));
+            const event = new Event("resize");
+            window.dispatchEvent(event);
+        });
 
         function computeGradientColor(color1, color2, t) {
             const c1 = parseInt(color1.slice(1), 16);
@@ -144,51 +118,49 @@
             return `rgb(${r}, ${g}, ${b})`;
         }
 
-        function computeCellSize(width, height, cells) {
-            let cols = 1;
-            while(true) {
-                const cellSize = width / cols;
-                const rows = Math.ceil(cells / cols);
-                if (rows * cellSize < height) {
-                    return {
-                        rows : rows,
-                        cols: cols,
-                        cellSize: cellSize,
-                        cells: cells
-                    };
-                }
-                cols += 1;
-            }
-        }
-
         function reposition() {
-            const currentWeek = weeksSince(birthdayPicker.getDateString("yyyy-mm-dd"));
+            // noinspection JSUnresolvedReference
+            const birthDate = birthdayPicker.getDateString("yyyy-mm-dd");
+            const now = new Date();
+
+            const intervalPicker = document.getElementById("interval_picker");
+            const intervalType = intervalPicker.value;
 
             for (const viewport of document.getElementsByClassName("viewport")) {
                 const svg = document.createElementNS(SVG_NS, "svg");
 
                 const rect = viewport.getBoundingClientRect();
-                const grid = computeCellSize(rect.width, rect.height, weeks);
-                const radius = grid.cellSize / 2;
+                let numberOfWeeks = 0;
+                let currentWeek = 0;
 
-                for (let i = 0; i < weeks; i++) {
+                for(let w of fomo[`${intervalType}Intervals`](birthDate)) {
+                    numberOfWeeks += 1;
+                    if (w.contains(now)) {
+                        currentWeek = w.index;
+                    }
+                }
+
+                const layout = fomo.layout(rect.width, rect.height, numberOfWeeks);
+                const radius = Math.min(layout.width, layout.height) / 2;
+
+                for (let w of fomo[`${intervalType}Intervals`](birthDate)) {
                     const cell = document.createElementNS(SVG_NS, "circle");
 
-                    const cx = (i % grid.cols)*grid.cellSize + radius;
-                    const cy = (Math.floor(i / grid.cols))*grid.cellSize + radius;
-                    const r = radius * .85;
+                    const cx = (w.index % layout.cols) * layout.width + radius;
+                    const cy = (Math.floor(w.index / layout.cols)) * layout.height + radius;
+                    const r = radius * .75;
 
                     cell.setAttribute("cx", `${cx}`);
                     cell.setAttribute("cy", `${cy}`);
                     cell.setAttribute("r", `${r}`);
 
                     let background;
-                    if (currentWeek < i) {
-                        background = computeGradientColor("#00ff00", "#cccccc", (i - currentWeek)/(weeks - currentWeek));
-                    } else if (currentWeek === i) {
+                    if (currentWeek < w.index) {
+                        background = computeGradientColor("#00ff00", "#cccccc", (w.index - currentWeek)/(numberOfWeeks - currentWeek));
+                    } else if (currentWeek === w.index) {
                         background = "#ffa500";
                     } else {
-                        background = computeGradientColor("#cccccc", "#ffa500", i/currentWeek);
+                        background = computeGradientColor("#cccccc", "#ffa500", w.index/currentWeek);
                     }
                     cell.setAttribute("fill", background);
                     svg.appendChild(cell);
