@@ -128,10 +128,10 @@
 
                 const layout = fomo.layout(rect.width, rect.height, numberOfWeeks);
                 const s = Math.min(layout.width, layout.height);
-                const radius = s / 2;
 
                 for (let w of fomo[`${intervalType}Intervals`](birthDate)) {
 
+                    const radius = s / 2;
                     const x = (w.index % layout.cols) * layout.width;
                     const y = (Math.floor(w.index / layout.cols)) * layout.height;
 
@@ -142,7 +142,7 @@
 
                         const cx = x + radius;
                         const cy = y + radius;
-                        const r = radius * .75;
+                        const r = radius * .8;
 
                         const cell = document.createElementNS(SVG_NS, "circle");
                         cell.setAttribute("stroke", stroke);
@@ -182,7 +182,8 @@
                         animation.setAttribute("attributeName", "transform");
                         animation.setAttribute("attributeType", "XML");
                         animation.setAttribute("type", "scale");
-                        animation.setAttribute("values", "0.8;0.6;0.6;0.6;0.6;0.8");
+                        animation.setAttribute("values", "0.8;0.9;0.8;1;0.8;0.8");
+                        animation.setAttribute("keyTimes", "0;0.1;0.2;0.35;0.45;1");
                         animation.setAttribute("dur", "4s");
                         animation.setAttribute("repeatCount", "indefinite");
 
