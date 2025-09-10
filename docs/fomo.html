@@ -84,7 +84,7 @@
     <script>
         const SVG_NS = "http://www.w3.org/2000/svg";
         const birthdayPicker = new BirthdayPicker("#birthday_picker", {
-            defaultDate: localStorage.getItem("birthday") || "now",
+            defaultDate: localStorage.getItem("birthday") || "1988-05-18",
             placeholder: false
         });
 
@@ -94,23 +94,19 @@
 
         intervalPicker.addEventListener("change", () => {
             localStorage.setItem("interval", document.getElementById("interval_picker").value);
-            const event = new Event("resize");
+            const event = new Event("fomo-update");
             window.dispatchEvent(event);
         });
 
         birthdayPicker.addEventListener("datechange", () => {
             localStorage.setItem("birthday", birthdayPicker.getDateString("yyyy-mm-dd"));
-            const event = new Event("resize");
+            const event = new Event("fomo-update");
             window.dispatchEvent(event);
         });
 
-        function reposition() {
+        function reposition(birthDate, intervalType) {
             // noinspection JSUnresolvedReference
-            const birthDate = birthdayPicker.getDateString("yyyy-mm-dd");
             const now = new Date();
-
-            const intervalPicker = document.getElementById("interval_picker");
-            const intervalType = intervalPicker.value;
 
             for (const viewport of document.getElementsByClassName("viewport")) {
                 const svg = document.createElementNS(SVG_NS, "svg");
@@ -205,10 +201,15 @@
         window.addEventListener("resize", () => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
-                console.time("generate");
-                reposition();
-                console.timeEnd("generate");
+                const event = new Event("fomo-update");
+                window.dispatchEvent(event);
             }, 50);
+        });
+
+        window.addEventListener("fomo-update", () => {
+            console.time("generate");
+            reposition(localStorage.getItem("birthday"), localStorage.getItem("interval"));
+            console.timeEnd("generate");
         });
 
         const event = new Event("resize");
