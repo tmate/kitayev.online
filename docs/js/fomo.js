@@ -1,5 +1,13 @@
 const fomo = (function() {
 
+    const BEFORE = "before";
+    const PREGNANCY = "pregnancy";
+    const LIFE = "life";
+    const TRANSITION_LIFE_DECLINE = "transition_life_decline";
+    const DECLINE = "decline";
+    const TRANSITION_DECLINE_AFTER = "transition_decline_after";
+    const AFTER = "after";
+
     function layout(width, height, cells) {
         let best = null;
 
@@ -64,7 +72,7 @@ const fomo = (function() {
             end: end,
             prev: () => {
                 const prevDate = new Date(start);
-                prevDate.setDate(prevDate.getDate() - daysInMonth(prevDate.getFullYear(), prevDate.getMonth() + 1));
+                prevDate.setDate(prevDate.getDate() - daysInMonth(prevDate.getFullYear(), prevDate.getMonth()));
                 return monthIterator(prevDate);
             },
             next: () => {
@@ -75,42 +83,85 @@ const fomo = (function() {
         };
     }
 
-    function* intervals(dateOfBirth, interval, options={}) {
-        const {
-            includeInception=true,
-            includeBeforeInception=1,
-            includeBeforeBirth=1,
-            includeAfterDeath=2
-        } = options;
-
-        const [year, month, day] = dateOfBirth.split("-");
-        const birthDate = new Date(year, month - 1, day);
-        const currentDate = new Date();
+    function* intervals(birthDate, interval) {
         const inceptionDate = new Date(birthDate);
         inceptionDate.setDate(birthDate.getDate() - 280);
-        const deathDate =  new Date(birthDate);
-        deathDate.setFullYear(birthDate.getFullYear() + 69);
 
-        let item = interval(birthDate);
+        const declineTransitionStartDate = new Date(birthDate);
+        declineTransitionStartDate.setFullYear(birthDate.getFullYear() + 67);
+        const declineTransitionEndDate = new Date(birthDate);
+        declineTransitionEndDate.setFullYear(birthDate.getFullYear() + 72);
+
+        const deathTransitionStartDate = new Date(birthDate);
+        deathTransitionStartDate.setFullYear(birthDate.getFullYear() + 81);
+        const deathDate = new Date(birthDate);
+        deathDate.setFullYear(birthDate.getFullYear() + 84);
+
+        const periods = [
+            { type : BEFORE, end: inceptionDate },
+            { type : PREGNANCY, end: birthDate },
+            { type : LIFE, end: declineTransitionStartDate },
+            { type : TRANSITION_LIFE_DECLINE, end: declineTransitionEndDate },
+            { type : DECLINE, end: declineTransitionStartDate },
+            { type : TRANSITION_DECLINE_AFTER, end: deathDate },
+            { type : AFTER, end: new Date(Number.MAX_SAFE_INTEGER) }
+        ];
+
+        let item = interval(inceptionDate);
+        console.log("inception:", inceptionDate);
+        console.log("inception period:", item.start, item.end);
+        item = item.prev();
+        console.log("previous period:", item.start, item.end);
+        item = item.prev();
+        console.log("previous period:", item.start, item.end);
+
         let index = 0;
-        while(item.end.getTime() < deathDate.getTime()) {
-            yield {
-                index,
-                contains: (d) => d.getTime() >= item.start && d.getTime() <= item.end,
-                ...item
-            };
+        let periodIndex = 0;
+        let periodCount = 0;
+
+        while(item.start < deathDate) {
+            if (periods[periodIndex].end <= item.end) {
+                periodIndex += 1;
+                periodCount = 0;
+            }
+            periodCount += 1;
+            yield { index, type: periods[periodIndex].type, ...item };
+            item = item.next();
+            index += 1;
+        }
+
+        for(let i = 0; i < 5; i++) {
+            if (periods[periodIndex].end <= item.end) {
+                periodIndex += 1;
+                periodCount = 0;
+            }
+            yield { index, type: periods[periodIndex].type, ...item };
             item = item.next();
             index += 1;
         }
     }
 
     return {
-        weekIntervals : (dateOfBirth) => intervals(dateOfBirth, weekIterator),
-        monthIntervals : (dateOfBirth) => intervals(dateOfBirth, monthIterator),
+        period : {
+            BEFORE,
+            PREGNANCY,
+            LIFE,
+            TRANSITION_LIFE_DECLINE,
+            DECLINE,
+            TRANSITION_DECLINE_AFTER,
+            AFTER,
+        },
+
+        intervals : (dateOfBirth, type) => {
+            if (type === "week") {
+                return intervals(dateOfBirth, weekIterator);
+            }
+            return intervals(dateOfBirth, monthIterator);
+        },
 
         layout : (width, height, cells) => {
             let best = null;
-            for(let i = 0; i < Math.ceil(cells/10); i++) {
+            for(let i = 0; i < 5; i++) {
                 const score = layout(width, height, cells + i);
                 if (best === null || best.score > score.score) {
                     best = score;
@@ -122,4 +173,5 @@ const fomo = (function() {
             return best;
         }
     };
+
 })();
