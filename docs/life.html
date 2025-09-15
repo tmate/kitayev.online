@@ -221,6 +221,7 @@
         });
 
         window.addEventListener("fomo-update", () => {
+            adjustSelectsWidth();
             console.time("generate");
             const dateOfBirth = localStorage.getItem("birthday") || "1988-05-18";
             const [year, month, day] = dateOfBirth.split("-");
@@ -228,8 +229,6 @@
             generate(birthDate , localStorage.getItem("interval") || "year");
             console.timeEnd("generate");
         });
-
-        adjustSelectsWidth();
 
         const event = new Event("resize");
         window.dispatchEvent(event);
