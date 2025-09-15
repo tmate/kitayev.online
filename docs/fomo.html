@@ -180,7 +180,7 @@
             const dateOfBirth = localStorage.getItem("birthday") || "1988-05-18";
             const [year, month, day] = dateOfBirth.split("-");
             const birthDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-            generate(birthDate , localStorage.getItem("interval"));
+            generate(birthDate , localStorage.getItem("interval") || "year");
             console.timeEnd("generate");
         });
 
