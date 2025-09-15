@@ -26,12 +26,14 @@
                     <option value="year">годы</option>
                     <option value="month">месяцы</option>
                 </select>
+
                 <span>моей жизни.</span>
             </p>
             <img class="swipe_arrow" alt="swipe right" src="images/arrow.png"></img>
 
         </div>
-        <div class="viewport"></div>
+        <div class="viewport">
+        </div>
         <div class="footer">
             <p>Что же я собираюсь с этим делать?</p>
         </div>
@@ -88,7 +90,7 @@
                     }
                 }
 
-                const layout = fomo.layout(rect.width, rect.height, numberOfIntervals);
+                const layout = fomo.layout(rect.width - 32, rect.height - 32, numberOfIntervals);
                 const s = Math.min(layout.width, layout.height);
 
                 let isBorn = false;
@@ -135,8 +137,8 @@
                         cell.setAttribute("stroke", stroke);
                         cell.setAttribute("fill", fill);
 
-                        cell.setAttribute("cx", `${cx}`);
-                        cell.setAttribute("cy", `${cy}`);
+                        cell.setAttribute("cx", `${cx + 16}`);
+                        cell.setAttribute("cy", `${cy + 16}`);
                         cell.setAttribute("r", `${r}`);
 
                         svg.appendChild(cell);
@@ -148,8 +150,8 @@
                         xGap = Math.abs(layout.width - s)/2;
                         yGap = Math.abs(layout.height - s)/2;
 
-                        g.setAttribute("x", `${x}`);
-                        g.setAttribute("y", `${y}`);
+                        g.setAttribute("x", `${x + 16}`);
+                        g.setAttribute("y", `${y + 16}`);
                         g.setAttribute("width", `${s}`);
                         g.setAttribute("height", `${s}`);
                         g.setAttribute("href", "images/heart.svg")

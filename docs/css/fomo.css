@@ -60,7 +60,7 @@ html, body {
 
     select {
         border: none;
-        border-bottom: 1px #ccc dashed;
+        border-bottom: 2px #ccc dashed;
         background-color: transparent;
         outline: none;
         padding: 0;
@@ -69,6 +69,7 @@ html, body {
         margin-left: 4px;
         font-family: inherit;
         font-size: inherit;
+        font-weight: bold;
         color: inherit;
         box-shadow: none;
         -webkit-appearance: none;

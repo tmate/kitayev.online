@@ -134,12 +134,8 @@ const fomo = (function() {
         ];
 
         let item = interval(inceptionDate);
-        console.log("inception:", inceptionDate);
-        console.log("inception period:", item.start, item.end);
         item = item.prev();
-        console.log("previous period:", item.start, item.end);
         item = item.prev();
-        console.log("previous period:", item.start, item.end);
 
         let index = 0;
         let periodIndex = 0;
