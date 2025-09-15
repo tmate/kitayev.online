@@ -44,11 +44,13 @@ html, body {
     .header p {
         display: block;
         padding: 1em;
+        margin-bottom: 0;
     }
     .header img {
         max-width: 80%;
-        margin: 1em;
+        margin: 0 1em 1em;
     }
+
     .footer p {
         flex: 1;
         display: block;
