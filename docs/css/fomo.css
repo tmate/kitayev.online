@@ -43,6 +43,7 @@ html, body {
     .header {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
     }
 
     .header p {
@@ -50,6 +51,11 @@ html, body {
         padding: 1em;
         margin-bottom: 0;
     }
+    .header p:nth-child(2) {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
     .header img {
         max-width: 80%;
         margin: 0 1em 6em;
@@ -110,9 +116,7 @@ html, body {
     .header {
         font-size: 1.5rem;
         padding: 0 0 0;
-    }
-    .swipe_arrow {
-        display: none;
+        column-gap: 0.2em;
     }
     .carousel {
         display: flex;
@@ -133,7 +137,7 @@ html, body {
     .footer p {
         margin: 0;
     }
-    .footer a img {
+    .coarse {
         display: none;
     }
     .header, .footer {
