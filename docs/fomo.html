@@ -49,7 +49,7 @@
         });
 
         const intervalPicker = document.getElementById("interval_picker");
-        defaultInterval = localStorage.getItem("interval") || "month";
+        defaultInterval = localStorage.getItem("interval") || "year";
         intervalPicker.value = defaultInterval;
 
         intervalPicker.addEventListener("change", () => {
