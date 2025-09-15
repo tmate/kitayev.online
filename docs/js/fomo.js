@@ -185,12 +185,12 @@ const fomo = (function() {
 
         layout : (width, height, cells) => {
             let best = null;
-            for(let i = 0; i < 5; i++) {
+            for(let i = 5; i > 1; i--) {
                 const score = layout(width, height, cells + i);
                 if (best === null || best.score > score.score) {
                     best = score;
                 }
-                if (i === 0 && best.score < 3) {
+                if (i === 5 && best.score < 3) {
                     break;
                 }
             }

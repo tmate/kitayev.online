@@ -50,22 +50,59 @@
             arrange: "dmy",
             locale: "ru"
         });
+        birthdayPicker.setMonthFormat("long");
 
         const intervalPicker = document.getElementById("interval_picker");
         defaultInterval = localStorage.getItem("interval") || "year";
         intervalPicker.value = defaultInterval;
 
         intervalPicker.addEventListener("change", () => {
+            adjustSelectsWidth();
+
             localStorage.setItem("interval", document.getElementById("interval_picker").value);
             const event = new Event("fomo-update");
             window.dispatchEvent(event);
+
         });
 
         birthdayPicker.addEventListener("datechange", () => {
+            adjustSelectsWidth();
+
             localStorage.setItem("birthday", birthdayPicker.getDateString("yyyy-mm-dd"));
             const event = new Event("fomo-update");
             window.dispatchEvent(event);
         });
+
+
+        function adjustSelectsWidth() {
+            const monthForIndex = (index) => {
+                return [
+                    "января", "февраля", "марта",
+                    "апреля", "мая", "июня",
+                    "июля", "августа", "сентября",
+                    "октября", "ноября", "декабря"
+                ][index];
+            };
+
+            for (const select of document.getElementsByTagName("select")) {
+                const tempSpan = document.createElement("span");
+                tempSpan.style.visibility = "hidden";
+                tempSpan.style.fontWeight = "bold";
+                if (select.id === "month") {
+                    for (let i = 0; i < select.options.length; i++) {
+                        select.options[i].text = monthForIndex(i);
+                    }
+                }
+                tempSpan.innerText = select.options[select.selectedIndex].text;
+
+                select.parentNode.insertBefore(tempSpan, select);
+                const width = tempSpan.getBoundingClientRect().width;
+                select.style.maxWidth = `${width}px`;
+                select.style.minWidth = `${width}px`;
+
+                tempSpan.remove();
+            }
+        }
 
         function generate(birthDate, intervalType) {
             // noinspection JSUnresolvedReference
@@ -91,7 +128,7 @@
                     }
                 }
 
-                const layout = fomo.layout(rect.width - 32, rect.height - 64, numberOfIntervals);
+                const layout = fomo.layout(rect.width - 32, rect.height - 72, numberOfIntervals);
                 const s = Math.min(layout.width, layout.height);
 
                 let isBorn = false;
@@ -186,6 +223,8 @@
             generate(birthDate , localStorage.getItem("interval") || "year");
             console.timeEnd("generate");
         });
+
+        adjustSelectsWidth();
 
         const event = new Event("resize");
         window.dispatchEvent(event);
