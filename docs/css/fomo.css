@@ -61,7 +61,7 @@ html, body {
     .footer p {
         display: block;
         padding: 1em;
-        margin: 0 1em 6em;
+        margin: 0 1em 4em;
     }
 
     .viewport > * {
