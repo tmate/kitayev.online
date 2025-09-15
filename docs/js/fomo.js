@@ -83,6 +83,32 @@ const fomo = (function() {
         };
     }
 
+    function yearIterator(date) {
+        const start = new Date(date);
+        start.setFullYear(date.getFullYear(), 0, 1);
+        start.setHours(0, 0, 0, 0);
+
+        const end = new Date(date);
+        end.setFullYear(date.getFullYear() + 1, 0, 1);
+        end.setHours(0, 0, 0, 0);
+        end.setMilliseconds(-1);
+
+        return {
+            start : start,
+            end: end,
+            prev: () => {
+                const prevDate = new Date(start);
+                prevDate.setFullYear(prevDate.getFullYear() - 1);
+                return yearIterator(prevDate);
+            },
+            next: () => {
+                const nextDate = new Date(start);
+                nextDate.setFullYear(nextDate.getFullYear() + 1);
+                return yearIterator(nextDate);
+            },
+        };
+    }
+
     function* intervals(birthDate, interval) {
         const inceptionDate = new Date(birthDate);
         inceptionDate.setDate(birthDate.getDate() - 280);
@@ -155,6 +181,8 @@ const fomo = (function() {
         intervals : (dateOfBirth, type) => {
             if (type === "week") {
                 return intervals(dateOfBirth, weekIterator);
+            } else if (type === "year") {
+                return intervals(dateOfBirth, yearIterator);
             }
             return intervals(dateOfBirth, monthIterator);
         },
