@@ -47,7 +47,8 @@
             yearEl: "year",
             monthEl: "month",
             dayEl: "day",
-            arrange: "dmy"
+            arrange: "dmy",
+            locale: "ru"
         });
 
         const intervalPicker = document.getElementById("interval_picker");
@@ -90,7 +91,7 @@
                     }
                 }
 
-                const layout = fomo.layout(rect.width - 32, rect.height - 48, numberOfIntervals);
+                const layout = fomo.layout(rect.width - 32, rect.height - 64, numberOfIntervals);
                 const s = Math.min(layout.width, layout.height);
 
                 let isBorn = false;
