@@ -2,6 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     background: #333333;
+    min-height: -webkit-fill-available;
 }
 
 @media (pointer: coarse) {
@@ -19,6 +20,7 @@ html, body {
         touch-action: pan-x;
         -ms-overflow-style: none;
         scrollbar-width: none;
+        min-height: -webkit-fill-available;
     }
     .carousel::-webkit-scrollbar { display: none; }
 
