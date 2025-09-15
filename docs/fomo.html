@@ -13,20 +13,25 @@
 
 <body>
     <div class="carousel">
-        <div class="header panel">
-            <div style="margin-right: 0.5em;">Birthday:</div>
-            <div id="birthday_picker"></div>
+        <div class="header">
+            <p id="birthday_picker">
+                <span>Я родился</span>
+                <select id="day"></select>
+                <select id="month"></select>
+                <select id="year"></select>
+                <span>года.</span>
+                <span>Вот</span>
 
-            <label for="interval_picker" style="margin-left: 1em; margin-right: 0.5em;">Interval:</label>
-            <select id="interval_picker">
-                <option value="week">Weeks</option>
-                <option value="month">Months</option>
-                <option value="year">Years</option>
-            </select>
+                <select id="interval_picker">
+                    <option value="year">годы</option>
+                    <option value="month">месяцы</option>
+                </select>
+                <span>моей жизни.</span>
+            </p>
 
         </div>
-        <div class="viewport panel"></div>
-        <div class="footer panel">
+        <div class="viewport"></div>
+        <div class="footer">
             <p>&copy; 2025, Alexander Kitayev.</p>
         </div>
     </div>
@@ -35,7 +40,11 @@
         const SVG_NS = "http://www.w3.org/2000/svg";
         const birthdayPicker = new BirthdayPicker("#birthday_picker", {
             defaultDate: localStorage.getItem("birthday") || "1988-05-18",
-            placeholder: false
+            placeholder: false,
+            yearEl: "year",
+            monthEl: "month",
+            dayEl: "day",
+            arrange: "dmy"
         });
 
         const intervalPicker = document.getElementById("interval_picker");

@@ -1,86 +1,122 @@
 html, body {
     height: 100%;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    background: #333;
-}
-.header {
-    padding: 1em 1em 0;
-}
-.footer {
-    padding: 0 1em 1em;
-}
-.footer p {
-    margin: 0;
-}
-.header, .footer {
-    background: #333;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.viewport {
-    flex: 1;
-    margin: 1em;
-    min-width: 400px;
-    min-height: 400px;
-}
-.viewport > * {
-    width: 100%;
-    height: 100%;
-}
-select {
-    border: none;
-    border-bottom: 1px #ccc dashed;
-    background-color: transparent;
-    outline: none;
-    padding: 0;
-    cursor: pointer;
-    margin-right: 4px;
-    margin-left: 4px;
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-    box-shadow: none;
-    -webkit-appearance: none;
-    overflow: hidden;
-}
-select option {
-    overflow: hidden;
-    color: #ccc;
-    padding: 4px;
-    background-color: #333; /* Example color */
+    background: #333333;
 }
 
-/* Horizontal scroll container */
-.carousel {
-    display: flex;                    /* place children in a row */
-    width: 100%;                      /* viewport width */
-    height: 100vh;                    /* full viewport height */
-    overflow-x: auto;                 /* horizontal scrolling (touch swipe) */
-    overflow-y: hidden;               /* prevent vertical scroll inside container */
-    scroll-snap-type: x mandatory;    /* snap to each panel */
-    -webkit-overflow-scrolling: touch;/* momentum scroll on iOS */
-    scroll-behavior: smooth;          /* smooth snap when programmatic (optional) */
-    touch-action: pan-x;              /* prioritize horizontal panning on touch devices */
-    -ms-overflow-style: none;         /* hide IE scrollbar */
-    scrollbar-width: none;            /* hide Firefox scrollbar */
+@media (pointer: coarse) {
+
+    .carousel {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        touch-action: pan-x;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+
+    .header, .footer, .viewport {
+        flex: 0 0 100vw;
+        height: 100vh;
+        scroll-snap-align: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+        user-select: none;
+    }
+
+    .header p {
+        flex: 1;
+        display: block;
+        padding: 1em;
+    }
+
+    .viewport > * {
+        width: 100%;
+        height: 100%;
+    }
+
+    select {
+        border: none;
+        border-bottom: 1px #ccc dashed;
+        background-color: transparent;
+        outline: none;
+        padding: 0;
+        cursor: pointer;
+        margin-right: 4px;
+        margin-left: 4px;
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        box-shadow: none;
+        -webkit-appearance: none;
+        overflow: hidden;
+
+        width: auto;               /* let it shrink */
+        display: inline-block;
+        min-width: 0;              /* remove default min width */
+        max-width: max-content;    /* ensure it grows to content */
+    }
+    select option {
+        overflow: hidden;
+        color: #ccc;
+        padding: 4px;
+        background-color: #333; /* Example color */
+    }
 }
+@media (pointer: fine) {
 
-/* hide webkit scrollbar (optional aesthetic) */
-.carousel::-webkit-scrollbar { display: none; }
+    html, body {
+        display: flex;
+        flex-direction: column;
+        background: #333;
+    }
 
-/* Each panel is exactly one viewport width & height */
-.panel {
-    flex: 0 0 100vw;     /* don't grow/shrink, fixed at 100vw */
-    height: 100vh;       /* full viewport height */
-    scroll-snap-align: start; /* snap alignment for each panel */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: white;
-    user-select: none;   /* avoid accidental text selection while swiping */
+    .header {
+        padding: 1em 1em 0;
+    }
+    .footer {
+        padding: 0 1em 1em;
+    }
+    .footer p {
+        margin: 0;
+    }
+    .header, .footer {
+        background: #333;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    select {
+        border: none;
+        border-bottom: 1px #ccc dashed;
+        background-color: transparent;
+        outline: none;
+        padding: 0;
+        cursor: pointer;
+        margin-right: 4px;
+        margin-left: 4px;
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        box-shadow: none;
+        -webkit-appearance: none;
+        overflow: hidden;
+    }
+    select option {
+        overflow: hidden;
+        color: #ccc;
+        padding: 4px;
+        background-color: #333; /* Example color */
+    }
 }
