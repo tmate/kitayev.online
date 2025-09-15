@@ -53,3 +53,34 @@ select option {
     padding: 4px;
     background-color: #333; /* Example color */
 }
+
+/* Horizontal scroll container */
+.carousel {
+    display: flex;                    /* place children in a row */
+    width: 100%;                      /* viewport width */
+    height: 100vh;                    /* full viewport height */
+    overflow-x: auto;                 /* horizontal scrolling (touch swipe) */
+    overflow-y: hidden;               /* prevent vertical scroll inside container */
+    scroll-snap-type: x mandatory;    /* snap to each panel */
+    -webkit-overflow-scrolling: touch;/* momentum scroll on iOS */
+    scroll-behavior: smooth;          /* smooth snap when programmatic (optional) */
+    touch-action: pan-x;              /* prioritize horizontal panning on touch devices */
+    -ms-overflow-style: none;         /* hide IE scrollbar */
+    scrollbar-width: none;            /* hide Firefox scrollbar */
+}
+
+/* hide webkit scrollbar (optional aesthetic) */
+.carousel::-webkit-scrollbar { display: none; }
+
+/* Each panel is exactly one viewport width & height */
+.panel {
+    flex: 0 0 100vw;     /* don't grow/shrink, fixed at 100vw */
+    height: 100vh;       /* full viewport height */
+    scroll-snap-align: start; /* snap alignment for each panel */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    user-select: none;   /* avoid accidental text selection while swiping */
+}
