@@ -16,7 +16,7 @@
         <div class="header">
             <p id="birthday_picker">
                 <span>Я родился</span>
-                <select id="day"></select>
+                <select id="day"></select><span>-го</span>
                 <select id="month"></select>
                 <select id="year"></select>
                 <span>года.</span>
@@ -44,6 +44,7 @@
         const birthdayPicker = new BirthdayPicker("#birthday_picker", {
             defaultDate: localStorage.getItem("birthday") || "1988-05-18",
             placeholder: false,
+            leadingZero: false,
             yearEl: "year",
             monthEl: "month",
             dayEl: "day",
@@ -97,8 +98,8 @@
 
                 select.parentNode.insertBefore(tempSpan, select);
                 const width = tempSpan.getBoundingClientRect().width;
-                select.style.maxWidth = `${width}px`;
-                select.style.minWidth = `${width}px`;
+                select.style.maxWidth = `${width*.98}px`;
+                select.style.minWidth = `${width*.98}px`;
 
                 tempSpan.remove();
             }
