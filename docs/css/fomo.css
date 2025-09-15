@@ -25,8 +25,12 @@ html, body {
     .carousel::-webkit-scrollbar { display: none; }
 
     .header, .footer, .viewport {
-        flex: 0 0 100vw;
         height: 100vh;
+    }
+
+    .header, .footer, .viewport {
+        flex: 0 0 100vw;
+        height: 100dvh;
         scroll-snap-align: start;
         display: flex;
         align-items: center;
@@ -48,13 +52,14 @@ html, body {
     }
     .header img {
         max-width: 80%;
-        margin: 0 1em 1em;
+        margin: 0 1em 6em;
     }
 
     .footer p {
         flex: 1;
         display: block;
         padding: 1em;
+        margin: 0 1em 6em;
     }
 
     .viewport > * {
