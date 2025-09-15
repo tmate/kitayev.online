@@ -33,7 +33,20 @@ html, body {
         user-select: none;
     }
 
+    .header {
+        display: flex;
+        flex-direction: column;
+    }
+
     .header p {
+        display: block;
+        padding: 1em;
+    }
+    .header img {
+        max-width: 80%;
+        margin: 1em;
+    }
+    .footer p {
         flex: 1;
         display: block;
         padding: 1em;
@@ -82,7 +95,11 @@ html, body {
     }
 
     .header {
-        padding: 1em 1em 0;
+        font-size: 1.5rem;
+        padding: 0 0 0;
+    }
+    .swipe_arrow {
+        display: none;
     }
     .carousel {
         display: flex;
@@ -98,6 +115,7 @@ html, body {
     }
     .footer {
         padding: 0 1em 1em;
+        font-size: 1.5rem;
     }
     .footer p {
         margin: 0;
@@ -117,8 +135,8 @@ html, body {
         outline: none;
         padding: 0;
         cursor: pointer;
-        margin-right: 4px;
-        margin-left: 4px;
+        /*margin-right: 4px;*/
+        /*margin-left: 4px;*/
         font-family: inherit;
         font-size: inherit;
         color: inherit;

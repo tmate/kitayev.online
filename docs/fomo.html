@@ -28,11 +28,12 @@
                 </select>
                 <span>моей жизни.</span>
             </p>
+            <img class="swipe_arrow" alt="swipe right" src="images/arrow.png"></img>
 
         </div>
         <div class="viewport"></div>
         <div class="footer">
-            <p>&copy; 2025, Alexander Kitayev.</p>
+            <p>Что же я собираюсь с этим делать?</p>
         </div>
     </div>
 
@@ -100,15 +101,20 @@
                     if (currentInterval !== interval.index) {
 
                         let stroke = GRAY_COLOR;
+                        let fill = BLACK_COLOR;
                         if (currentInterval < interval.index) {
                             if (interval.type === fomo.period.LIFE) {
                                 stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
                             } else if (interval.type === fomo.period.TRANSITION_LIFE_DECLINE) {
                                 stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
                             } else if (interval.type === fomo.period.DECLINE) {
-                                stroke = FALL_COLOR;
+                                stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
                             } else if (interval.type === fomo.period.TRANSITION_DECLINE_AFTER) {
-                                stroke = FALL_COLOR;
+                                stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
                             } else if (interval.type === fomo.period.AFTER) {
                                 stroke = BLACK_COLOR;
                             }
@@ -127,7 +133,7 @@
 
                         const cell = document.createElementNS(SVG_NS, "circle");
                         cell.setAttribute("stroke", stroke);
-                        cell.setAttribute("fill", BLACK_COLOR);
+                        cell.setAttribute("fill", fill);
 
                         cell.setAttribute("cx", `${cx}`);
                         cell.setAttribute("cy", `${cy}`);
@@ -171,7 +177,7 @@
 
         window.addEventListener("fomo-update", () => {
             console.time("generate");
-            const dateOfBirth = localStorage.getItem("birthday");
+            const dateOfBirth = localStorage.getItem("birthday") || "1988-05-18";
             const [year, month, day] = dateOfBirth.split("-");
             const birthDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
             generate(birthDate , localStorage.getItem("interval"));
