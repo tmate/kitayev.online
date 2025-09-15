@@ -55,8 +55,10 @@ html, body {
         margin: 0 1em 6em;
     }
 
+    .footer {
+        flex-direction: column;
+    }
     .footer p {
-        flex: 1;
         display: block;
         padding: 1em;
         margin: 0 1em 6em;
@@ -130,6 +132,9 @@ html, body {
     }
     .footer p {
         margin: 0;
+    }
+    .footer a img {
+        display: none;
     }
     .header, .footer {
         background: #333;
