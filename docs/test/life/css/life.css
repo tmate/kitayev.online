@@ -96,6 +96,8 @@ html, body {
         display: inline-block;
         min-width: 0;              /* remove default min width */
         max-width: max-content;    /* ensure it grows to content */
+
+        text-align-last: center;
     }
     select option {
         overflow: hidden;
@@ -163,6 +165,7 @@ html, body {
         box-shadow: none;
         -webkit-appearance: none;
         overflow: hidden;
+        text-align-last: center;
     }
     select option {
         overflow: hidden;

@@ -91,8 +91,7 @@
             window.dispatchEvent(event);
         });
 
-
-        function adjustSelectsWidth() {
+        function adjustMonthSelectsValues() {
             const monthForIndex = (index) => {
                 return [
                     "января", "февраля", "марта",
@@ -101,66 +100,58 @@
                     "октября", "ноября", "декабря"
                 ][index];
             };
-
             for (const select of document.getElementsByTagName("select")) {
-                const tempSpan = document.createElement("span");
-                tempSpan.style.visibility = "hidden";
-                tempSpan.style.fontWeight = "bold";
                 if (select.id === "month") {
                     for (let i = 0; i < select.options.length; i++) {
                         select.options[i].text = monthForIndex(i);
                     }
                 }
+            }
+        }
+
+        function adjustSelectsWidth() {
+            for (const select of document.getElementsByTagName("select")) {
+                const tempSpan = document.createElement("span");
+                tempSpan.style.visibility = "hidden";
+                tempSpan.style.fontWeight = "bold";
                 tempSpan.innerText = select.options[select.selectedIndex].text;
 
-                select.parentNode.insertBefore(tempSpan, select);
+                select.replaceWith(tempSpan);
                 const width = tempSpan.getBoundingClientRect().width;
-                select.style.maxWidth = `${width*.98}px`;
-                select.style.minWidth = `${width*.98}px`;
+                select.style.maxWidth = `${width}px`;
+                select.style.minWidth = `${width}px`;
+                select.style.width = `${width}px`;
 
-                tempSpan.remove();
+                tempSpan.replaceWith(select);
             }
         }
 
         function generate(birthDate, intervalType) {
-            // noinspection JSUnresolvedReference
-            const now = new Date();
-
             const SUMMER_COLOR = "#228B22";
             const FALL_COLOR = "#8B3A3A";
             const GRAY_COLOR = "#888";
+            const DARK_GRAY_COLOR = "#555";
             const BLACK_COLOR = "#333";
             const SUN_COLOR = "#FFD700";
+
 
             for (const viewport of document.getElementsByClassName("viewport")) {
                 const svg = document.createElementNS(SVG_NS, "svg");
 
                 const rect = viewport.getBoundingClientRect();
-                let numberOfIntervals = 0;
-                let currentInterval = 0;
+                const experiment = life.generate(birthDate, intervalType, rect.width, rect.height);
+                const s = Math.min(experiment.width, experiment.height);
 
-                for(let interval of life.intervals(birthDate, intervalType)) {
-                    numberOfIntervals += 1;
-                    if (now >= interval.start && now <= interval.end) {
-                        currentInterval = interval.index;
-                    }
-                }
-
-                const layout = life.layout(rect.width - 32, rect.height - 72, numberOfIntervals);
-                const s = Math.min(layout.width, layout.height);
-
-                let isBorn = false;
-
-                for (let interval of life.intervals(birthDate, intervalType)) {
+                for (let index = 0; index < experiment.items.length; index++) {
+                    const interval = experiment.items[index];
                     const radius = s / 2;
-                    const x = (interval.index % layout.cols) * layout.width;
-                    const y = (Math.floor(interval.index / layout.cols)) * layout.height;
+                    const x = (index % experiment.cols) * experiment.width;
+                    const y = (Math.floor(index / experiment.cols)) * experiment.height;
 
-                    if (currentInterval !== interval.index) {
-
+                    if (!interval.isNow) {
                         let stroke = GRAY_COLOR;
                         let fill = BLACK_COLOR;
-                        if (currentInterval < interval.index) {
+                        if (!interval.isPast) {
                             if (interval.type === life.period.LIFE) {
                                 stroke = SUMMER_COLOR;
                                 fill = SUMMER_COLOR;
@@ -174,15 +165,16 @@
                                 stroke = SUMMER_COLOR;
                                 fill = SUMMER_COLOR;
                             } else if (interval.type === life.period.AFTER) {
+                                stroke = DARK_GRAY_COLOR;
+                            } else if (interval.type === life.period.AFTER_AFTER) {
                                 stroke = BLACK_COLOR;
                             }
+                        } else if (interval.isBirth) {
+                            stroke = SUN_COLOR;
                         } else if (interval.type === life.period.PREGNANCY) {
                             stroke = GRAY_COLOR;
                         } else if (interval.type === life.period.BEFORE) {
                             stroke = BLACK_COLOR;
-                        } else if (interval.type === life.period.LIFE && !isBorn) {
-                            stroke = SUN_COLOR;
-                            isBorn = true;
                         }
 
                         const cx = x + radius;
@@ -193,8 +185,8 @@
                         cell.setAttribute("stroke", stroke);
                         cell.setAttribute("fill", fill);
 
-                        cell.setAttribute("cx", `${cx + 16}`);
-                        cell.setAttribute("cy", `${cy + 16}`);
+                        cell.setAttribute("cx", `${cx}`);
+                        cell.setAttribute("cy", `${cy}`);
                         cell.setAttribute("r", `${r}`);
 
                         svg.appendChild(cell);
@@ -203,11 +195,11 @@
                         let xGap = 0;
                         let yGap = 0;
 
-                        xGap = Math.abs(layout.width - s)/2;
-                        yGap = Math.abs(layout.height - s)/2;
+                        xGap = Math.abs(experiment.width - s)/2;
+                        yGap = Math.abs(experiment.height - s)/2;
 
-                        g.setAttribute("x", `${x + 16}`);
-                        g.setAttribute("y", `${y + 16}`);
+                        g.setAttribute("x", `${x}`);
+                        g.setAttribute("y", `${y}`);
                         g.setAttribute("width", `${s}`);
                         g.setAttribute("height", `${s}`);
                         g.setAttribute("href", "images/heart.svg")
@@ -224,6 +216,8 @@
             }
         }
 
+        adjustMonthSelectsValues();
+
         let timeout;
         window.addEventListener("resize", () => {
             clearTimeout(timeout);
@@ -235,12 +229,10 @@
 
         window.addEventListener("fomo-update", () => {
             adjustSelectsWidth();
-            console.time("generate");
             const dateOfBirth = localStorage.getItem("birthday") || "1988-05-18";
             const [year, month, day] = dateOfBirth.split("-");
             const birthDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
             generate(birthDate , localStorage.getItem("interval") || "year");
-            console.timeEnd("generate");
         });
 
         const event = new Event("resize");

@@ -1,5 +1,12 @@
 const life = (function() {
 
+    const PREGNANCY_DAYS = 280;
+    const ACTIVE_LIFE_SPAN_YEARS = 67;
+    const TOTAL_LIFE_SPAN_YEARS = 84;
+    const DECLINE_TRANSITION_YEARS = 6;
+    const DEATH_TRANSITION_YEARS = 3;
+    const AFTER_DEATH_YEARS = 2;
+
     const BEFORE = "before";
     const PREGNANCY = "pregnancy";
     const LIFE = "life";
@@ -7,6 +14,7 @@ const life = (function() {
     const DECLINE = "decline";
     const TRANSITION_DECLINE_AFTER = "transition_decline_after";
     const AFTER = "after";
+    const AFTER_AFTER = "after_after";
 
     function layout(width, height, cells) {
         let best = null;
@@ -26,141 +34,151 @@ const life = (function() {
                 }
             }
         }
-
         return best;
     }
 
-    function weekIterator(date) {
-        const start = new Date(date);
-        start.setDate(date.getDate() - (date.getDay()));
-        start.setHours(0, 0, 0, 0);
+    function populateItemFractions(items) {
+        const distribution = {};
+        for (let item of items) {
+            if (distribution[item.type]) {
+                distribution[item.type] += 1;
+            } else {
+                distribution[item.type] = 1;
+            }
+        }
+        let base = 0;
+        let type = null;
+        for (let item of items) {
+            if (item.type !== type) {
+                base = 0;
+            }
+            item.fraction = base + (1/distribution[item.type]);
+            type = item.type;
+            base = item.fraction;
+        }
 
-        const end = new Date(date);
-        end.setDate(date.getDate() + (7 - (date.getDay())));
-        end.setHours(0, 0, 0, 0);
-        end.setMilliseconds(-1);
-
-        return {
-            start : start,
-            end: end,
-            prev: () => {
-                const prevDate = new Date(start);
-                prevDate.setDate(prevDate.getDate() - 7);
-                return weekIterator(prevDate);
-            },
-            next: () => {
-                const nextDate = new Date(start);
-                nextDate.setDate(nextDate.getDate() + 7);
-                return weekIterator(nextDate);
-            },
-        };
+        return items;
     }
 
-    function monthIterator(date) {
-        const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
-        const start = new Date(date);
-        start.setDate(1);
-        start.setHours(0, 0, 0, 0);
+    const years = {
+        first: (date) => {
+            if (date.getMonth() >= 6) {
+                return new Date(new Date(new Date(date).setMonth(6, 1)).setHours(0, 0, 0, 0));
+            } else {
+                return new Date(new Date(new Date(date).setMonth(0, 1)).setHours(0, 0, 0, 0));
+            }
+        },
+        next: (date) => new Date(new Date(date).setFullYear(date.getFullYear() + 1)),
+        prev: (date) => new Date(new Date(date).setFullYear(date.getFullYear() - 1)),
+        before: 3,
+        after: 4,
+        slackBefore: 3,
+        slackAfter: 7,
+    };
 
-        const end = new Date(date);
-        end.setDate(1 + daysInMonth(date.getFullYear(), date.getMonth() + 1));
-        end.setHours(0, 0, 0, 0);
-        end.setMilliseconds(-1);
+    const months = {
+        first: (date) => new Date(new Date(new Date(date).setDate(1))),
+        next: (date) => new Date(new Date(date).setMonth(date.getMonth() + 1)),
+        prev: (date) => new Date(new Date(date).setMonth(date.getMonth() - 1)),
+        before: 12,
+        after: 24,
+        slackBefore: 10,
+        slackAfter: 16,
+    };
 
-        return {
-            start : start,
-            end: end,
-            prev: () => {
-                const prevDate = new Date(start);
-                prevDate.setDate(prevDate.getDate() - daysInMonth(prevDate.getFullYear(), prevDate.getMonth()));
-                return monthIterator(prevDate);
-            },
-            next: () => {
-                const nextDate = new Date(start);
-                nextDate.setDate(nextDate.getDate() + daysInMonth(nextDate.getFullYear(), nextDate.getMonth() + 1) + 1);
-                return monthIterator(nextDate);
-            },
-        };
-    }
+    const weeks = {
+        first: (date) => {
+            const day = date.getDay() || 7;
+            if (day !== 1) {
+                date = new Date(new Date(date).setHours(-24 * (day - 1)));
+            }
+            return new Date(date);
+        },
+        next: (date) => new Date(new Date(date).setDate(date.getDate() + 7)),
+        prev: (date) => new Date(new Date(date).setDate(date.getDate() - 7)),
+        before: 60,
+        after: 72,
+        slackBefore: 30,
+        slackAfter: 50,
+    };
 
-    function yearIterator(date) {
-        const start = new Date(date);
-        start.setFullYear(date.getFullYear(), 0, 1);
-        start.setHours(0, 0, 0, 0);
-
-        const end = new Date(date);
-        end.setFullYear(date.getFullYear() + 1, 0, 1);
-        end.setHours(0, 0, 0, 0);
-        end.setMilliseconds(-1);
-
-        return {
-            start : start,
-            end: end,
-            prev: () => {
-                const prevDate = new Date(start);
-                prevDate.setFullYear(prevDate.getFullYear() - 1);
-                return yearIterator(prevDate);
-            },
-            next: () => {
-                const nextDate = new Date(start);
-                nextDate.setFullYear(nextDate.getFullYear() + 1);
-                return yearIterator(nextDate);
-            },
-        };
-    }
-
-    function* intervals(birthDate, interval) {
+    function generate(birthDate, interval, width, height) {
+        const items = [];
         const inceptionDate = new Date(birthDate);
-        inceptionDate.setDate(birthDate.getDate() - 280);
+        const now = new Date();
 
-        const declineTransitionStartDate = new Date(birthDate);
-        declineTransitionStartDate.setFullYear(birthDate.getFullYear() + 67);
-        const declineTransitionEndDate = new Date(birthDate);
-        declineTransitionEndDate.setFullYear(birthDate.getFullYear() + 72);
-
-        const deathTransitionStartDate = new Date(birthDate);
-        deathTransitionStartDate.setFullYear(birthDate.getFullYear() + 81);
-        const deathDate = new Date(birthDate);
-        deathDate.setFullYear(birthDate.getFullYear() + 84);
+        inceptionDate.setDate(birthDate.getDate() - PREGNANCY_DAYS);
 
         const periods = [
             { type : BEFORE, end: inceptionDate },
             { type : PREGNANCY, end: birthDate },
-            { type : LIFE, end: declineTransitionStartDate },
-            { type : TRANSITION_LIFE_DECLINE, end: declineTransitionEndDate },
-            { type : DECLINE, end: declineTransitionStartDate },
-            { type : TRANSITION_DECLINE_AFTER, end: deathDate },
-            { type : AFTER, end: new Date(Number.MAX_SAFE_INTEGER) }
+            { type : LIFE, end: new Date(new Date(birthDate).setFullYear(birthDate.getFullYear() + ACTIVE_LIFE_SPAN_YEARS - (DECLINE_TRANSITION_YEARS/2))) },
+            { type : TRANSITION_LIFE_DECLINE, end: new Date(new Date(birthDate).setFullYear(birthDate.getFullYear() + ACTIVE_LIFE_SPAN_YEARS + (DECLINE_TRANSITION_YEARS/2))) },
+            { type : DECLINE, end: new Date(new Date(birthDate).setFullYear(birthDate.getFullYear() + TOTAL_LIFE_SPAN_YEARS - DEATH_TRANSITION_YEARS)) },
+            { type : TRANSITION_DECLINE_AFTER, end: new Date(new Date(birthDate).setFullYear(birthDate.getFullYear() + TOTAL_LIFE_SPAN_YEARS)) },
+            { type : AFTER, end: new Date(new Date(birthDate).setFullYear(birthDate.getFullYear() + TOTAL_LIFE_SPAN_YEARS + AFTER_DEATH_YEARS)) },
+            { type : AFTER_AFTER, end: new Date(Number.MAX_SAFE_INTEGER) }
         ];
 
-        let item = interval(inceptionDate);
-        item = item.prev();
-        item = item.prev();
-
-        let index = 0;
-        let periodIndex = 0;
-        let periodCount = 0;
-
-        while(item.start < deathDate) {
-            if (periods[periodIndex].end <= item.end) {
-                periodIndex += 1;
-                periodCount = 0;
+        const generateItem = (date, type) => {
+            return {
+                type : type,
+                start: start,
+                end: interval.next(start),
+                isPast: now.getTime() >= interval.next(start).getTime(),
+                isBirth: start.getTime() <= birthDate.getTime() && birthDate.getTime() < interval.next(start).getTime(),
+                isNow: start.getTime() <= now.getTime() && now.getTime() < interval.next(start).getTime(),
             }
-            periodCount += 1;
-            yield { index, type: periods[periodIndex].type, ...item };
-            item = item.next();
-            index += 1;
+        };
+
+        let start = interval.first(birthDate);
+        for(let i = 0; i < interval.before; i++) {
+            start = interval.prev(start);
         }
 
-        for(let i = 0; i < 5; i++) {
-            if (periods[periodIndex].end <= item.end) {
-                periodIndex += 1;
-                periodCount = 0;
+        let period = 0;
+        while(periods[period].type !== AFTER_AFTER) {
+            items.push(generateItem(start, periods[period].type));
+            start = interval.next(start);
+            if (periods[period].end < interval.next(start)) {
+                period += 1;
             }
-            yield { index, type: periods[periodIndex].type, ...item };
-            item = item.next();
-            index += 1;
         }
+
+        for(let i = 0; i < interval.after; i++) {
+            items.push(generateItem(start, AFTER_AFTER));
+            start = interval.next(start);
+        }
+
+        const layouts = [];
+        let slackBefore = 0;
+        let slackAfter = 0;
+        for (let i = 0; i < interval.slackBefore + interval.slackAfter; i++) {
+            layouts.push({...layout(width, height, items.length + i), slackAfter: slackAfter, slackBefore: slackBefore});
+            if (i % 2 === 0 && slackBefore < interval.slackBefore) {
+                slackBefore += 1;
+            } else {
+                slackAfter += 1;
+            }
+        }
+        for (let i = 0; i < interval.slackBefore; i++) {
+            layouts.push({...layout(width, height, items.length + i), slackAfter: interval.slackAfter, slackBefore: i });
+        }
+        layouts.sort((a, b) => a.score - b.score);
+
+
+        start = new Date(items[0].start);
+        for (let i = 0; i < layouts[0].slackBefore; i++) {
+            start = interval.prev(start);
+            items.unshift(generateItem(start, BEFORE));
+        }
+        start = new Date(items[items.length - 1].start);
+        for (let i = 0; i < layouts[0].slackAfter; i++) {
+            start = interval.next(start);
+            items.push(generateItem(start, AFTER_AFTER));
+        }
+
+        return { items: populateItemFractions(items), ...layouts[0] };
     }
 
     return {
@@ -172,30 +190,17 @@ const life = (function() {
             DECLINE,
             TRANSITION_DECLINE_AFTER,
             AFTER,
+            AFTER_AFTER,
         },
 
-        intervals : (dateOfBirth, type) => {
-            if (type === "week") {
-                return intervals(dateOfBirth, weekIterator);
-            } else if (type === "year") {
-                return intervals(dateOfBirth, yearIterator);
+        generate : (dateOfBirth, type, width, height) => {
+            if (type === "month") {
+                return generate(dateOfBirth, months, width, height);
+            } else if (type === "week") {
+                return generate(dateOfBirth, weeks, width, height);
             }
-            return intervals(dateOfBirth, monthIterator);
+            return generate(dateOfBirth, years, width, height);
         },
-
-        layout : (width, height, cells) => {
-            let best = null;
-            for(let i = 5; i > 1; i--) {
-                const score = layout(width, height, cells + i);
-                if (best === null || best.score > score.score) {
-                    best = score;
-                }
-                if (i === 5 && best.score < 3) {
-                    break;
-                }
-            }
-            return best;
-        }
     };
 
 })();
