@@ -24,72 +24,97 @@
 </head>
 
 <body>
-    <div class="carousel">
+    <div class="carousel non-touch">
         <div class="header">
-            <p id="birthday_picker">
+            <p class="birthday_picker">
                 <span>Я родился</span>
-                <select id="day"></select><span>-го</span>
-                <select id="month"></select>
-                <select id="year"></select>
+                <select class="day"></select><span>-го</span>
+                <select class="month"></select>
+                <select class="year"></select>
                 <span>года.</span>
-            </p>
-            <p>
                 <span>Вот</span>
-                <select id="interval_picker">
+                <select class="interval_picker">
                     <option value="year">годы</option>
                     <option value="month">месяцы</option>
                     <option value="week">недели</option>
                 </select>
-
                 <span>моей жизни.</span>
             </p>
-            <img class="coarse" alt="swipe right" src="images/swipe.png"/>
-
         </div>
         <div class="viewport">
         </div>
         <div class="footer">
             <p>Что же я собираюсь с этим делать?</p>
-            <a class="coarse" href="/">
+        </div>
+    </div>
+
+    <div class="carousel touch">
+        <div class="header">
+            <p class="birthday_picker">
+                <span>Я родился</span>
+                <select class="day"></select><span>-го</span>
+                <select class="month"></select>
+                <select class="year"></select>
+                <span>года.</span>
+            </p>
+            <p>
+                <span>Вот</span>
+                <select class="interval_picker">
+                    <option value="year">годы</option>
+                    <option value="month">месяцы</option>
+                    <option value="week">недели</option>
+                </select>
+                <span>моей жизни.</span>
+            </p>
+            <img alt="swipe right" src="images/swipe.png"/>
+        </div>
+        <div class="viewport">
+        </div>
+        <div class="footer">
+            <p>Что же я собираюсь с этим делать?</p>
+            <a href="/">
                 <img alt="consider therapy" src="images/heart.svg"/>
             </a>
         </div>
     </div>
 
     <script>
+        for (const el of document.getElementsByClassName("carousel")) {
+            if (!el.checkVisibility()) {
+                el.remove();
+            }
+        }
+
         const SVG_NS = "http://www.w3.org/2000/svg";
-        const birthdayPicker = new BirthdayPicker("#birthday_picker", {
+        const birthdayPicker = new BirthdayPicker(".birthday_picker", {
             defaultDate: localStorage.getItem("birthday") || "1988-05-18",
             placeholder: false,
             leadingZero: false,
-            yearEl: "year",
-            monthEl: "month",
-            dayEl: "day",
+            yearEl: ".year",
+            monthEl: ".month",
+            dayEl: ".day",
             arrange: "dmy",
             locale: "ru"
         });
         birthdayPicker.setMonthFormat("long");
-
-        const intervalPicker = document.getElementById("interval_picker");
-        defaultInterval = localStorage.getItem("interval") || "year";
-        intervalPicker.value = defaultInterval;
-
-        intervalPicker.addEventListener("change", () => {
-            adjustSelectsWidth();
-
-            localStorage.setItem("interval", document.getElementById("interval_picker").value);
-            const event = new Event("fomo-update");
-            window.dispatchEvent(event);
-
-        });
-
         birthdayPicker.addEventListener("datechange", () => {
             adjustSelectsWidth();
 
             localStorage.setItem("birthday", birthdayPicker.getDateString("yyyy-mm-dd"));
-            const event = new Event("fomo-update");
+            const event = new Event("life-update");
             window.dispatchEvent(event);
         });
+
+        for(const picker of document.getElementsByClassName("interval_picker")) {
+            picker.value = localStorage.getItem("interval") || "year";
+            picker.addEventListener("change", () => {
+                adjustSelectsWidth();
+
+                localStorage.setItem("interval", picker.value);
+                const event = new Event("life-update");
+                window.dispatchEvent(event);
+            });
+        }
 
         function adjustMonthSelectsValues() {
             const monthForIndex = (index) => {
@@ -100,8 +125,9 @@
                     "октября", "ноября", "декабря"
                 ][index];
             };
+
             for (const select of document.getElementsByTagName("select")) {
-                if (select.id === "month") {
+                if (select.classList.contains("month")) {
                     for (let i = 0; i < select.options.length; i++) {
                         select.options[i].text = monthForIndex(i);
                     }
@@ -222,12 +248,12 @@
         window.addEventListener("resize", () => {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
-                const event = new Event("fomo-update");
+                const event = new Event("life-update");
                 window.dispatchEvent(event);
             }, 50);
         });
 
-        window.addEventListener("fomo-update", () => {
+        window.addEventListener("life-update", () => {
             adjustSelectsWidth();
             const dateOfBirth = localStorage.getItem("birthday") || "1988-05-18";
             const [year, month, day] = dateOfBirth.split("-");
@@ -235,7 +261,7 @@
             generate(birthDate , localStorage.getItem("interval") || "year");
         });
 
-        const event = new Event("resize");
+        const event = new Event("life-update");
         window.dispatchEvent(event);
     </script>
 </body>
