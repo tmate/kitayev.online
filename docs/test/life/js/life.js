@@ -1,4 +1,4 @@
-const fomo = (function() {
+const life = (function() {
 
     const BEFORE = "before";
     const PREGNANCY = "pregnancy";

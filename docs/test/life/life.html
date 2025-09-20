@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="css/fomo.css">
+    <link rel="stylesheet" href="css/life.css">
 
     <script src="js/birthdaypicker.js"></script>
-    <script src="js/fomo.js"></script>
+    <script src="js/life.js"></script>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-996777277">
@@ -43,7 +43,7 @@
 
                 <span>моей жизни.</span>
             </p>
-            <img class="coarse" alt="swipe right" src="images/arrow.png"/>
+            <img class="coarse" alt="swipe right" src="images/swipe.png"/>
 
         </div>
         <div class="viewport">
@@ -139,19 +139,19 @@
                 let numberOfIntervals = 0;
                 let currentInterval = 0;
 
-                for(let interval of fomo.intervals(birthDate, intervalType)) {
+                for(let interval of life.intervals(birthDate, intervalType)) {
                     numberOfIntervals += 1;
                     if (now >= interval.start && now <= interval.end) {
                         currentInterval = interval.index;
                     }
                 }
 
-                const layout = fomo.layout(rect.width - 32, rect.height - 72, numberOfIntervals);
+                const layout = life.layout(rect.width - 32, rect.height - 72, numberOfIntervals);
                 const s = Math.min(layout.width, layout.height);
 
                 let isBorn = false;
 
-                for (let interval of fomo.intervals(birthDate, intervalType)) {
+                for (let interval of life.intervals(birthDate, intervalType)) {
                     const radius = s / 2;
                     const x = (interval.index % layout.cols) * layout.width;
                     const y = (Math.floor(interval.index / layout.cols)) * layout.height;
@@ -161,26 +161,26 @@
                         let stroke = GRAY_COLOR;
                         let fill = BLACK_COLOR;
                         if (currentInterval < interval.index) {
-                            if (interval.type === fomo.period.LIFE) {
+                            if (interval.type === life.period.LIFE) {
                                 stroke = SUMMER_COLOR;
                                 fill = SUMMER_COLOR;
-                            } else if (interval.type === fomo.period.TRANSITION_LIFE_DECLINE) {
+                            } else if (interval.type === life.period.TRANSITION_LIFE_DECLINE) {
                                 stroke = SUMMER_COLOR;
                                 fill = SUMMER_COLOR;
-                            } else if (interval.type === fomo.period.DECLINE) {
+                            } else if (interval.type === life.period.DECLINE) {
                                 stroke = SUMMER_COLOR;
                                 fill = SUMMER_COLOR;
-                            } else if (interval.type === fomo.period.TRANSITION_DECLINE_AFTER) {
+                            } else if (interval.type === life.period.TRANSITION_DECLINE_AFTER) {
                                 stroke = SUMMER_COLOR;
                                 fill = SUMMER_COLOR;
-                            } else if (interval.type === fomo.period.AFTER) {
+                            } else if (interval.type === life.period.AFTER) {
                                 stroke = BLACK_COLOR;
                             }
-                        } else if (interval.type === fomo.period.PREGNANCY) {
+                        } else if (interval.type === life.period.PREGNANCY) {
                             stroke = GRAY_COLOR;
-                        } else if (interval.type === fomo.period.BEFORE) {
+                        } else if (interval.type === life.period.BEFORE) {
                             stroke = BLACK_COLOR;
-                        } else if (interval.type === fomo.period.LIFE && !isBorn) {
+                        } else if (interval.type === life.period.LIFE && !isBorn) {
                             stroke = SUN_COLOR;
                             isBorn = true;
                         }
