@@ -13,35 +13,55 @@ html, body {
 
     .carousel {
         display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
         width: 100%;
         height: 100vh;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scroll-snap-stop: always;
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
         touch-action: pan-x;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        min-height: -webkit-fill-available;
-    }
-    .carousel::-webkit-scrollbar { display: none; }
-
-    .header, .footer, .viewport {
-        height: 100vh;
     }
 
-    .header, .footer, .viewport {
-        flex: 0 0 100vw;
-        height: 100dvh;
+    .page {
+        flex: 0 0 100%;
+        min-width: 100%;
+        height: 100%;
         scroll-snap-align: start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        color: #eee;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        background: #333;
+    }
+
+    .content .viewport {
+        flex: 1;
+        margin: 1em 1em 0 1em;
+        display: flex;
+        width: calc(100% - 2em);
+        height: calc(100% - 1em);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .content .viewport-footer {
+        height: 120px;
+        margin: 0 1em 1em;
+        width: calc(100% - 2em);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2rem;
-        color: white;
-        user-select: none;
+    }
+
+    .content .viewport svg {
+        width: 100%;
+        height: 100%;
     }
 
     .header {
@@ -64,6 +84,10 @@ html, body {
         max-width: 80%;
         margin: 0 1em 6em;
     }
+    .viewport-footer img {
+        max-width: 80%;
+        margin-bottom: 3em;
+    }
 
     .footer {
         flex-direction: column;
@@ -72,11 +96,6 @@ html, body {
         display: block;
         padding: 1em;
         margin: 0 1em 4em;
-    }
-
-    .viewport > * {
-        width: 100%;
-        height: 100%;
     }
 
     select {
@@ -135,7 +154,7 @@ html, body {
     .viewport {
         flex: 1;
     }
-    .viewport > * {
+    .viewport svg {
         width: 100%;
         height: 100%;
     }
@@ -145,9 +164,6 @@ html, body {
     }
     .footer p {
         margin: 0;
-    }
-    .coarse {
-        display: none;
     }
     .header, .footer {
         background: #333;
@@ -164,8 +180,6 @@ html, body {
         outline: none;
         padding: 0;
         cursor: pointer;
-        /*margin-right: 4px;*/
-        /*margin-left: 4px;*/
         font-family: inherit;
         font-size: inherit;
         color: inherit;

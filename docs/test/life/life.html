@@ -49,7 +49,7 @@
     </div>
 
     <div class="carousel touch">
-        <div class="header">
+        <div class="header page">
             <p class="birthday_picker">
                 <span>Я родился</span>
                 <select class="day"></select><span>-го</span>
@@ -68,9 +68,13 @@
             </p>
             <img alt="swipe right" src="images/swipe.png"/>
         </div>
-        <div class="viewport">
+        <div class="content page">
+            <div class="viewport"></div>
+            <div class="viewport-footer">
+                <img alt="swipe right" src="images/swipe.png"/>
+            </div>
         </div>
-        <div class="footer">
+        <div class="footer page">
             <p>Что же я собираюсь с этим делать?</p>
             <a href="/">
                 <img alt="consider therapy" src="images/heart.svg"/>
@@ -165,6 +169,7 @@
                 const svg = document.createElementNS(SVG_NS, "svg");
 
                 const rect = viewport.getBoundingClientRect();
+                console.log(rect)
                 const experiment = life.generate(birthDate, intervalType, rect.width, rect.height);
                 const s = Math.min(experiment.width, experiment.height);
 
