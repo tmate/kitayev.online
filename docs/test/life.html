@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Жизнь</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/fomo.css">
+
+    <script src="js/birthdaypicker.js"></script>
+    <script src="js/fomo.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-996777277">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'AW-996777277');
+    </script>
+</head>
+
+<body>
+    <div class="carousel">
+        <div class="header">
+            <p id="birthday_picker">
+                <span>Я родился</span>
+                <select id="day"></select><span>-го</span>
+                <select id="month"></select>
+                <select id="year"></select>
+                <span>года.</span>
+            </p>
+            <p>
+                <span>Вот</span>
+                <select id="interval_picker">
+                    <option value="year">годы</option>
+                    <option value="month">месяцы</option>
+                    <option value="week">недели</option>
+                </select>
+
+                <span>моей жизни.</span>
+            </p>
+            <img class="coarse" alt="swipe right" src="images/arrow.png"/>
+
+        </div>
+        <div class="viewport">
+        </div>
+        <div class="footer">
+            <p>Что же я собираюсь с этим делать?</p>
+            <a class="coarse" href="/">
+                <img alt="consider therapy" src="images/heart.svg"/>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const SVG_NS = "http://www.w3.org/2000/svg";
+        const birthdayPicker = new BirthdayPicker("#birthday_picker", {
+            defaultDate: localStorage.getItem("birthday") || "1988-05-18",
+            placeholder: false,
+            leadingZero: false,
+            yearEl: "year",
+            monthEl: "month",
+            dayEl: "day",
+            arrange: "dmy",
+            locale: "ru"
+        });
+        birthdayPicker.setMonthFormat("long");
+
+        const intervalPicker = document.getElementById("interval_picker");
+        defaultInterval = localStorage.getItem("interval") || "year";
+        intervalPicker.value = defaultInterval;
+
+        intervalPicker.addEventListener("change", () => {
+            adjustSelectsWidth();
+
+            localStorage.setItem("interval", document.getElementById("interval_picker").value);
+            const event = new Event("fomo-update");
+            window.dispatchEvent(event);
+
+        });
+
+        birthdayPicker.addEventListener("datechange", () => {
+            adjustSelectsWidth();
+
+            localStorage.setItem("birthday", birthdayPicker.getDateString("yyyy-mm-dd"));
+            const event = new Event("fomo-update");
+            window.dispatchEvent(event);
+        });
+
+
+        function adjustSelectsWidth() {
+            const monthForIndex = (index) => {
+                return [
+                    "января", "февраля", "марта",
+                    "апреля", "мая", "июня",
+                    "июля", "августа", "сентября",
+                    "октября", "ноября", "декабря"
+                ][index];
+            };
+
+            for (const select of document.getElementsByTagName("select")) {
+                const tempSpan = document.createElement("span");
+                tempSpan.style.visibility = "hidden";
+                tempSpan.style.fontWeight = "bold";
+                if (select.id === "month") {
+                    for (let i = 0; i < select.options.length; i++) {
+                        select.options[i].text = monthForIndex(i);
+                    }
+                }
+                tempSpan.innerText = select.options[select.selectedIndex].text;
+
+                select.parentNode.insertBefore(tempSpan, select);
+                const width = tempSpan.getBoundingClientRect().width;
+                select.style.maxWidth = `${width*.98}px`;
+                select.style.minWidth = `${width*.98}px`;
+
+                tempSpan.remove();
+            }
+        }
+
+        function generate(birthDate, intervalType) {
+            // noinspection JSUnresolvedReference
+            const now = new Date();
+
+            const SUMMER_COLOR = "#228B22";
+            const FALL_COLOR = "#8B3A3A";
+            const GRAY_COLOR = "#888";
+            const BLACK_COLOR = "#333";
+            const SUN_COLOR = "#FFD700";
+
+            for (const viewport of document.getElementsByClassName("viewport")) {
+                const svg = document.createElementNS(SVG_NS, "svg");
+
+                const rect = viewport.getBoundingClientRect();
+                let numberOfIntervals = 0;
+                let currentInterval = 0;
+
+                for(let interval of fomo.intervals(birthDate, intervalType)) {
+                    numberOfIntervals += 1;
+                    if (now >= interval.start && now <= interval.end) {
+                        currentInterval = interval.index;
+                    }
+                }
+
+                const layout = fomo.layout(rect.width - 32, rect.height - 72, numberOfIntervals);
+                const s = Math.min(layout.width, layout.height);
+
+                let isBorn = false;
+
+                for (let interval of fomo.intervals(birthDate, intervalType)) {
+                    const radius = s / 2;
+                    const x = (interval.index % layout.cols) * layout.width;
+                    const y = (Math.floor(interval.index / layout.cols)) * layout.height;
+
+                    if (currentInterval !== interval.index) {
+
+                        let stroke = GRAY_COLOR;
+                        let fill = BLACK_COLOR;
+                        if (currentInterval < interval.index) {
+                            if (interval.type === fomo.period.LIFE) {
+                                stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
+                            } else if (interval.type === fomo.period.TRANSITION_LIFE_DECLINE) {
+                                stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
+                            } else if (interval.type === fomo.period.DECLINE) {
+                                stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
+                            } else if (interval.type === fomo.period.TRANSITION_DECLINE_AFTER) {
+                                stroke = SUMMER_COLOR;
+                                fill = SUMMER_COLOR;
+                            } else if (interval.type === fomo.period.AFTER) {
+                                stroke = BLACK_COLOR;
+                            }
+                        } else if (interval.type === fomo.period.PREGNANCY) {
+                            stroke = GRAY_COLOR;
+                        } else if (interval.type === fomo.period.BEFORE) {
+                            stroke = BLACK_COLOR;
+                        } else if (interval.type === fomo.period.LIFE && !isBorn) {
+                            stroke = SUN_COLOR;
+                            isBorn = true;
+                        }
+
+                        const cx = x + radius;
+                        const cy = y + radius;
+                        const r = radius * .8;
+
+                        const cell = document.createElementNS(SVG_NS, "circle");
+                        cell.setAttribute("stroke", stroke);
+                        cell.setAttribute("fill", fill);
+
+                        cell.setAttribute("cx", `${cx + 16}`);
+                        cell.setAttribute("cy", `${cy + 16}`);
+                        cell.setAttribute("r", `${r}`);
+
+                        svg.appendChild(cell);
+                    } else {
+                        const g = document.createElementNS(SVG_NS, "image");
+                        let xGap = 0;
+                        let yGap = 0;
+
+                        xGap = Math.abs(layout.width - s)/2;
+                        yGap = Math.abs(layout.height - s)/2;
+
+                        g.setAttribute("x", `${x + 16}`);
+                        g.setAttribute("y", `${y + 16}`);
+                        g.setAttribute("width", `${s}`);
+                        g.setAttribute("height", `${s}`);
+                        g.setAttribute("href", "images/heart.svg")
+
+                        svg.appendChild(g);
+                    }
+                }
+
+                if (viewport.firstChild) {
+                    viewport.firstChild.replaceWith(svg);
+                } else {
+                    viewport.appendChild(svg);
+                }
+            }
+        }
+
+        let timeout;
+        window.addEventListener("resize", () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const event = new Event("fomo-update");
+                window.dispatchEvent(event);
+            }, 50);
+        });
+
+        window.addEventListener("fomo-update", () => {
+            adjustSelectsWidth();
+            console.time("generate");
+            const dateOfBirth = localStorage.getItem("birthday") || "1988-05-18";
+            const [year, month, day] = dateOfBirth.split("-");
+            const birthDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+            generate(birthDate , localStorage.getItem("interval") || "year");
+            console.timeEnd("generate");
+        });
+
+        const event = new Event("resize");
+        window.dispatchEvent(event);
+    </script>
+</body>
+</html>
