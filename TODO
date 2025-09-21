@@ -4,14 +4,15 @@ LIFE page:
 + add fraction information to items to generate gradient
 + set different head and tail sizes for different interval types
 + separate desktop and touch CSS and HTML versions
-- add "too old for that shit" fallback
++ gradient colors and gradient saturation
++ change local storage and event names to use app prefix
 
-- use yarn line for weeks interval (or even for months), not individual circles
-- gradient colors and gradient saturation
+- add share button
 
-- ensure layout put heart closer to center by shifting head or tail items
+* add "too old for that shit" fallback (limit age for now)
 - add information of life expectancy and clock at the last page
-- change local storage and event names to use app prefix
+- use yarn line for weeks interval (or even for months), not individual circles
+- ensure layout put heart closer to center by shifting head or tail items
 
 GOC page:
 
