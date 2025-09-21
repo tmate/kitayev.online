@@ -168,9 +168,9 @@ html, body {
     }
 
     .share img {
-        opacity: 0.5;
-        width: 75px;
-        height: 75px;
+        opacity: 0.2;
+        width: 2em;
+        height: 2em;
     }
 }
 
@@ -258,7 +258,7 @@ html, body {
     }
 
     .share-image {
-        opacity: 0.5;
+        opacity: 0.2;
         width: 2em;
         height: 2em;
         cursor: pointer;
