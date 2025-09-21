@@ -130,7 +130,7 @@
             };
 
             for (const select of document.getElementsByTagName("select")) {
-                if (select.classList.contains("month")) {
+                if (select.id === "month") {
                     for (let i = 0; i < select.options.length; i++) {
                         select.options[i].text = monthForIndex(i);
                     }
