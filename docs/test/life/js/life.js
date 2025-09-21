@@ -1,4 +1,5 @@
 const life = (function() {
+    const SVG_NS = "http://www.w3.org/2000/svg";
 
     const PREGNANCY_DAYS = 280;
     const ACTIVE_LIFE_SPAN_YEARS = 67;
@@ -35,29 +36,6 @@ const life = (function() {
             }
         }
         return best;
-    }
-
-    function populateItemFractions(items) {
-        const distribution = {};
-        for (let item of items) {
-            if (distribution[item.type]) {
-                distribution[item.type] += 1;
-            } else {
-                distribution[item.type] = 1;
-            }
-        }
-        let base = 0;
-        let type = null;
-        for (let item of items) {
-            if (item.type !== type) {
-                base = 0;
-            }
-            item.fraction = base + (1/distribution[item.type]);
-            type = item.type;
-            base = item.fraction;
-        }
-
-        return items;
     }
 
     const years = {
@@ -120,7 +98,9 @@ const life = (function() {
             { type : AFTER_AFTER, end: new Date(Number.MAX_SAFE_INTEGER) }
         ];
 
+        const typesCount = {};
         const generateItem = (date, type) => {
+            typesCount[type] = (typesCount[type]|| 0) + 1;
             return {
                 type : type,
                 start: start,
@@ -128,7 +108,7 @@ const life = (function() {
                 isPast: now.getTime() >= interval.next(start).getTime(),
                 isBirth: start.getTime() <= birthDate.getTime() && birthDate.getTime() < interval.next(start).getTime(),
                 isNow: start.getTime() <= now.getTime() && now.getTime() < interval.next(start).getTime(),
-            }
+            };
         };
 
         let start = interval.first(birthDate);
@@ -178,7 +158,89 @@ const life = (function() {
             items.push(generateItem(start, AFTER_AFTER));
         }
 
-        return { items: populateItemFractions(items), ...layouts[0] };
+        for (let i = 0; i < items.length; i++) {
+            items[i].total = typesCount[items[i].type];
+            items[i].index = i === 0 ? 0 : (items[i -1].type === items[i].type ? items[i -1].index + 1 : 0);
+        }
+
+        return { items, ...layouts[0] };
+    }
+
+    function coordinates(layout, index) {
+        const col = index % layout.cols;
+        const row = Math.floor(index / layout.cols);
+        return { row, col, x : col*layout.width, y : layout.height*row };
+    }
+
+    function gradientColor(start, end, fraction) {
+        fraction = Math.min(Math.max(fraction, 0), 1);
+
+        const parseRGB = hex => ((v=parseInt(hex.slice(1),16))=>([v>>16&255, v>>8&255,v&255 ]))();
+
+        const [r1, g1, b1] = parseRGB(start);
+        const [r2, g2, b2] = parseRGB(end);
+
+        const r = Math.round(r1 + (r2 - r1) * fraction);
+        const g = Math.round(g1 + (g2 - g1) * fraction);
+        const b = Math.round(b1 + (b2 - b1) * fraction);
+
+        return `rgb(${r},${g},${b})`;
+    }
+
+    function renderHeart(layout, index) {
+        const s = Math.min(layout.width, layout.height);
+        const xGap = Math.abs(layout.width - s)/2;
+        const yGap = Math.abs(layout.height - s)/2;
+        const { x, y } = coordinates(layout, index);
+
+        const element = document.createElementNS(SVG_NS, "image")
+        element.setAttribute("x", `${x + xGap}`);
+        element.setAttribute("y", `${y + yGap}`);
+        element.setAttribute("width", `${s}`);
+        element.setAttribute("height", `${s}`);
+        element.setAttribute("href", "images/heart.svg");
+        return element;
+    }
+
+    function renderCircle(layout, index) {
+        const s = Math.min(layout.width, layout.height);
+        const radius = s / 2;
+        const { x, y } = coordinates(layout, index);
+
+        const element = document.createElementNS(SVG_NS, "circle");
+        element.setAttribute("fill", "#333333");
+        element.setAttribute("cx", `${x + radius}`);
+        element.setAttribute("cy", `${y + radius}`);
+        element.setAttribute("r", `${radius * .8}`);
+        const item = layout.items[index];
+
+        if (item.type === PREGNANCY) {
+            element.setAttribute("opacity", `${(item.index + 1)/item.total}`);
+        } else if (item.type === AFTER) {
+            element.setAttribute("opacity", `${(item.total - (item.index + 1))/item.total}`);
+        } else if (item.type === LIFE && !item.isPast) {
+            element.setAttribute("fill", "#9CAF88");
+        } else if (item.type === TRANSITION_LIFE_DECLINE && !item.isPast) {
+            const color = gradientColor("#9CAF88", "#996515", (item.index + 1) / (item.total + 1));
+            element.setAttribute("fill", color);
+        } else if (item.type === TRANSITION_DECLINE_AFTER && !item.isPast) {
+            const color = gradientColor("#996515", "#333333", (item.index + 1) / (item.total + 1));
+            element.setAttribute("fill", color);
+        } else if (item.type === DECLINE && !item.isPast) {
+            element.setAttribute("fill", "#996515");
+        }
+        element.setAttribute("stroke", item.isPast ? (item.isBirth ? "#FFD700" : "#888888") : "#333333");
+        return element;
+    }
+
+    function render(layout, index) {
+        const item = layout.items[index];
+        if (item.isNow) {
+            return renderHeart(layout, index);
+        } else if (item.type === BEFORE || item.type === AFTER_AFTER) {
+            return null;
+        }
+        return renderCircle(layout, index);
     }
 
     return {
@@ -193,13 +255,15 @@ const life = (function() {
             AFTER_AFTER,
         },
 
+        render : render,
+
         generate : (dateOfBirth, type, width, height) => {
             if (type === "month") {
-                return generate(dateOfBirth, months, width, height);
+                return {...generate(dateOfBirth, months, width, height), type };
             } else if (type === "week") {
-                return generate(dateOfBirth, weeks, width, height);
+                return {...generate(dateOfBirth, weeks, width, height), type };
             }
-            return generate(dateOfBirth, years, width, height);
+            return {...generate(dateOfBirth, years, width, height), type };
         },
     };
 

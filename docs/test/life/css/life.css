@@ -58,6 +58,10 @@ html, body {
         align-items: center;
         justify-content: center;
     }
+    .content .viewport-footer img {
+        max-width: 80%;
+        margin-bottom: 3em;
+    }
 
     .content .viewport svg {
         width: 100%;
@@ -83,10 +87,6 @@ html, body {
     .header img {
         max-width: 80%;
         margin: 0 1em 6em;
-    }
-    .viewport-footer img {
-        max-width: 80%;
-        margin-bottom: 3em;
     }
 
     .footer {
