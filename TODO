@@ -7,7 +7,8 @@ LIFE page:
 + gradient colors and gradient saturation
 + change local storage and event names to use app prefix
 
-- add share button
++ load birth date and interval type from the argument
++ add share button
 
 * add "too old for that shit" fallback (limit age for now)
 - add information of life expectancy and clock at the last page

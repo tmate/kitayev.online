@@ -43,10 +43,10 @@ html, body {
 
     .content .viewport {
         flex: 1;
-        margin: 1em 1em 0 1em;
+        margin: 1em 1em 2em 1em;
         display: flex;
         width: calc(100% - 2em);
-        height: calc(100% - 1em);
+        height: calc(100% - 3em);
         align-items: center;
         justify-content: center;
     }
@@ -154,6 +154,23 @@ html, body {
 
     .dots button.active {
         background: rgba(255, 255, 255, 0.9);
+    }
+
+    .share {
+        flex: 1;
+        align-items: flex-end;
+        display: flex;
+        margin-bottom: 4em;
+    }
+
+    .header .share {
+        align-self: center;
+    }
+
+    .share img {
+        opacity: 0.5;
+        width: 75px;
+        height: 75px;
     }
 }
 

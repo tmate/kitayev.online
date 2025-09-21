@@ -68,6 +68,9 @@
                 <span>моей жизни:</span>
             </p>
             <p style="color: #555555; align-self: center; font-size: 80%">крути&nbsp;вправо</p>
+            <div class="share">
+                <img class="share-image" src="images/share.png" alt="share"/>
+            </div>
         </div>
 
         <div class="content page">
@@ -79,6 +82,9 @@
             <a href="/">
                 <img alt="consider therapy" src="images/heart.svg"/>
             </a>
+            <div class="share">
+                <img class="share-image" src="images/share.png" alt="share"/>
+            </div>
         </div>
     </div>
     <div class="touch dots" id="dots"></div>
@@ -89,6 +95,35 @@
                 el.remove();
             }
         }
+
+        function removeURLParam(key) {
+            const url = new URL(window.location.href);
+            url.searchParams.delete(key);
+            window.history.replaceState({}, document.title, url.toString());
+        }
+
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const urlBirthdate = urlSearchParams.get("date");
+        const urlIntervalType = urlSearchParams.get("interval");
+        if (urlBirthdate) {
+            const [year, month, day] = urlBirthdate.split("-");
+            if (year && month && day) {
+                try {
+                    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+                    const age = new Date().getFullYear() - date.getFullYear();
+                    if (age > 0 && age <= 84) {
+                        localStorage.setItem("birthday", `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
+                    }
+                } catch {
+                }
+            }
+        }
+        if (urlIntervalType && ["month", "year", "week"].includes(urlIntervalType.toLowerCase())) {
+            localStorage.setItem("interval", urlIntervalType);
+        }
+
+        removeURLParam("date");
+        removeURLParam("interval");
 
         const SVG_NS = "http://www.w3.org/2000/svg";
         const birthdayPicker = new BirthdayPicker("#birthday_picker", {
@@ -119,6 +154,28 @@
             const event = new Event("life-update");
             window.dispatchEvent(event);
         });
+
+        for (const btn of document.getElementsByClassName("share-image")) {
+            btn.addEventListener("click", async () => {
+                const sharedURL = new URL(window.location.href);
+                sharedURL.searchParams.set("date", localStorage.getItem("birthday") || "1988-05-18");
+                sharedURL.searchParams.set("interval", localStorage.getItem("interval") || "year");
+                const shareData = {
+                    url : sharedURL.toString(),
+                    text: "Ваша жизнь с высоты птичьего полёта",
+                    title: "Ваша жизнь"
+                };
+
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch {
+                    }
+                } else {
+                    window.location.href = shareData.url;
+                }
+            });
+        }
 
         function adjustMonthSelectsValues() {
             const monthForIndex = (index) => {
