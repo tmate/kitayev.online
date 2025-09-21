@@ -67,14 +67,12 @@
                 </select>
                 <span>моей жизни.</span>
             </p>
-            <img alt="swipe right" src="images/swipe.png"/>
         </div>
+
         <div class="content page">
             <div class="viewport"></div>
-            <div class="viewport-footer">
-                <img alt="swipe right" src="images/swipe.png"/>
-            </div>
         </div>
+
         <div class="footer page">
             <p>Что же я собираюсь с этим делать?</p>
             <a href="/">
@@ -82,6 +80,7 @@
             </a>
         </div>
     </div>
+    <div class="touch dots" id="dots"></div>
 
     <script>
         for (const el of document.getElementsByClassName("carousel")) {
@@ -178,7 +177,38 @@
             }
         }
 
+        function setupDots() {
+            const carousel = document.getElementsByClassName("carousel")[0];
+            const pages = carousel.querySelectorAll(".page");
+            const dotsContainer = document.getElementById("dots");
+
+            pages.forEach((_, i) => {
+                const dot = document.createElement("button");
+                dot.addEventListener("click", () => {
+                    carousel.scrollTo({
+                        left: i * window.innerWidth,
+                        behavior: "smooth"
+                    });
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = dotsContainer.querySelectorAll("button");
+            function updateDots() {
+                const index = Math.round(carousel.scrollLeft / window.innerWidth);
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle("active", i === index);
+                });
+            }
+
+            carousel.addEventListener("scroll", () => {
+                requestAnimationFrame(updateDots);
+            });
+            updateDots();
+        }
+
         adjustMonthSelectsValues();
+        setupDots();
 
         let timeout;
         window.addEventListener("resize", () => {
