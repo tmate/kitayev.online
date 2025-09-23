@@ -225,7 +225,6 @@
 
                 const rect = viewport.getBoundingClientRect();
                 const layout = life.generate(birthDate, intervalType, rect.width, rect.height);
-                console.log(layout);
 
                 for (let index = 0; index < layout.items.length; index++) {
                     const child = life.render(layout, index);
