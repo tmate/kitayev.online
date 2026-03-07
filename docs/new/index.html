@@ -10,9 +10,24 @@
 </head>
 
 <body>
+
 <header id="top" class="menu-container">
     <div class="menu">
         <a class="logo" href="#top">Aлександр&nbsp;Китаев</a>
+        <nav class="desktop menu-items">
+            <a class="menu-item" href="#about">Обо мне</a>
+            <a class="menu-item" href="#inquiry">Зачем вам терапия</a>
+            <a class="menu-item" href="#process">Что мы будем делать</a>
+            <a class="menu-item" href="#solution">C чего мы начнём</a>
+            <a class="menu-item" href="#conditions">Условия и цена</a>
+        </nav>
+        <nav class="mobile menu-button">Меню</nav>
+    </div>
+
+    <div class="mobile mobile-hidden mobile-menu" id="mobile-menu">
+        <a class="logo" href="#top">Aлександр&nbsp;Китаев</a>
+        <a class="menu-button">&times;</a>
+
         <nav class="menu-items">
             <a class="menu-item" href="#about">Обо мне</a>
             <a class="menu-item" href="#inquiry">Зачем вам терапия</a>
@@ -20,7 +35,15 @@
             <a class="menu-item" href="#solution">C чего мы начнём</a>
             <a class="menu-item" href="#conditions">Условия и цена</a>
         </nav>
-        <nav class="menu-button mobile">Меню</nav>
+
+        <div class="btn-group">
+            <a class="mobile btn btn-text btn-primary" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+               title="Напишите на WhatsApp"><span>Записаться на консультацию</span></a>
+            <a class="mobile btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+               title="Напишите на WhatsApp"><img width="40" height="40" src="images/whatsapp-w.svg" alt="WhatsApp"/></a>
+            <a class="mobile btn" target="_blank" rel="noopener" href="https://t.me/kitajev" title="Напишите в Telegram"><img
+                    width="40" height="40" src="images/telegram-w.svg" alt="Telegram"/></a>
+        </div>
     </div>
 </header>
 
@@ -303,9 +326,18 @@
         document.getElementById("education").classList.toggle("hidden");
     }
 
+    function toggleMenu(e) {
+        e.stopPropagation();
+        document.getElementById("mobile-menu").classList.toggle("mobile-hidden");
+    }
+
     document.querySelectorAll('.education-toggle').forEach(el => {
         el.addEventListener('click', e => toggleEducation(e));
     });
+    document.querySelectorAll('.menu-button').forEach(el => {
+        el.addEventListener('click', e => toggleMenu(e));
+    });
+
     document.querySelector('body').addEventListener('click', (e) => {
         const popup = e.target.closest('.education');
         const isShown = !document.getElementById("education").classList.contains("hidden");
@@ -313,12 +345,23 @@
             toggleEducation(e);
         }
     });
+
+    document.querySelectorAll('.mobile-menu nav a').forEach(el => el.addEventListener('click', (e) => {
+        document.getElementById("mobile-menu").classList.toggle("mobile-hidden");
+        return true;
+    }));
+
+    document.querySelectorAll('.mobile-menu .logo').forEach(el => el.addEventListener('click', (e) => {
+        document.getElementById("mobile-menu").classList.toggle("mobile-hidden");
+        return true;
+    }));
+
     document.querySelector('body').addEventListener('keydown', (e) => {
         const isShown = !document.getElementById("education").classList.contains("hidden");
         if (isShown && e.key === 'Escape') {
             toggleEducation(e);
         }
-    })
+    });
 </script>
 
 </body>
