@@ -2,6 +2,7 @@
   font-family: Inter;
   src: url("TikTokSans-Medium.ttf");
 }
+
 @font-face {
   font-family: InterBold;
   src: url("TikTokSans_18pt_Expanded-SemiBold.ttf");
@@ -18,6 +19,7 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 .hidden {
   display: none !important;
 }
@@ -34,8 +36,9 @@
     grid-auto-rows: auto;
     gap: 20px;
   }
+
   .container {
-    min-width : 1440px;
+    min-width: 1440px;
   }
 
   .h1 {
@@ -45,6 +48,7 @@
     line-height: 130%;
     text-transform: uppercase;
   }
+
   .h2 {
     font-family: InterBold, serif;
     font-size: 18px;
@@ -52,6 +56,7 @@
     line-height: 130%;
     text-transform: uppercase;
   }
+
   .h3 {
     font-family: InterBold, serif;
     font-size: 9px;
@@ -66,6 +71,7 @@
     letter-spacing: 0;
     line-height: 165%;
   }
+
   .text-btn {
     font-family: InterBold, serif;
     font-size: 9px;
@@ -79,6 +85,7 @@
     flex-direction: row;
     gap: 16px;
   }
+
   .btn {
     .text-btn();
     cursor: pointer;
@@ -87,13 +94,16 @@
     justify-content: center;
     text-decoration: none;
   }
+
   .btn-text {
     padding: 16px 24px;
   }
+
   .btn-primary {
     background-color: @color-gray;
     color: @color-white;
   }
+
   .btn-light {
     background-color: @color-white;
     color: @color-black;
@@ -102,22 +112,27 @@
   .menu-container {
     .container();
     background-color: @color-beige;
+
     .menu {
       .h3();
       .grid();
+
       .logo {
         color: @color-black;
         grid-column: 1 / span 2;
         text-decoration: none;
       }
+
       .menu-items {
         grid-column: 5 / -1;
         display: flex;
         gap: 20px;
+
         .menu-item {
           color: @color-black;
           text-decoration: none;
         }
+
         .menu-item:hover {
           color: @color-black;
           text-decoration: underline;
@@ -131,6 +146,7 @@
   .about-container {
     .container();
     background-color: @color-beige;
+
     .about {
       .grid();
 
@@ -139,11 +155,14 @@
         display: flex;
         flex-direction: column;
         grid-column: 1 / span 12;
+
         .highlight {
           color: @color-green;
         }
+
         z-index: 1;
         position: relative;
+
         .about-image {
           line-height: 0;
           top: 90px;
@@ -152,6 +171,7 @@
           position: absolute;
         }
       }
+
       .description-header {
         position: relative;
         grid-column: 8 / -1;
@@ -159,13 +179,16 @@
         flex-direction: column;
         .h2();
       }
+
       .description-text {
         grid-column: 8 / -1;
         .p();
       }
+
       .description-buttons {
         grid-column: 8 / -1;
       }
+
       .description-bullets {
         margin-top: 200px;
         grid-column: 8 / -1;
@@ -174,6 +197,7 @@
         gap: 8px;
         position: relative;
         .h3();
+
         .education-btn {
           text-decoration: underline;
           text-decoration-style: dashed;
@@ -188,37 +212,43 @@
 
 
   .education {
+    position: absolute;
+    border: 1px solid @color-gray;
+    background-color: @color-white;
+    color: @color-black;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 30px 20px;
+    width: 800px;
+    top: 110px;
+    left: -200px;
+    z-index: 1;
+
+    .close {
       position: absolute;
-      border: 1px solid @color-gray;
-      background-color: @color-white;
-      color: @color-black;
-      display: flex;
-      flex-direction: column;
-      padding: 30px 30px 20px;
-      width: 800px;
-      top: 110px;
-      left: -200px;
-      z-index: 1;
-      .close {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        cursor: pointer;
-      }
-      .page-header {
-        .h2();
-      }
-      .bullets {
-        padding-top: 20px;
-        padding-left: 20px;
-        .h3();
-        .bullet {
-          display: list-item;
-          b {
-            font-weight: bold;
-          }
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+    }
+
+    .page-header {
+      .h2();
+    }
+
+    .bullets {
+      padding-top: 20px;
+      padding-left: 20px;
+      .h3();
+
+      .bullet {
+        display: list-item;
+
+        b {
+          font-weight: bold;
         }
       }
+    }
+
     .text {
       display: flex;
       flex-direction: column;
@@ -231,9 +261,11 @@
   .inquiry-container {
     .container();
     background-color: @color-white;
+
     .inquiry {
       .grid();
       padding-bottom: 80px;
+
       .inquiry-bullets {
         margin-top: 100px;
         margin-bottom: 140px;
@@ -242,6 +274,7 @@
         grid-template-columns: 1fr 1fr;
         grid-auto-rows: auto;
         gap: 16px;
+
         .inquiry-bullet {
           display: flex;
           flex-direction: row;
@@ -249,6 +282,7 @@
           .h3();
         }
       }
+
       .inquiry-page-header {
         grid-column: 1 / span 2;
         .h3();
@@ -261,13 +295,16 @@
       .inquiry-header {
         grid-column: 1 / -1;
         .h1();
+
         .highlight {
           color: @color-green;
         }
       }
+
       .inquiry-text {
         grid-column: 1 / span 6;
         .p();
+
         p {
           margin: 10px 0;
         }
@@ -279,14 +316,17 @@
     .container();
     background-color: @color-green;
     color: @color-white;
+
     .troubles {
       .grid();
       padding-top: 60px;
       padding-bottom: 60px;
+
       .header {
         grid-column: 1 / span 6;
         .h2();
       }
+
       .trouble-bullets {
         grid-column: 1 / span 6;
         display: flex;
@@ -294,15 +334,18 @@
         gap: 16px;
         margin-left: 20px;
         .p();
+
         .trouble-bullet {
           display: list-item;
 
         }
       }
+
       .trouble-buttons {
         grid-column: 8 / -1;
         display: flex;
         flex-direction: column;
+
         .description {
           margin-top: auto;
           margin-bottom: 20px;
@@ -318,6 +361,7 @@
     color: @color-black;
     padding-top: 80px;
     padding-bottom: 80px;
+
     .process {
       .grid();
 
@@ -336,6 +380,7 @@
         .h1();
         display: flex;
         flex-direction: column;
+
         .highlight {
           color: @color-green;
         }
@@ -345,6 +390,7 @@
         grid-column: 8 / -1;
         grid-row: 2 / span 2;
         .p();
+
         p {
           margin-bottom: 10px;
         }
@@ -357,6 +403,7 @@
     background-color: @color-white;
     color: @color-black;
     padding-bottom: 80px;
+
     .solution {
       .grid();
 
@@ -375,15 +422,18 @@
         .h1();
         display: flex;
         flex-direction: column;
+
         .highlight {
           color: @color-green;
         }
       }
+
       .header-wide {
         grid-column: 1 / -1;
         .h1();
         display: flex;
         flex-direction: column;
+
         .highlight {
           color: @color-green;
         }
@@ -393,6 +443,7 @@
         grid-column: 8 / -1;
         grid-row: 3 / span 1;
         .p();
+
         p {
           margin-bottom: 10px;
         }
@@ -407,6 +458,7 @@
         justify-content: center;
         padding-bottom: 200px;
         padding-top: 180px;
+
         img {
           max-width: 220px;
           max-height: 280px;
@@ -420,10 +472,12 @@
     .container();
     background-color: @color-green;
     color: @color-white;
+
     .conditions {
       .grid();
       padding-top: 60px;
       padding-bottom: 60px;
+
       .page-header {
         grid-column: 1 / span 6;
         .h3();
@@ -432,9 +486,11 @@
         align-items: center;
         gap: 12px;
       }
+
       .price-header {
         grid-column: 1 / span 6;
         .h2();
+
         .price-value {
           padding: 10px 10px;
           white-space: nowrap;
@@ -445,6 +501,7 @@
           .h3();
         }
       }
+
       .conditions-bullets {
         grid-column: 7 / -1;
         grid-row: 2 / span 2;
@@ -453,14 +510,17 @@
         gap: 16px;
         margin-left: 20px;
         .p();
+
         .conditions-bullet {
           display: list-item;
         }
       }
+
       .buttons {
         grid-column: 7 / -1;
         display: flex;
         flex-direction: column;
+
         .description {
           margin-top: auto;
           margin-bottom: 20px;
@@ -469,6 +529,7 @@
       }
     }
   }
+
   .footer-container {
     .container();
     background-color: @color-gray;
@@ -478,18 +539,21 @@
 
     .footer {
       .grid();
+
       .logo {
         .h2();
         color: @color-white;
         grid-column: 1 / span 5;
         text-decoration: none;
       }
+
       .menu-items {
         .h3();
         grid-column: 10 / -1;
         display: flex;
         flex-direction: column;
         gap: 20px;
+
         .menu-item {
           color: @color-white;
           text-decoration: none;
