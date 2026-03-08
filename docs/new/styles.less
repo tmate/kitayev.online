@@ -699,7 +699,7 @@
       grid-template-rows: 80px auto 50px;
 
       gap: 16px;
-      padding: 16px 10px;
+      padding: 10px 10px;
 
       .logo {
         grid-column: 1 / span 3;
@@ -823,45 +823,44 @@
 
   .education {
     position: fixed;
-    border: 1px solid @color-gray;
     background-color: @color-white;
     color: @color-black;
-    display: flex;
+    display: grid;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 100vw;
 
-    flex-direction: column;
-    padding: 20px;
+    .h3();
+    .grid();
+    width: 100vw !important;
+
+    grid-template-rows: 40px auto 80px 50px;
+    gap: 16px;
+    padding: 10px 10px;
+
     z-index: 2;
     overflow: scroll;
 
-    .close {
-      position: absolute;
-      right: 35px;
-      top: 15px;
-      font-size: 36px;
-      cursor: pointer;
-      color: @color-gray;
-    }
-
-    .back {
-      position: absolute;
-      left: 20px;
-      top: 15px;
-      font-size: 36px;
-      cursor: pointer;
-      color: @color-gray;
-    }
-
     .page-header {
-      .h2();
-      padding-left: 50px;
+      grid-column: 1 / span 3;
+      grid-row: 1;
+      text-decoration: none;
+      color: @color-black;
+      padding-left: 8px;
+    }
+    .close {
+      grid-column: 4 / span 1;
+      grid-row: 1;
+      padding-right: 8px;
+      justify-self: end;
+      font-size: 19px;
+      cursor: pointer;
     }
 
     .bullets {
+      grid-column: 1 / -1;
+      grid-row: 2;
       padding-top: 20px;
       padding-left: 20px;
       display: flex;
@@ -879,11 +878,18 @@
     }
 
     .text {
+      grid-column: 1 / -1;
+      grid-row: 3;
       display: flex;
       flex-direction: column;
       padding-top: 20px;
       padding-left: 20px;
       .h3();
+    }
+
+    .back {
+      grid-column: 1 / -1;
+      grid-row: 4;
     }
   }
 
