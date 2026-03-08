@@ -691,56 +691,58 @@
 
       z-index: 2;
       overflow: scroll;
+      .mobile-menu-inner {
+        .grid();
+        .h3();
 
-      .grid();
-      width: 100vw !important;
-      .h3();
+        grid-template-rows: 80px auto 50px;
 
-      grid-template-rows: 80px auto 50px;
-
-      gap: 16px;
-      padding: 16px 10px;
-
-      .logo {
-        grid-column: 1 / span 3;
-        grid-row: 1;
-        text-decoration: none;
-        color: @color-black;
-      }
-      .menu-button {
-        grid-column: 4 / span 1;
-        grid-row: 1;
-        padding-right: 8px;
-        justify-self: end;
-        font-size: 19px;
-        cursor: pointer;
-      }
-
-      .menu-items {
-        align-self: start;
-        justify-self: center;
-        place-self: start;
-        grid-column: 1 / span 4;
-        grid-row: 2;
-        display: flex;
-        flex-direction: column;
         gap: 16px;
-        padding-left: 8px;
+        padding: 16px 10px;
 
-        .menu-item {
-          color: @color-black;
+        .logo {
+          grid-column: 1 / span 3;
+          grid-row: 1;
           text-decoration: none;
+          color: @color-black;
         }
 
-        .menu-item:hover {
-          color: @color-black;
-          text-decoration: underline;
-          text-underline-offset: 8px;
-          text-decoration-thickness: 1px;
+        .menu-button {
+          grid-column: 4 / span 1;
+          grid-row: 1;
+          padding-right: 8px;
+          justify-self: end;
+          font-size: 19px;
+          cursor: pointer;
         }
-      }
-      .btn-group {
-        grid-column: 1 / -1;
+
+        .menu-items {
+          align-self: start;
+          justify-self: center;
+          place-self: start;
+          grid-column: 1 / span 4;
+          grid-row: 2;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          padding-left: 8px;
+
+          .menu-item {
+            color: @color-black;
+            text-decoration: none;
+          }
+
+          .menu-item:hover {
+            color: @color-black;
+            text-decoration: underline;
+            text-underline-offset: 8px;
+            text-decoration-thickness: 1px;
+          }
+        }
+
+        .btn-group {
+          grid-column: 1 / -1;
+        }
       }
     }
   }
@@ -975,6 +977,7 @@
           display: list-item;
 
         }
+        padding-bottom: 60px;
       }
 
       .trouble-buttons {
