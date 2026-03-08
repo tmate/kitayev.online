@@ -644,7 +644,7 @@
   }
 
   .btn-text {
-    padding: 16px 4px;
+    padding: 16px 8px;
   }
 
   .btn-primary {
@@ -699,14 +699,13 @@
       grid-template-rows: 80px auto 50px;
 
       gap: 16px;
-      padding: 10px 10px;
+      padding: 16px 10px;
 
       .logo {
         grid-column: 1 / span 3;
         grid-row: 1;
         text-decoration: none;
         color: @color-black;
-        padding-left: 8px;
       }
       .menu-button {
         grid-column: 4 / span 1;
@@ -835,9 +834,9 @@
     .grid();
     width: 100vw !important;
 
-    grid-template-rows: 40px auto 80px 50px;
+    grid-template-rows: 30px auto 80px 50px;
     gap: 16px;
-    padding: 10px 10px;
+    padding: 16px 10px;
 
     z-index: 2;
     overflow: scroll;
@@ -861,11 +860,10 @@
     .bullets {
       grid-column: 1 / -1;
       grid-row: 2;
-      padding-top: 20px;
       padding-left: 20px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
       .h3();
 
       .bullet {
@@ -882,7 +880,7 @@
       grid-row: 3;
       display: flex;
       flex-direction: column;
-      padding-top: 20px;
+      padding-top: 10px;
       padding-left: 20px;
       .h3();
     }
@@ -1149,6 +1147,7 @@
       }
 
       .buttons {
+        padding-top: 40px;
         grid-column: 1 / -1;
         display: flex;
         flex-direction: column;
