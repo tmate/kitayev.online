@@ -576,25 +576,14 @@
       }
     }
   }
-  .mobile {
-    display: none !important;
-  }
-  .tablet {
-    display: none !important;
-  }
-  .not-desktop {
-    display: none !important;
-  }
+  .mobile:not(.desktop) { display: none !important; }
+  .tablet:not(.desktop) { display: none !important; }
 }
 
 /* tablet */
 @media screen and (768px <= width < 1440px) {
-  .desktop {
-    display: none !important;
-  }
-  .mobile {
-    display: none !important;
-  }
+  .mobile:not(.tablet)  { display: none !important; }
+  .desktop:not(.tablet) { display: none !important; }
 
   .grid {
     margin: 0 auto;
@@ -1190,19 +1179,12 @@
       }
     }
   }
-  .mobile {
-    display: none !important;
-  }
 }
 
 /* mobile */
 @media screen and (width < 768px) {
-  .desktop {
-    display: none !important;
-  }
-  .tablet {
-    display: none !important;
-  }
+  .desktop:not(.mobile) { display: none !important; }
+  .tablet:not(.mobile)  { display: none !important; }
   .grid {
     margin: 0 auto;
     padding: 16px 10px;
@@ -1795,8 +1777,5 @@
         }
       }
     }
-  }
-  .not-mobile {
-    display: none !important;
   }
 }
