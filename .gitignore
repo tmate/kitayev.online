@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Package manager
+package-lock.json
+
+# Playwright
+test-results/
+playwright-report/
+
+# OS
+.DS_Store
+Thumbs.db

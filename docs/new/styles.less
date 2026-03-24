@@ -24,6 +24,57 @@
   display: none !important;
 }
 
+/* typography structure — sizes are set per breakpoint below */
+.make-h1(@size) {
+  font-family: Inter, serif;
+  font-size: @size;
+  letter-spacing: 1%;
+  line-height: 130%;
+  text-transform: uppercase;
+}
+
+.make-h2(@size) {
+  font-family: InterBold, serif;
+  font-size: @size;
+  letter-spacing: 5%;
+  line-height: 130%;
+  text-transform: uppercase;
+}
+
+.make-h3(@size) {
+  font-family: InterBold, serif;
+  font-size: @size;
+  letter-spacing: 10%;
+  line-height: 150%;
+  text-transform: uppercase;
+}
+
+.make-p(@size) {
+  font-family: Inter, serif;
+  font-size: @size;
+  letter-spacing: 0;
+  line-height: 165%;
+}
+
+.make-text-btn(@size) {
+  font-family: InterBold, serif;
+  font-size: @size;
+  letter-spacing: 10%;
+  line-height: 150%;
+  text-transform: uppercase;
+}
+
+/* button colors — identical across all breakpoints */
+.btn-primary {
+  background-color: @color-gray;
+  color: @color-white;
+}
+
+.btn-light {
+  background-color: @color-white;
+  color: @color-black;
+}
+
 /* desktop */
 @media screen and (width >= 1440px) {
   .grid {
@@ -45,44 +96,11 @@
     min-width: 1440px;
   }
 
-  .h1 {
-    font-family: Inter, serif;
-    font-size: 36px;
-    letter-spacing: 1%;
-    line-height: 130%;
-    text-transform: uppercase;
-  }
-
-  .h2 {
-    font-family: InterBold, serif;
-    font-size: 18px;
-    letter-spacing: 5%;
-    line-height: 130%;
-    text-transform: uppercase;
-  }
-
-  .h3 {
-    font-family: InterBold, serif;
-    font-size: 9px;
-    letter-spacing: 10%;
-    line-height: 150%;
-    text-transform: uppercase;
-  }
-
-  .p {
-    font-family: Inter, serif;
-    font-size: 12px;
-    letter-spacing: 0;
-    line-height: 165%;
-  }
-
-  .text-btn {
-    font-family: InterBold, serif;
-    font-size: 9px;
-    letter-spacing: 10%;
-    line-height: 150%;
-    text-transform: uppercase;
-  }
+  .h1 { .make-h1(36px); }
+  .h2 { .make-h2(18px); }
+  .h3 { .make-h3(9px); }
+  .p { .make-p(12px); }
+  .text-btn { .make-text-btn(9px); }
 
   .btn-group {
     display: flex;
@@ -101,16 +119,6 @@
 
   .btn-text {
     padding: 16px 24px;
-  }
-
-  .btn-primary {
-    background-color: @color-gray;
-    color: @color-white;
-  }
-
-  .btn-light {
-    background-color: @color-white;
-    color: @color-black;
   }
 
   .menu-container {
@@ -574,6 +582,9 @@
   .tablet {
     display: none !important;
   }
+  .not-desktop {
+    display: none !important;
+  }
 }
 
 /* tablet */
@@ -600,44 +611,11 @@
     min-width: 768px;
   }
 
-  .h1 {
-    font-family: Inter, serif;
-    font-size: 30px;
-    letter-spacing: 1%;
-    line-height: 130%;
-    text-transform: uppercase;
-  }
-
-  .h2 {
-    font-family: InterBold, serif;
-    font-size: 18px;
-    letter-spacing: 5%;
-    line-height: 130%;
-    text-transform: uppercase;
-  }
-
-  .h3 {
-    font-family: InterBold, serif;
-    font-size: 9px;
-    letter-spacing: 10%;
-    line-height: 150%;
-    text-transform: uppercase;
-  }
-
-  .p {
-    font-family: Inter, serif;
-    font-size: 12px;
-    letter-spacing: 0;
-    line-height: 165%;
-  }
-
-  .text-btn {
-    font-family: InterBold, serif;
-    font-size: 9px;
-    letter-spacing: 10%;
-    line-height: 150%;
-    text-transform: uppercase;
-  }
+  .h1 { .make-h1(30px); }
+  .h2 { .make-h2(18px); }
+  .h3 { .make-h3(9px); }
+  .p { .make-p(12px); }
+  .text-btn { .make-text-btn(9px); }
 
   .btn-group {
     display: flex;
@@ -656,16 +634,6 @@
 
   .btn-text {
     padding: 16px 8px;
-  }
-
-  .btn-primary {
-    background-color: @color-gray;
-    color: @color-white;
-  }
-
-  .btn-light {
-    background-color: @color-white;
-    color: @color-black;
   }
 
   .menu-container {
@@ -1251,44 +1219,11 @@
     height: auto;
   }
 
-  .h1 {
-    font-family: Inter, serif;
-    font-size: 23px;
-    letter-spacing: 1%;
-    line-height: 130%;
-    text-transform: uppercase;
-  }
-
-  .h2 {
-    font-family: InterBold, serif;
-    font-size: 16px;
-    letter-spacing: 5%;
-    line-height: 130%;
-    text-transform: uppercase;
-  }
-
-  .h3 {
-    font-family: InterBold, serif;
-    font-size: 10px;
-    letter-spacing: 10%;
-    line-height: 150%;
-    text-transform: uppercase;
-  }
-
-  .p {
-    font-family: Inter, serif;
-    font-size: 14px;
-    letter-spacing: 0;
-    line-height: 165%;
-  }
-
-  .text-btn {
-    font-family: InterBold, serif;
-    font-size: 10px;
-    letter-spacing: 10%;
-    line-height: 150%;
-    text-transform: uppercase;
-  }
+  .h1 { .make-h1(23px); }
+  .h2 { .make-h2(16px); }
+  .h3 { .make-h3(10px); }
+  .p { .make-p(14px); }
+  .text-btn { .make-text-btn(10px); }
 
   .btn-group {
     display: flex;
@@ -1309,15 +1244,6 @@
     padding: 16px 8px;
   }
 
-  .btn-primary {
-    background-color: @color-gray;
-    color: @color-white;
-  }
-
-  .btn-light {
-    background-color: @color-white;
-    color: @color-black;
-  }
   .mobile-hidden {
     display: none !important;
   }
@@ -1869,5 +1795,8 @@
         }
       }
     }
+  }
+  .not-mobile {
+    display: none !important;
   }
 }
