@@ -1,156 +1,393 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="images/bullet2.svg" />
 
-    <title>Психолог, Гештальт-Терапевт | Прага | Александр Китаев</title>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-996777277">
-    </script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'AW-996777277');
-    </script>
+    <title>Психолог в Праге | Александр Китаев</title>
+    <link rel="stylesheet/less" type="text/css" href="styles.less"/>
+    <script src="less.min.js"></script>
 </head>
+
 <body>
-<header>
-    <div class="lang-switch">
-        <a href="index_en.html">In English</a>
+
+<header id="top" class="menu-container">
+    <div class="menu">
+        <a class="logo" href="#top">Aлександр&nbsp;Китаев</a>
+        <nav class="desktop menu-items">
+            <a class="menu-item" href="#about">Обо мне</a>
+            <a class="menu-item" href="#inquiry">Зачем терапия вам</a>
+            <a class="menu-item" href="#process">Как это работает</a>
+            <a class="menu-item" href="#solution">Что мы будем делать</a>
+            <a class="menu-item" href="#conditions">Условия и цена</a>
+        </nav>
+        <nav class="mobile tablet menu-button">Меню</nav>
     </div>
-    <div class="photo-placeholder"></div>
-    <h1 style="text-wrap: nowrap">Александр Китаев</h1>
-    <h3><span style="text-wrap: nowrap">Психолог</span>, <span style="text-wrap: nowrap">Гештальт-терапевт</span></h3>
 
-    <p><span style="text-wrap: nowrap">Консультации онлайн</span> <span style="text-wrap: nowrap">и лично в центре Праги</span></p>
-    <div class="contact-buttons" style="display:flex;gap:12px;flex-wrap:wrap; justify-content: center">
-        <!-- Telegram -->
-        <a
-                href="https://t.me/kitajev"
-                target="_blank" rel="noopener"
-                aria-label="Contact on Telegram"
-                style="display:inline-flex;align-items:center;gap:8px;
-           padding:10px 14px;border-radius:999px;
-           background:#229ED9;color:#fff;text-decoration:none;
-           font:500 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-           box-shadow:0 4px 10px rgba(34,158,217,.25);"
-        >
-            <svg width="18" height="18" viewBox="0 0 240 240" aria-hidden="true">
-                <path fill="#fff" d="M120 0a120 120 0 1 0 0 240 120 120 0 0 0 0-240zm52.6 79.2c-3 32-16 109-20.3 129.4-1.6 7.1-5.8 9.4-9.6 9.7-8.2.6-14.5-5.4-22.6-10.6-12.6-8.3-19.7-13.4-32-21.5-14.2-9.3-5-14.3 3.1-22.6 2.1-2.2 39-35.8 39.7-38.9.1-.3.2-1.2-.5-1.8-.7-.6-1.7-.4-2.4-.2-1 .2-17.1 10.9-48.3 32-4.6 3.1-8.7 4.6-12.3 4.5-4-.1-11.6-2.2-17.3-4-7-2.3-12.6-3.5-12.1-7.4.3-2.1 3.2-4.2 8.8-6.4 34.5-15 57.6-24.9 68.8-29.6 32.8-13.6 39.6-16 44-16.1 1 .0 3.2.2 4.7 1.4 1.2 1 1.6 2.4 1.7 3.5 0 1 .2 3.2.1 4.9z"/>
-            </svg>
-            Напишите в Telegram
-        </a>
+    <div class="mobile tablet hidden mobile-menu" id="mobile-menu">
+        <div class="tablet mobile-menu-shadow"></div>
+        <div class="mobile-menu-inner">
+            <a class="logo" href="#top">Aлександр&nbsp;Китаев</a>
+            <a class="menu-button">&times;</a>
 
-        <!-- WhatsApp -->
-        <a
-                href="https://wa.me/420606112191"
-                target="_blank" rel="noopener"
-                aria-label="Contact on WhatsApp"
-                style="display:inline-flex;align-items:center;gap:8px;
-           padding:10px 14px;border-radius:999px;
-           background:#25D366;color:#111;text-decoration:none;
-           font:600 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-           box-shadow:0 4px 10px rgba(37,211,102,.25);"
-        >
-            <svg width="18" height="18" viewBox="0 0 32 32" aria-hidden="true">
-                <path fill="#111" d="M19.1 17.2c-.3-.2-1.7-.8-2-.9s-.5-.1-.8.1-.9 1-.9 1-.3.4-.7.3-1.4-.5-2.6-1.6c-1-1-1.6-2.2-1.8-2.6s0-.6.2-.8l.6-.7c.2-.2.2-.4.3-.6s.1-.4 0-.6c-.1-.2-.8-2.1-1.1-2.8-.3-.8-.6-.7-.8-.7h-.7s-.6.1-.9.4c-.4.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.2 2.6 4.1 6.4 5.6.9.4 1.7.6 2.3.8 1 .3 2 .2 2.8.1.9-.1 1.7-.8 1.9-1.6.2-.8.2-1.5.1-1.7-.1-.1-.3-.2-.6-.4z"/>
-                <path fill="#25D366" d="M27.6 4.4A14.9 14.9 0 0 0 2.2 22.1L1 31l9-1.9A14.9 14.9 0 1 0 27.6 4.4zm-4.2 19.8c-.5 1.5-2.5 2.1-4 2.1-1.1 0-2.5-.2-4.1-.8-7.2-3-8.6-8.5-8.6-8.5S6 12 6 10.6 6.6 8 7.1 7.5s1.1-1 1.6-1h1.2c.4 0 .9.1 1.3 1.1.5 1 .9 2.4 1 2.6.1.2.2.6 0 1-.2.4-.3.6-.7 1s-.6.5-.3 1.1c.3.6 1.3 2.2 2.8 3.5 1.9 1.7 3.4 2.3 4 2.6.6.2 1 .2 1.3-.1s.9-1.1 1.1-1.5c.2-.4.5-.4.9-.2s2.3 1.1 2.7 1.3.6.3.7.5c.1.3.1 1.4-.4 2.9z"/>
-            </svg>
-            Напишите в WhatsApp
-        </a>
+            <nav class="menu-items">
+                <a class="menu-item" href="#about">Обо мне</a>
+                <a class="menu-item" href="#inquiry">Зачем терапия вам</a>
+                <a class="menu-item" href="#process">Как это работает</a>
+                <a class="menu-item" href="#solution">Что мы будем делать</a>
+                <a class="menu-item" href="#conditions">Условия и цена</a>
+
+                <a class="mobile menu-item game" target="_blank" rel="noopener" href="https://kitayev.online/life">
+                    <span>И</span>
+                    <span>Г</span>
+                    <span>Р</span>
+                    <span>А</span>
+                </a>
+            </nav>
+
+            <div class="btn-group">
+                <a class="btn btn-text btn-primary" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><span>Задать вопрос / записаться</span></a>
+                <a class="btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><img width="40" height="40" src="images/whatsapp.svg" alt="WhatsApp"/></a>
+                <a class="btn" target="_blank" rel="noopener" href="https://t.me/kitajev" title="Напишите в Telegram"><img
+                        width="40" height="40" src="images/telegram.svg" alt="Telegram"/></a>
+            </div>
+        </div>
     </div>
 </header>
 
-<section>
-
-    <h2 data-icon="🌱">Что я предлагаю</h2>
-    <p>Индивидуальные консультации и терапия для взрослых обнаруживших себя в трудном положении.</p>
-    <p>С чем я могу вам помочь:</p>
-    <ul>
-        <li>Подавленное состояние, потеря интереса к жизни</li>
-        <li>Сложности с общением, публичной деятельностью</li>
-        <li>Тревога, панические атаки, проблемы со сном</li>
-        <li>Неудовлетворенность отношениями или их отсутствием</li>
-        <li>Кризис смысла, утраты, трудность завершить начатое</li>
-    </ul>
-    <p>Это примеры для ориентировки. Приходите на консультацию с тем, что беспокоит вас.</p>
-    <p>Я работаю на русском и английском языках.</p>
-    <h2 data-icon="📋">Условия</h2>
-    <ul>
-        <li>Длительность консультации - 50 минут</li>
-        <li>Стоимость - 2000 CZK или 80 EUR или 7500 RUB или 160 AZN</li>
-        <li>Онлайн в zoom или очно в кабинете по адресу <a href="https://www.google.com/maps?q=Žitná+49+Praha" target="_blank" rel="noopener">Žitná 49, Praha 1</a></li>
-    </ul>
-    <h2 data-icon="💬">Обо мне</h2>
-    <p>
-        Я психолог, гештальт-терапевт. Я люблю свою работу.
-    </p>
-    <p>
-        Веду частную практику с 2018 года. Нахожусь в личной терапии (1000+ часов).
-        Получаю регулярную индивидуальную и групповую супервизию.
-    </p>
-    <p>Моё образование:</p>
-    <ul>
-        <li>Санкт-Петербургский Институт Гештальта - программа профессиональной переквалификации</li>
-        <li>Санкт-Петербургский Институт Гештальта - первая и вторая ступени подготовки гештальт-терапевтов по программе EAGT</li>
-        <li>Итальянский Институт Гештальта - двухлетняя программа повышения квалификации под руководством Маргариты Спаньолло Лобб</li>
-        <li>Итальянский Институт Гештальта - специализация по работе в полевой парадигме</li>
-        <li>Международный Институт Гештальта - специализация по ведению групп</li>
-        <li>Московский Гештальт Институт - летние обучающие интенсивы с 2016 года</li>
-    </ul>
-    <h2 data-icon="📅">Записаться</h2>
-
-    <div class="contact-buttons" style="display:flex;gap:12px;flex-wrap:wrap;justify-content: center">
-        <!-- Telegram -->
-        <a
-                href="https://t.me/kitajev"
-                target="_blank" rel="noopener"
-                aria-label="Contact on Telegram"
-                style="display:inline-flex;align-items:center;gap:8px;
-           padding:10px 14px;border-radius:999px;
-           background:#229ED9;color:#fff;text-decoration:none;
-           font:500 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-           box-shadow:0 4px 10px rgba(34,158,217,.25);"
-        >
-            <svg width="18" height="18" viewBox="0 0 240 240" aria-hidden="true">
-                <path fill="#fff" d="M120 0a120 120 0 1 0 0 240 120 120 0 0 0 0-240zm52.6 79.2c-3 32-16 109-20.3 129.4-1.6 7.1-5.8 9.4-9.6 9.7-8.2.6-14.5-5.4-22.6-10.6-12.6-8.3-19.7-13.4-32-21.5-14.2-9.3-5-14.3 3.1-22.6 2.1-2.2 39-35.8 39.7-38.9.1-.3.2-1.2-.5-1.8-.7-.6-1.7-.4-2.4-.2-1 .2-17.1 10.9-48.3 32-4.6 3.1-8.7 4.6-12.3 4.5-4-.1-11.6-2.2-17.3-4-7-2.3-12.6-3.5-12.1-7.4.3-2.1 3.2-4.2 8.8-6.4 34.5-15 57.6-24.9 68.8-29.6 32.8-13.6 39.6-16 44-16.1 1 .0 3.2.2 4.7 1.4 1.2 1 1.6 2.4 1.7 3.5 0 1 .2 3.2.1 4.9z"/>
-            </svg>
-            Напишите в Telegram
-        </a>
-
-        <!-- WhatsApp -->
-        <a
-                href="https://wa.me/420606112191"
-                target="_blank" rel="noopener"
-                aria-label="Contact on WhatsApp"
-                style="display:inline-flex;align-items:center;gap:8px;
-           padding:10px 14px;border-radius:999px;
-           background:#25D366;color:#111;text-decoration:none;
-           font:600 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-           box-shadow:0 4px 10px rgba(37,211,102,.25);"
-        >
-            <svg width="18" height="18" viewBox="0 0 32 32" aria-hidden="true">
-                <path fill="#111" d="M19.1 17.2c-.3-.2-1.7-.8-2-.9s-.5-.1-.8.1-.9 1-.9 1-.3.4-.7.3-1.4-.5-2.6-1.6c-1-1-1.6-2.2-1.8-2.6s0-.6.2-.8l.6-.7c.2-.2.2-.4.3-.6s.1-.4 0-.6c-.1-.2-.8-2.1-1.1-2.8-.3-.8-.6-.7-.8-.7h-.7s-.6.1-.9.4c-.4.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.2 2.6 4.1 6.4 5.6.9.4 1.7.6 2.3.8 1 .3 2 .2 2.8.1.9-.1 1.7-.8 1.9-1.6.2-.8.2-1.5.1-1.7-.1-.1-.3-.2-.6-.4z"/>
-                <path fill="#25D366" d="M27.6 4.4A14.9 14.9 0 0 0 2.2 22.1L1 31l9-1.9A14.9 14.9 0 1 0 27.6 4.4zm-4.2 19.8c-.5 1.5-2.5 2.1-4 2.1-1.1 0-2.5-.2-4.1-.8-7.2-3-8.6-8.5-8.6-8.5S6 12 6 10.6 6.6 8 7.1 7.5s1.1-1 1.6-1h1.2c.4 0 .9.1 1.3 1.1.5 1 .9 2.4 1 2.6.1.2.2.6 0 1-.2.4-.3.6-.7 1s-.6.5-.3 1.1c.3.6 1.3 2.2 2.8 3.5 1.9 1.7 3.4 2.3 4 2.6.6.2 1 .2 1.3-.1s.9-1.1 1.1-1.5c.2-.4.5-.4.9-.2s2.3 1.1 2.7 1.3.6.3.7.5c.1.3.1 1.4-.4 2.9z"/>
-            </svg>
-            Напишите в WhatsApp
-        </a>
+<section class="about-container">
+    <div class="about">
+        <div class="header">
+            <span>Индивидуальные консультации и терапия</span>
+            <span><span>для взрослых, </span><span class="highlight">обнаруживших себя</span></span>
+            <span class="highlight">в трудном положении</span>
+            <div class="about-image">
+                <img src="images/kitayev.jpg" alt="Александр Китаев"/>
+            </div>
+        </div>
+        <div id="about" class="description-header">
+            <span>Меня зовут Александр Китаев.</span>
+            <span>Я психолог, гештальт-терапевт.</span>
+            <div class="education hidden" id="education">
+                <div class="education-inner">
+                    <div class="page-header">Моё образование</div>
+                    <a class="close education-toggle">&times;</a>
+                    <div class="bullets">
+                        <div class="bullet"><b>2017-2020</b> Санкт-Петербургский Институт Гештальта - программа
+                            профессиональной переквалификации
+                        </div>
+                        <div class="bullet"><b>2017-2020</b> Санкт-Петербургский Институт Гештальта - <b>первая и вторая
+                            ступени подготовки гештальт-терапевтов</b> по программе EAGT
+                        </div>
+                        <div class="bullet"><b>2017-2023</b> Московский Гештальт Институт - летние обучающие интенсивы</div>
+                        <div class="bullet"><b>2023-2025</b> Итальянский Институт Гештальта - <b>двухлетняя программа
+                            повышения квалификации</b> под руководством Маргариты Спаньолло Лобб
+                        </div>
+                        <div class="bullet"><b>2023</b> Итальянский Институт Гештальта - <b>специализация по работе в
+                            полевой парадигме</b></div>
+                        <div class="bullet"><b>2024-2025</b> Международный Институт Гештальта - <b>специализация по ведению
+                            групп</b></div>
+                        <div class="bullet"><b>2025</b> Курс <b>глубинная работе с нарциссической травмой</b> под
+                            руководством Константина Логинова
+                        </div>
+                        <div class="bullet"><b>2026</b> Курс <b>Доула Смерти</b> - сопровождение умирающих и горюющих людей
+                        </div>
+                    </div>
+                    <div class="text">
+                        <div>Психолог - моя вторая профессия, по первому образованию я программист.</div>
+                        <div>Я люблю свою работу и постоянно учусь новому.</div>
+                    </div>
+                    <div class="mobile back btn btn-primary btn-text education-toggle">Вернуться на сайт</div>
+                </div>
+            </div>
+        </div>
+        <div class="description-text">
+            Терапия это процесс, который помогает людям вновь оказаться в&nbsp;ладу с собой и миром и жить хорошую
+            жизнь.
+            Приходите на консультацию с тем, что беспокоит вас. Приносите то, что болит.
+        </div>
+        <div class="description-buttons btn-group">
+            <a class="desktop btn btn-text btn-primary" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+               title="Напишите на WhatsApp"><span>Задать вопрос или записаться</span></a>
+            <a class="mobile tablet btn btn-text btn-primary" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+               title="Напишите на WhatsApp"><span>Задать вопрос / записаться</span></a>
+            <a class="desktop tablet btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+               title="Напишите на WhatsApp"><img width="40" height="40" src="images/whatsapp.svg" alt="WhatsApp"/></a>
+            <a class="mobile btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+               title="Напишите на WhatsApp"><img width="40" height="40" src="images/whatsapp-w.svg" alt="WhatsApp"/></a>
+            <a class="desktop tablet btn" target="_blank" rel="noopener" href="https://t.me/kitajev" title="Напишите в Telegram"><img
+                    width="40" height="40" src="images/telegram.svg" alt="Telegram"/></a>
+            <a class="mobile btn" target="_blank" rel="noopener" href="https://t.me/kitajev" title="Напишите в Telegram"><img
+                    width="40" height="40" src="images/telegram-w.svg" alt="Telegram"/></a>
+        </div>
+        <div class="description-bullets">
+            <div class="desktop tablet education-btn education-toggle">Моё образование</div>
+            <div class="desktop">Принимаю клиентов онлайн или лично в центре Праги</div>
+            <div class="desktop">Работаю на русском и английском</div>
+            <div class="mobile tablet">онлайн и лично в центре Праги</div>
+            <div class="mobile tablet">на русском и английском</div>
+        </div>
     </div>
-    <div style="width:100%;display: inline-flex; justify-content: center">
-    <p>Я отвечу вам в самое ближайшее время.</p>
-    </div>
-
 </section>
 
-<footer>
-    <p>&copy; 2025 Александр Китаев – Психолог, Гештальт-терапевт | Прага и онлайн</p>
-</footer>
+<section class="inquiry-container">
+    <div class="inquiry">
+        <div class="inquiry-bullets">
+            <div class="inquiry-bullet">
+                <img src="images/bullet1.svg" alt=""/>
+                <div>
+                    <div>Веду частную</div>
+                    <div>практику с 2018 года</div>
+                </div>
+            </div>
+            <div class="inquiry-bullet">
+                <img src="images/bullet2.svg" alt=""/>
+                <div>
+                    <div>Моя работа проходит</div>
+                    <div>регулярную супервизию</div>
+                </div>
+            </div>
+            <div class="inquiry-bullet">
+                <img src="images/bullet3.svg" alt=""/>
+                <div>
+                    <div>Следую этическому</div>
+                    <div>кодексу EAGT</div>
+                </div>
+            </div>
+            <div class="inquiry-bullet">
+                <img src="images/bullet4.svg" alt=""/>
+                <div>
+                    <div>LGBT+</div>
+                    <div>Friendly</div>
+                </div>
+            </div>
+            <div class="mobile btn btn-text btn-primary education-toggle">Моё образование</div>
+        </div>
+
+        <div id="inquiry" class="inquiry-page-header">
+            <img width="26" height="26" src="images/header1.svg" alt=""/>
+            <div>Зачем терапия вам</div>
+        </div>
+        <div class="inquiry-header">
+            <div>В моей практике <span class="highlight">я пока ещё не встречал человека,</span></div>
+            <div>который бы пришёл на консультацию из любопытства</div>
+        </div>
+
+        <div class="inquiry-text">
+            <p>
+                Терапия это процесс, который помогает вам добраться из точки А в точку Б.
+
+                Точка А - ваше состояние сейчас. В котором трудно быть в ладу с собой, с другими и миром.
+                Точка Б - ваша способность жить достаточно хорошую жизнь. Жизнь, которой вы даёте своё согласие.
+            </p>
+            <p>
+                Терапия начинается с вашего решения отправиться в этот путь.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="troubles-container">
+    <div class="troubles">
+        <div class="header">
+            С чем я могу вам помочь
+        </div>
+        <div class="trouble-bullets">
+            <div class="trouble-bullet">Тревога, панические атаки</div>
+            <div class="trouble-bullet">Неудовлетворённость отношениями</div>
+            <div class="trouble-bullet">Подавленное состояние</div>
+            <div class="trouble-bullet">Навязчивые мысли</div>
+            <div class="trouble-bullet">Трудности со сном</div>
+        </div>
+        <div class="trouble-buttons">
+            <div class="description">Это примеры для ориентировки. Приходите с тем, что беспокоит вас.</div>
+            <div class="btn-group">
+                <a class="btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><img width="40" height="40" src="images/whatsapp-w.svg" alt="WhatsApp"/></a>
+                <a class="btn" target="_blank" rel="noopener" href="https://t.me/kitajev"
+                   title="Напишите в Telegram"><img width="40" height="40" src="images/telegram-w.svg" alt="Telegram"/></a>
+                <a class="desktop btn btn-text btn-light" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><span>Задать вопрос или записаться</span></a>
+                <a class="mobile tablet btn btn-text btn-light" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><span>Задать вопрос / записаться</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="process" class="process-container">
+    <div class="process">
+        <div class="page-header">
+            <img width="26" height="26" src="images/header2.svg" alt=""/>
+            <div>Что мы будем делать</div>
+        </div>
+        <div class="header">
+            <span>Я работаю с людьми</span>
+            <span class="highlight">в Гештальт-подходе</span>
+        </div>
+        <div class="text">
+            <p>
+                Если вы человек от психологии далёкий, то это вам мало что скажет.
+                Терапевтическая встреча с психологом называется сессия –
+                от латинского слова сидеть. Мы с вами садимся друг напротив друга
+                и разговариваем. Иногда молчим.
+            </p>
+            <p>
+                В это трудно поверить, но, при определённых условиях, разговор становится
+                исцеляющим, облегчающим боль и способствующим глубоким изменениям.
+                Эти определённые условия мы, психологи, ещё называем терапевтическими
+                отношениями.
+            </p>
+            <p>
+                Моя задача – эти условия вместе с вами создать и поддерживать.
+                Ваша – регулярно приходить на сессии.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="solution" class="solution-container">
+    <div class="solution">
+        <div class="page-header">
+            <img width="26" height="26" src="images/header3.svg" alt=""/>
+            <div>С чего мы начнём</div>
+        </div>
+        <div class="header">
+            <span>К психологу вы</span>
+            <span>приходите с запросом</span>
+        </div>
+        <div class="text">
+            <p>
+                Запрос может быть как очень ясным, например <i>хочу избавиться от тревоги</i>,
+                так и совсем неясным, например - <i>я не знаю чего хочу</i>.
+            </p>
+            <p>
+                В терапии мы исследуем ваш запрос: неясный делаем яснее, а очень ясный
+                немного приглушаем, чтобы разглядеть контекст. В результате нашего
+                сотрудничества ваш запрос или то, что из него получилось, оказывается
+                решённым.
+            </p>
+            <p>
+                Как и в любых душевных делах я не могу вам гарантировать результат.
+                Но я обещаю, что применю все свои навыки и сделаю всё от меня
+                зависящее для того, чтобы вы получили то, для чего пришли на терапию.
+            </p>
+            <p>
+                Если я пойму, что вас запрос вне моей компетенции, то сразу вам об этом скажу.
+            </p>
+        </div>
+        <div class="image">
+            <img src="images/kitayev2.jpg" alt="Александр Китаев"/>
+        </div>
+        <div class="header-wide">
+            <div>Моя работа – заботиться о том, чтобы мы</div>
+            <div>построили отношения, в которых <span class="highlight">возможно</span></div>
+            <div class="highlight">исцелить раны, полученные в других отношениях</div>
+        </div>
+    </div>
+</section>
+
+<section id="conditions" class="conditions-container">
+    <div class="conditions">
+        <div class="page-header">
+            <img width="26" height="26" src="images/header4.svg" alt=""/>
+            <div>Условия терапии</div>
+        </div>
+        <div class="price-header">
+            Стоимость консультации
+            <div class="price-value">
+                <div class="prices-list">2000 CZK | 80 EUR | 8000 RUB | 160 AZN</div>
+                <div>Стоимость фиксируется на год</div>
+            </div>
+        </div>
+        <div class="conditions-bullets">
+            <div class="conditions-bullet">Длительность консультации 50 минут</div>
+            <div class="conditions-bullet">Онлайн в Zoom или очно в кабинете <wbr/>по адресу Žitná 49, Praha 1</div>
+            <div class="conditions-bullet">Русский или английский язык</div>
+            <div class="conditions-bullet">Оплата заранее</div>
+        </div>
+        <div class="buttons">
+            <div class="btn-group">
+                <a class="desktop btn btn-text btn-light" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><span>Задать вопрос или записаться</span></a>
+                <a class="mobile tablet btn btn-text btn-light" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><span>Задать вопрос / записаться</span></a>
+                <a class="btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+                   title="Напишите на WhatsApp"><img width="40" height="40" src="images/whatsapp-w.svg" alt="WhatsApp"/></a>
+                <a class="btn" target="_blank" rel="noopener" href="https://t.me/kitajev"
+                   title="Напишите в Telegram"><img width="40" height="40" src="images/telegram-w.svg" alt="Telegram"/></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="footer" class="footer-container">
+    <div class="footer">
+        <a class="logo" href="#top">Aлександр&nbsp;Китаев</a>
+        <nav class="menu-items">
+            <a class="menu-item" href="#about">Обо мне</a>
+            <a class="menu-item" href="#inquiry">Зачем терапия вам</a>
+            <a class="menu-item" href="#process">Как это работает</a>
+            <a class="menu-item" href="#solution">Что мы будем делать</a>
+            <a class="menu-item" href="#conditions">Условия и цена</a>
+        </nav>
+    </div>
+</section>
+
+<script>
+    function toggleEducation(e) {
+        e.stopPropagation();
+        document.getElementById("education").classList.toggle("hidden");
+    }
+
+    function toggleMenu(e) {
+        e.stopPropagation();
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+    }
+
+    document.querySelectorAll('.education-toggle').forEach(el => {
+        el.addEventListener('click', e => toggleEducation(e));
+    });
+    document.querySelectorAll('.menu-button').forEach(el => {
+        el.addEventListener('click', e => toggleMenu(e));
+    });
+
+    document.querySelector('body').addEventListener('click', (e) => {
+        const popup = e.target.closest('.education');
+        const isShown = !document.getElementById("education").classList.contains("hidden");
+        if (!popup && isShown) {
+            toggleEducation(e);
+        }
+    });
+
+    document.querySelectorAll('.mobile-menu nav a').forEach(el => el.addEventListener('click', (e) => {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+        return true;
+    }));
+
+    document.querySelectorAll('.mobile-menu .logo').forEach(el => el.addEventListener('click', (e) => {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+        return true;
+    }));
+    document.querySelectorAll('.mobile-menu-shadow').forEach(el => el.addEventListener('click', (e) => {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+        return true;
+    }));
+
+    document.querySelector('body').addEventListener('keydown', (e) => {
+        const isEducationShown = !document.getElementById("education").classList.contains("hidden");
+        const isMenuShown = !document.getElementById("mobile-menu").classList.contains("hidden");
+        if (isEducationShown && e.key === 'Escape') {
+            toggleEducation(e);
+        }
+        if (isMenuShown && e.key === 'Escape') {
+            toggleMenu(e);
+        }
+    });
+</script>
 
 </body>
 </html>
