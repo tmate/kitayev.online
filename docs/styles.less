@@ -18,6 +18,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .hidden {
@@ -100,6 +102,77 @@
   text-decoration: underline;
   text-underline-offset: 8px;
   text-decoration-thickness: 1px;
+}
+
+/* term popup trigger — styled after Meduza.io footnote links */
+.term {
+  background: #f8f8f8;
+  border-radius: 4px;
+  box-shadow: inset 1px 0 #b3b3b3, inset 0 1px #b3b3b3, inset -1px 0 #b3b3b3, inset 0 -1px #b3b3b3;
+  cursor: pointer;
+  padding: 0 4px;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+/* term popup overlay — shown only on mobile via media query */
+.term-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgb(0 0 0 / 50%);
+  z-index: 199;
+}
+
+/* term popup card */
+.term-popup {
+  position: fixed;
+  z-index: 200;
+  background-color: @color-white;
+  color: @color-black;
+  border: 1px solid @color-gray;
+  padding: 14px 18px 16px;
+  max-width: 320px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: var(--caret-left, 50%);
+    transform: ~"translateX(-50%)";
+    border: 9px solid transparent;
+    pointer-events: none;
+  }
+
+  &.arrow-up {
+    &::before {
+      bottom: 100%;
+      border-bottom-color: @color-gray;
+    }
+    &::after {
+      bottom: calc(100% - 1px);
+      border-bottom-color: @color-white;
+    }
+  }
+
+  &.arrow-down {
+    &::before {
+      top: 100%;
+      border-top-color: @color-gray;
+    }
+    &::after {
+      top: calc(100% - 1px);
+      border-top-color: @color-white;
+    }
+  }
+
+  .term-popup-title {
+    .make-h3(10px);
+  }
+
+  .term-popup-body {
+    .make-p(13px);
+    margin-top: 8px;
+  }
 }
 
 /* desktop */
@@ -480,7 +553,7 @@
         img {
           max-width: 220px;
           max-height: 280px;
-          transform: rotateY(180deg);
+          transform: ~"rotateY(180deg)";
         }
       }
     }
@@ -579,6 +652,9 @@
       }
     }
   }
+  .term-overlay { display: none !important; }
+  .term { padding-bottom: 1px; }
+
   .therapy-hero-container {
     background-color: @color-beige;
 
@@ -657,6 +733,8 @@
 @media screen and (768px <= width < 1440px) {
   .mobile:not(.tablet)  { display: none !important; }
   .desktop:not(.tablet) { display: none !important; }
+  .term-overlay { display: none !important; }
+  .term { padding-bottom: 1px; }
 
   .grid {
     margin: 0 auto;
@@ -1123,7 +1201,7 @@
           margin: auto auto;
           max-width: 150px;
           max-height: 190px;
-          transform: rotateY(180deg);
+          transform: ~"rotateY(180deg)";
         }
       }
     }
@@ -1300,6 +1378,17 @@
 @media screen and (width < 768px) {
   .desktop:not(.mobile) { display: none !important; }
   .tablet:not(.mobile)  { display: none !important; }
+  .term-popup {
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    height: auto;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 20px 24px 36px;
+    &::before, &::after { display: none; }
+  }
   .grid {
     margin: 0 auto;
     padding: 16px 10px;
@@ -1778,7 +1867,7 @@
         img {
           max-width: 220px;
           max-height: 280px;
-          transform: rotateY(180deg);
+          transform: ~"rotateY(180deg)";
         }
       }
     }
