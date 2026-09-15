@@ -210,12 +210,21 @@
         photoOverlay.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:299;';
         document.body.appendChild(photoOverlay);
 
+        var scrollCloseEnabled = false;
+
+        function onScroll() { if (scrollCloseEnabled) closePhoto(); }
+
         function openPhoto() {
+            scrollCloseEnabled = false;
             heroPhoto.classList.add('photo-fullscreen');
             photoOverlay.style.display = 'block';
+            // scroll slightly to trigger browser chrome hiding
+            window.scrollTo({ top: window.scrollY + 1, behavior: 'instant' });
+            setTimeout(function () { scrollCloseEnabled = true; }, 400);
         }
 
         function closePhoto() {
+            scrollCloseEnabled = false;
             heroPhoto.classList.remove('photo-fullscreen');
             photoOverlay.style.display = 'none';
         }
@@ -231,7 +240,7 @@
 
         photoOverlay.addEventListener('click', closePhoto);
 
-        window.addEventListener('scroll', closePhoto, { passive: true });
+        window.addEventListener('scroll', onScroll, { passive: true });
         document.addEventListener('term-popup-show', closePhoto);
     }
 </script>
