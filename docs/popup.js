@@ -1,11 +1,11 @@
 (function () {
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:199;';
+  overlay.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:399;';
   document.body.appendChild(overlay);
 
   const popup = document.createElement('div');
   popup.className = 'term-popup hidden';
-  popup.innerHTML = '<div class="term-popup-title"></div><div class="term-popup-body"></div>';
+  popup.innerHTML = '<span class="term-popup-close">&times;</span><div class="term-popup-title"></div><div class="term-popup-body"></div>';
   document.body.appendChild(popup);
 
   let active = null;
@@ -17,6 +17,7 @@
   function show(term) {
     if (active === term) { hide(); return; }
     active = term;
+    document.dispatchEvent(new CustomEvent('term-popup-show'));
     popup.querySelector('.term-popup-title').textContent = term.dataset.title || '';
     popup.querySelector('.term-popup-body').textContent = term.dataset.text || '';
     popup.classList.remove('hidden');
@@ -74,6 +75,11 @@
     popup.style.setProperty('--caret-left', caretLeft + 'px');
     popup.classList.add(arrowClass);
   }
+
+  popup.querySelector('.term-popup-close').addEventListener('click', function (e) {
+    e.stopPropagation();
+    hide();
+  });
 
   document.addEventListener('click', function (e) {
     const term = e.target.closest('.term');

@@ -73,6 +73,16 @@
         <div class="header">Что такое терапия</div>
         <div class="mobile therapy-hero-photo">
             <img src="photo3.jpg" alt="Александр Китаев"/>
+            <span class="photo-popup-close">&times;</span>
+            <div class="therapy-hero-photo-caption">
+                Меня зовут Александр Китаев и это моя страничка о
+                <span class="term" data-title="Терапия" data-text="Психологическая работа, в которой изменение состояния человека происходит через особые терапевтические отношения между клиентом и специалистом.">терапии</span>
+                — о том, чем я с любовью и неугасающим интересом занимаюсь с 2020 года.
+                Буду рад принять вас
+                <span class="term" data-title="Онлайн" data-text="Встречи проходят в Zoom или другом удобном вам видеосервисе. Нужны надёжный интернет и уединённое место, где вас никто не побеспокоит.">онлайн</span>
+                или в
+                <span class="term" data-title="Кабинет в Праге" data-text="Очные встречи в центре Праги. Точный адрес сообщу при записи.">кабинете в центре Праги</span>.
+            </div>
         </div>
     </div>
 </section>
@@ -212,13 +222,19 @@
             photoOverlay.style.display = 'none';
         }
 
-        heroPhoto.addEventListener('click', function () {
-            heroPhoto.classList.contains('photo-fullscreen') ? closePhoto() : openPhoto();
+        heroPhoto.addEventListener('click', function (e) {
+            if (!heroPhoto.classList.contains('photo-fullscreen')) openPhoto();
+        });
+
+        heroPhoto.querySelector('.photo-popup-close').addEventListener('click', function (e) {
+            e.stopPropagation();
+            closePhoto();
         });
 
         photoOverlay.addEventListener('click', closePhoto);
 
         window.addEventListener('scroll', closePhoto, { passive: true });
+        document.addEventListener('term-popup-show', closePhoto);
     }
 </script>
 <script>
