@@ -74,7 +74,6 @@
         <div class="header">Что такое терапия</div>
         <div class="mobile therapy-hero-photo">
             <img src="photo3.jpg" alt="Александр Китаев"/>
-            <span class="photo-popup-close">&times;</span>
             <div class="therapy-hero-photo-caption">
                 Меня зовут Александр Китаев и это моя страничка о
                 <span class="term" data-title="Терапия" data-text="Психологическая работа, в которой изменение состояния человека происходит через особые терапевтические отношения между клиентом и специалистом.">терапии</span>
@@ -245,11 +244,6 @@
 
         heroPhoto.addEventListener('click', function (e) {
             if (!heroPhoto.classList.contains('photo-fullscreen')) openPhoto();
-        });
-
-        heroPhoto.querySelector('.photo-popup-close').addEventListener('click', function (e) {
-            e.stopPropagation();
-            closePhoto();
         });
 
         photoOverlay.addEventListener('click', closePhoto);

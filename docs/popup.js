@@ -5,7 +5,7 @@
 
   const popup = document.createElement('div');
   popup.className = 'term-popup hidden';
-  popup.innerHTML = '<span class="term-popup-close">&times;</span><div class="term-popup-title"></div><div class="term-popup-body"></div>';
+  popup.innerHTML = '<div class="term-popup-title"></div><div class="term-popup-body"></div>';
   document.body.appendChild(popup);
 
   let active = null;
@@ -75,11 +75,6 @@
     popup.style.setProperty('--caret-left', caretLeft + 'px');
     popup.classList.add(arrowClass);
   }
-
-  popup.querySelector('.term-popup-close').addEventListener('click', function (e) {
-    e.stopPropagation();
-    hide();
-  });
 
   document.addEventListener('click', function (e) {
     const term = e.target.closest('.term');
