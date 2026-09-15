@@ -254,6 +254,9 @@
 
         var popupCaption = heroPhoto.querySelector('.therapy-hero-photo-caption').cloneNode(true);
         popupCaption.style.cssText = 'display:block;font-family:Inter,serif;font-size:14px;line-height:165%;padding:0 24px 20px;color:#000;';
+        popupCaption.querySelectorAll('.term').forEach(function(el) {
+            el.replaceWith(document.createTextNode(el.textContent));
+        });
 
         var popupEducation = document.createElement('div');
         popupEducation.style.cssText = 'font-family:Inter,serif;font-size:14px;line-height:165%;color:#000;padding:0 24px 48px;';
