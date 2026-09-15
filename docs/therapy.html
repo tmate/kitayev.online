@@ -221,11 +221,24 @@
     var heroPhoto = document.querySelector('.therapy-hero-photo');
     if (heroPhoto) {
         var photoPopup = document.createElement('div');
-        photoPopup.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;background:#fff;overflow-y:auto;';
+        photoPopup.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;background:#fff;';
+
+        var controlsBar = document.createElement('div');
+        controlsBar.style.cssText = 'position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:linear-gradient(to bottom,rgba(0,0,0,0.35),transparent);pointer-events:none;';
+
+        var backBtn = document.createElement('span');
+        backBtn.textContent = '\u2039 \u0412\u0435\u0440\u043d\u0443\u0442\u044c\u0441\u044f';
+        backBtn.style.cssText = 'font-size:15px;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);pointer-events:auto;';
 
         var closeBtn = document.createElement('span');
         closeBtn.textContent = '\u00d7';
-        closeBtn.style.cssText = 'position:absolute;top:14px;right:18px;font-size:28px;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);z-index:1;';
+        closeBtn.style.cssText = 'font-size:28px;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);pointer-events:auto;';
+
+        controlsBar.appendChild(backBtn);
+        controlsBar.appendChild(closeBtn);
+
+        var contentArea = document.createElement('div');
+        contentArea.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:auto;';
 
         var popupImg = heroPhoto.querySelector('img').cloneNode(true);
         popupImg.style.cssText = 'display:block;width:100%;height:auto;';
@@ -233,13 +246,15 @@
         var popupCaption = heroPhoto.querySelector('.therapy-hero-photo-caption').cloneNode(true);
         popupCaption.style.cssText = 'display:block;font-size:13px;line-height:1.6;padding:12px 24px 36px;color:#000;';
 
-        photoPopup.appendChild(closeBtn);
-        photoPopup.appendChild(popupImg);
-        photoPopup.appendChild(popupCaption);
+        contentArea.appendChild(popupImg);
+        contentArea.appendChild(popupCaption);
+        photoPopup.appendChild(controlsBar);
+        photoPopup.appendChild(contentArea);
         document.body.appendChild(photoPopup);
 
         function openPhoto() {
             photoPopup.style.display = 'block';
+            contentArea.scrollTop = 0;
             window.scrollTo({ top: window.scrollY + 1, behavior: 'instant' });
         }
 
@@ -248,6 +263,7 @@
         }
 
         heroPhoto.addEventListener('click', openPhoto);
+        backBtn.addEventListener('click', closePhoto);
         closeBtn.addEventListener('click', closePhoto);
 
         document.addEventListener('term-popup-show', closePhoto);
