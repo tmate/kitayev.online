@@ -227,7 +227,7 @@
         controlsBar.style.cssText = 'position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:linear-gradient(to bottom,rgba(0,0,0,0.35),transparent);pointer-events:none;';
 
         var backBtn = document.createElement('span');
-        backBtn.style.cssText = 'display:flex;align-items:center;gap:7px;font-family:InterBold,serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);pointer-events:auto;transition:color 0.15s,text-shadow 0.15s;';
+        backBtn.style.cssText = 'display:flex;align-items:center;gap:7px;font-family:InterBold,serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);pointer-events:auto;transition:background 0.15s,padding 0.15s,text-shadow 0.15s;';
         var backChevron = document.createElement('span');
         backChevron.style.cssText = 'display:inline-block;width:7px;height:7px;border-top:1.5px solid #fff;border-left:1.5px solid #fff;transform:rotate(-45deg);flex-shrink:0;margin-top:1px;transition:border-color 0.15s;';
         var backText = document.createElement('span');
@@ -237,7 +237,7 @@
 
         var closeBtn = document.createElement('span');
         closeBtn.textContent = '\u00d7';
-        closeBtn.style.cssText = 'font-size:28px;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);pointer-events:auto;transition:color 0.15s,text-shadow 0.15s;';
+        closeBtn.style.cssText = 'font-size:28px;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);pointer-events:auto;transition:background 0.15s,padding 0.15s,text-shadow 0.15s;';
 
         controlsBar.appendChild(backBtn);
         controlsBar.appendChild(closeBtn);
@@ -278,15 +278,19 @@
         document.body.appendChild(photoPopup);
 
         function setControlsTheme(dark) {
-            var color = dark ? '#000' : '#fff';
-            var shadow = dark ? 'none' : '0 1px 4px rgba(0,0,0,0.6)';
+            var pill = dark ? 'rgba(0,0,0,0.55)' : 'transparent';
+            var pillPadding = dark ? '5px 10px 5px 8px' : '0';
+            var closePadding = dark ? '3px 8px' : '0';
             controlsBar.style.background = dark ? 'transparent' : 'linear-gradient(to bottom,rgba(0,0,0,0.35),transparent)';
-            backBtn.style.color = color;
-            backBtn.style.textShadow = shadow;
-            backChevron.style.borderTopColor = color;
-            backChevron.style.borderLeftColor = color;
-            closeBtn.style.color = color;
-            closeBtn.style.textShadow = shadow;
+            backBtn.style.background = pill;
+            backBtn.style.borderRadius = '20px';
+            backBtn.style.padding = pillPadding;
+            backBtn.style.textShadow = dark ? 'none' : '0 1px 4px rgba(0,0,0,0.6)';
+            backChevron.style.filter = dark ? 'none' : 'drop-shadow(0 1px 3px rgba(0,0,0,0.5))';
+            closeBtn.style.background = pill;
+            closeBtn.style.borderRadius = '20px';
+            closeBtn.style.padding = closePadding;
+            closeBtn.style.textShadow = dark ? 'none' : '0 1px 4px rgba(0,0,0,0.6)';
         }
 
         contentArea.addEventListener('scroll', function() {
