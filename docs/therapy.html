@@ -255,11 +255,13 @@
         function openPhoto() {
             photoPopup.style.display = 'block';
             contentArea.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
             window.scrollTo({ top: window.scrollY + 1, behavior: 'instant' });
         }
 
         function closePhoto() {
             photoPopup.style.display = 'none';
+            document.body.style.overflow = '';
         }
 
         heroPhoto.addEventListener('click', openPhoto);
