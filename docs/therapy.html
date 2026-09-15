@@ -297,22 +297,30 @@
             setControlsTheme(contentArea.scrollTop + controlsBar.offsetHeight > popupImg.offsetHeight);
         }, { passive: true });
 
-        function openPhoto() {
+        function showPhoto() {
             photoPopup.style.display = 'block';
             contentArea.scrollTop = 0;
             setControlsTheme(false);
             document.body.style.overflow = 'hidden';
-            history.pushState({ photoPopup: true }, '');
             window.scrollTo({ top: window.scrollY + 1, behavior: 'instant' });
         }
 
-        function closePhoto() {
+        function hidePhoto() {
             photoPopup.style.display = 'none';
             document.body.style.overflow = '';
         }
 
-        window.addEventListener('popstate', function() {
-            if (photoPopup.style.display === 'block') closePhoto();
+        function openPhoto() {
+            showPhoto();
+            history.pushState({ photoPopup: true }, '');
+        }
+
+        window.addEventListener('popstate', function(e) {
+            if (e.state && e.state.photoPopup) {
+                showPhoto();
+            } else if (photoPopup.style.display === 'block') {
+                hidePhoto();
+            }
         });
 
         heroPhoto.addEventListener('click', openPhoto);
