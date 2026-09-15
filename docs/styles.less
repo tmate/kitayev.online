@@ -1408,17 +1408,33 @@
     border-right: none;
     border-bottom: none;
     padding: 20px 24px 36px;
-    &::after { display: none; }
     &::before {
       display: block;
       content: '';
       position: absolute;
-      top: -20px;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      width: auto;
+      height: 16px;
+      background-color: @color-white;
+      clip-path: ~"polygon(0% 0%, calc(50% - 20px) 0%, 50% 100%, calc(50% + 20px) 0%, 100% 0%, 100% 100%, 0% 100%)";
+      border: none;
+      transform: none;
+      pointer-events: none;
+    }
+    &::after {
+      display: block;
+      content: '';
+      position: absolute;
+      bottom: 100%;
       left: 50%;
+      margin-bottom: 9px;
       width: 12px;
       height: 12px;
-      border-right: 2px solid rgba(255,255,255,0.7);
-      border-bottom: 2px solid rgba(255,255,255,0.7);
+      border: none;
+      border-right: 2px solid rgba(255,255,255,0.85);
+      border-bottom: 2px solid rgba(255,255,255,0.85);
       transform: ~"translateX(-50%) rotate(45deg)";
       pointer-events: none;
     }
@@ -2019,29 +2035,30 @@
         }
 
         .therapy-hero-photo-caption { display: none; }
+        .photo-popup-close { display: none; }
 
         &.photo-fullscreen {
           position: fixed;
-          top: auto;
+          top: 0;
           bottom: 0;
           left: 0;
           right: 0;
           z-index: 300;
           background-color: @color-white;
           color: @color-black;
-          border-top: 1px solid @color-gray;
+          overflow-y: auto;
 
-          &::before {
-            content: '';
+          .photo-popup-close {
+            display: block;
             position: absolute;
-            top: -20px;
-            left: 50%;
-            width: 12px;
-            height: 12px;
-            border-right: 2px solid rgba(255,255,255,0.7);
-            border-bottom: 2px solid rgba(255,255,255,0.7);
-            transform: ~"translateX(-50%) rotate(45deg)";
-            pointer-events: none;
+            top: 14px;
+            right: 18px;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            color: #fff;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+            z-index: 1;
           }
 
           img {

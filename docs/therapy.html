@@ -74,6 +74,7 @@
         <div class="header">Что такое терапия</div>
         <div class="mobile therapy-hero-photo">
             <img src="photo3.jpg" alt="Александр Китаев"/>
+            <span class="photo-popup-close">&times;</span>
             <div class="therapy-hero-photo-caption">
                 Меня зовут Александр Китаев и это моя страничка о
                 <span class="term" data-title="Терапия" data-text="Психологическая работа, в которой изменение состояния человека происходит через особые терапевтические отношения между клиентом и специалистом.">терапии</span>
@@ -175,7 +176,7 @@
         <div class="footer-conditions">
             <div class="footer-condition">
                 <span class="footer-condition-label">Где</span>
-                <span>Онлайн в Zoom или в кабинете: Vodičkova&nbsp;41, palac LIGNA, Praha</span>
+                <span>Онлайн в Zoom или очно в кабинете: Vodičkova&nbsp;41, palac LIGNA, Praha</span>
             </div>
             <div class="footer-condition">
                 <span class="footer-condition-label">Цена за сессию</span>
@@ -219,36 +220,36 @@
 <script>
     var heroPhoto = document.querySelector('.therapy-hero-photo');
     if (heroPhoto) {
-        var photoOverlay = document.createElement('div');
-        photoOverlay.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:299;';
-        document.body.appendChild(photoOverlay);
+        var photoPopup = document.createElement('div');
+        photoPopup.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;background:#fff;overflow-y:auto;';
 
-        var scrollCloseEnabled = false;
+        var closeBtn = document.createElement('span');
+        closeBtn.textContent = '\u00d7';
+        closeBtn.style.cssText = 'position:absolute;top:14px;right:18px;font-size:28px;line-height:1;cursor:pointer;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);z-index:1;';
 
-        function onScroll() { if (scrollCloseEnabled) closePhoto(); }
+        var popupImg = heroPhoto.querySelector('img').cloneNode(true);
+        popupImg.style.cssText = 'display:block;width:100%;height:auto;';
+
+        var popupCaption = heroPhoto.querySelector('.therapy-hero-photo-caption').cloneNode(true);
+        popupCaption.style.cssText = 'display:block;font-size:13px;line-height:1.6;padding:12px 24px 36px;color:#000;';
+
+        photoPopup.appendChild(closeBtn);
+        photoPopup.appendChild(popupImg);
+        photoPopup.appendChild(popupCaption);
+        document.body.appendChild(photoPopup);
 
         function openPhoto() {
-            scrollCloseEnabled = false;
-            heroPhoto.classList.add('photo-fullscreen');
-            photoOverlay.style.display = 'block';
-            // scroll slightly to trigger browser chrome hiding
+            photoPopup.style.display = 'block';
             window.scrollTo({ top: window.scrollY + 1, behavior: 'instant' });
-            setTimeout(function () { scrollCloseEnabled = true; }, 400);
         }
 
         function closePhoto() {
-            scrollCloseEnabled = false;
-            heroPhoto.classList.remove('photo-fullscreen');
-            photoOverlay.style.display = 'none';
+            photoPopup.style.display = 'none';
         }
 
-        heroPhoto.addEventListener('click', function (e) {
-            if (!heroPhoto.classList.contains('photo-fullscreen')) openPhoto();
-        });
+        heroPhoto.addEventListener('click', openPhoto);
+        closeBtn.addEventListener('click', closePhoto);
 
-        photoOverlay.addEventListener('click', closePhoto);
-
-        window.addEventListener('scroll', onScroll, { passive: true });
         document.addEventListener('term-popup-show', closePhoto);
     }
 </script>
