@@ -101,7 +101,7 @@
         <div class="therapy-section">
             <div class="therapy-section-title">Я вам помогу</div>
 	    <div class="therapy-intro">
-	       <p>В процессе работы со мной ваше состояние
+	       <p>В процессе работы <span id="со-мной" class="term">со мной</span> ваше состояние
 	          изменится и в этом новом состоянии вы найдёте способ и силы изменить устройство
 		  вашей жизни так, чтобы сказать: <i>я живу достаточно хорошую жизнь</i>.</p>
 	       <p>Либо само ваше <i>не нравится</i> станет значительно выносимее, чем сейчас,
@@ -325,6 +325,8 @@
         document.querySelectorAll('.menu-container a.logo').forEach(function(el) {
             el.addEventListener('click', function(e) { e.preventDefault(); openPhoto(); });
         });
+        var soMnoy = document.getElementById('со-мной');
+        if (soMnoy) soMnoy.addEventListener('click', function(e) { e.stopPropagation(); openPhoto(); });
         backBtn.addEventListener('click', function() { history.back(); });
         closeBtn.addEventListener('click', function() { history.back(); });
 
