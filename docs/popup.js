@@ -19,7 +19,7 @@
     active = term;
     document.dispatchEvent(new CustomEvent('term-popup-show'));
     popup.querySelector('.term-popup-title').textContent = term.dataset.title || '';
-    popup.querySelector('.term-popup-body').textContent = term.dataset.text || '';
+    popup.querySelector('.term-popup-body').innerHTML = term.dataset.text || '';
     popup.classList.remove('hidden');
     if (!isMobile()) {
       place(term);
