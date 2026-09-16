@@ -322,6 +322,9 @@
         });
 
         heroPhoto.addEventListener('click', openPhoto);
+        document.querySelectorAll('.menu-container a.logo').forEach(function(el) {
+            el.addEventListener('click', function(e) { e.preventDefault(); openPhoto(); });
+        });
         backBtn.addEventListener('click', function() { history.back(); });
         closeBtn.addEventListener('click', function() { history.back(); });
 
