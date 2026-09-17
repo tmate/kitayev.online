@@ -33,6 +33,7 @@
             <a class="menu-item" href="/#conditions">Условия и цена</a>
         </nav>
         <a class="mobile header-cta" href="#footer">Контакты</a>
+        <a class="desktop header-about" href="#">Обо мне</a>
         <a class="tablet desktop header-cta" href="#footer">Контакты</a>
     </div>
 
@@ -395,6 +396,15 @@
     document.querySelectorAll('.mobile-menu .logo').forEach(el => el.addEventListener('click', () => {
         document.getElementById("mobile-menu").classList.toggle("hidden");
     }));
+
+    document.querySelectorAll('.header-about').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var soMnoyEl = document.getElementById('со-мной');
+            if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        });
+    });
 
     document.querySelectorAll('.header-cta[href="#footer"]').forEach(function(kontaktyLink) {
         kontaktyLink.addEventListener('click', function(e) {
