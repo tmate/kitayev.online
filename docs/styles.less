@@ -825,6 +825,13 @@
         cursor: pointer;
       }
 
+      .header-cta {
+        grid-column: 8 / span 1;
+        text-align: right;
+        text-decoration: none;
+        color: @color-black;
+      }
+
       .menu-items {
         grid-column: 5 / -1;
         display: flex;
@@ -1331,7 +1338,26 @@
 
       .header {
         .h1();
-        grid-column: 1 / -1;
+        grid-column: 1 / span 5;
+        align-self: center;
+      }
+
+      .therapy-hero-photo {
+        grid-column: 6 / -1;
+        align-self: center;
+        cursor: pointer;
+
+        img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 1;
+          object-fit: cover;
+          object-position: center 15%;
+          border-radius: 4px;
+        }
+
+        .therapy-hero-photo-caption { display: none; }
+        .photo-popup-close { display: none; }
       }
     }
   }

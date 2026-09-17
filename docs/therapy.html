@@ -33,7 +33,7 @@
             <a class="menu-item" href="/#conditions">Условия и цена</a>
         </nav>
         <a class="mobile header-cta" href="#footer">Контакты</a>
-        <nav class="tablet menu-button">Меню</nav>
+        <a class="tablet header-cta" href="#footer">Контакты</a>
     </div>
 
     <div class="mobile tablet hidden mobile-menu" id="mobile-menu">
@@ -72,7 +72,7 @@
 <section class="therapy-hero-container">
     <div class="therapy-hero">
         <div class="header">Что такое терапия</div>
-        <div class="mobile therapy-hero-photo">
+        <div class="mobile tablet therapy-hero-photo">
             <img src="photo3.jpg" alt="Александр Китаев"/>
             <span class="photo-popup-close">&times;</span>
             <div class="therapy-hero-photo-caption">
@@ -374,7 +374,7 @@
         document.getElementById("mobile-menu").classList.toggle("hidden");
     }));
 
-    var kontaktyLink = document.querySelector('.mobile.header-cta[href="#footer"]');
+    var kontaktyLink = document.querySelector('.header-cta[href="#footer"]');
     if (kontaktyLink) {
         kontaktyLink.addEventListener('click', function(e) {
             e.preventDefault();
