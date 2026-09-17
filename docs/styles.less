@@ -2087,14 +2087,21 @@
   .therapy-container {
     background-color: @color-white;
     color: @color-black;
+    padding-bottom: 40px;
 
     .therapy {
-      .grid();
-      padding-top: 40px;
-      padding-bottom: 40px;
+      display: contents;
+
+      > .therapy-intro {
+        padding: 40px 10px 0;
+      }
+
+      > .therapy-section {
+        margin-top: 20px;
+        padding: 0 10px;
+      }
 
       .therapy-intro {
-        grid-column: 1 / -1;
         .p();
 
         p { margin-bottom: 10px; }
@@ -2106,8 +2113,6 @@
       }
 
       .therapy-section {
-        grid-column: 1 / -1;
-
         .therapy-section-title {
           .h2();
           margin-bottom: 12px;
