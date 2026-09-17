@@ -374,6 +374,14 @@
         document.getElementById("mobile-menu").classList.toggle("hidden");
     }));
 
+    var kontaktyLink = document.querySelector('.mobile.header-cta[href="#footer"]');
+    if (kontaktyLink) {
+        kontaktyLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+    }
+
     document.querySelector('body').addEventListener('keydown', (e) => {
         const isMenuShown = !document.getElementById("mobile-menu").classList.contains("hidden");
         if (isMenuShown && e.key === 'Escape') {
