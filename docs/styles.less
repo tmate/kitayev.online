@@ -689,7 +689,25 @@
           flex-direction: column;
           gap: 10px;
 
-          .therapy-bullet { display: list-item; }
+          .therapy-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            &::before {
+              content: '';
+              flex-shrink: 0;
+              width: 10px;
+              height: 10px;
+              margin-top: 5px;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+            &:nth-child(4n+1)::before { background-image: url('images/bullet1.svg'); }
+            &:nth-child(4n+2)::before { background-image: url('images/bullet2.svg'); }
+            &:nth-child(4n+3)::before { background-image: url('images/bullet3.svg'); }
+            &:nth-child(4n+0)::before { background-image: url('images/bullet4.svg'); }
+          }
         }
       }
 
@@ -2131,7 +2149,25 @@
           flex-direction: column;
           gap: 8px;
 
-          .therapy-bullet { display: list-item; }
+          .therapy-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            &::before {
+              content: '';
+              flex-shrink: 0;
+              width: 12px;
+              height: 12px;
+              margin-top: 6px;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+            &:nth-child(4n+1)::before { background-image: url('images/bullet1.svg'); }
+            &:nth-child(4n+2)::before { background-image: url('images/bullet2.svg'); }
+            &:nth-child(4n+3)::before { background-image: url('images/bullet3.svg'); }
+            &:nth-child(4n+0)::before { background-image: url('images/bullet4.svg'); }
+          }
         }
 
         &.therapy-section--beige {
