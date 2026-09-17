@@ -33,7 +33,7 @@
             <a class="menu-item" href="/#conditions">Условия и цена</a>
         </nav>
         <a class="mobile header-cta" href="#footer">Контакты</a>
-        <a class="tablet header-cta" href="#footer">Контакты</a>
+        <a class="tablet desktop header-cta" href="#footer">Контакты</a>
     </div>
 
     <div class="mobile tablet hidden mobile-menu" id="mobile-menu">
@@ -354,7 +354,7 @@
             el.addEventListener('click', function(e) {
                 if (window.innerWidth < 768) {
                     e.preventDefault(); openPhoto();
-                } else if (window.innerWidth < 1440) {
+                } else {
                     e.preventDefault();
                     e.stopPropagation();
                     var soMnoyEl = document.getElementById('со-мной');
@@ -396,13 +396,12 @@
         document.getElementById("mobile-menu").classList.toggle("hidden");
     }));
 
-    var kontaktyLink = document.querySelector('.header-cta[href="#footer"]');
-    if (kontaktyLink) {
+    document.querySelectorAll('.header-cta[href="#footer"]').forEach(function(kontaktyLink) {
         kontaktyLink.addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('footer').scrollIntoView({ behavior: 'smooth', block: 'end' });
         });
-    }
+    });
 
     document.querySelector('body').addEventListener('keydown', (e) => {
         const isMenuShown = !document.getElementById("mobile-menu").classList.contains("hidden");
