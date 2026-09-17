@@ -1338,17 +1338,38 @@
 
       .header {
         .h1();
-        grid-column: 1 / -1;
+        grid-column: 1 / span 5;
+        align-self: center;
       }
 
       .therapy-hero-author {
         .h3();
-        grid-column: 1 / -1;
+        grid-column: 1 / span 5;
+      }
+
+      .therapy-hero-photo {
+        grid-column: 6 / -1;
+        grid-row: 1 / span 2;
+        align-self: center;
+        cursor: pointer;
+
+        img {
+          display: block;
+          width: 100%;
+          aspect-ratio: 1;
+          object-fit: cover;
+          object-position: center 15%;
+          border-radius: 4px;
+        }
+
+        .therapy-hero-photo-caption { display: none; }
+        .photo-popup-close { display: none; }
       }
     }
   }
 
   .term-popup {
+    max-width: 480px;
     max-height: 70vh;
     overflow-y: auto;
   }
