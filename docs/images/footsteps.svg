@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80">
+  <defs>
+    <!-- Right shoe sole: toes point right (+x), outer edge at +y -->
+    <path id="s" d="M-5,-1.5 C-7,-2 -7,2 -5,2 L-1,3.5 C2,4.5 5,4 6.5,2.5 Q7,1 6.5,-1.5 C5,-3.5 2,-3.5 -1,-2.5 Z"/>
+  </defs>
+  <g fill="#000" opacity="0.13">
+    <!-- Person A alone, center y=40. lf=translate(cx,cy)scale(1,-1), rf=translate(cx,cy) -->
+    <use href="#s" transform="translate(7,34) scale(1,-1)"/>
+    <use href="#s" transform="translate(21,46)"/>
+    <use href="#s" transform="translate(35,34) scale(1,-1)"/>
+    <use href="#s" transform="translate(49,46)"/>
+    <use href="#s" transform="translate(63,34) scale(1,-1)"/>
+    <use href="#s" transform="translate(77,46)"/>
+    <use href="#s" transform="translate(91,34) scale(1,-1)"/>
+
+    <!-- Person B approaching from below (converging onto the path) -->
+    <use href="#s" transform="translate(76,72)"/>
+    <use href="#s" transform="translate(89,61) scale(1,-1)"/>
+
+    <!-- Walking together: A center y=25 (lf y=19, rf y=31), B center y=55 (lf y=49, rf y=61) -->
+    <!-- At odd x: rf pair (outer feet). At even x: lf pair (inner feet) -->
+    <use href="#s" transform="translate(98,31)"/>
+    <use href="#s" transform="translate(98,61)"/>
+    <use href="#s" transform="translate(112,19) scale(1,-1)"/>
+    <use href="#s" transform="translate(112,49) scale(1,-1)"/>
+    <use href="#s" transform="translate(126,31)"/>
+    <use href="#s" transform="translate(126,61)"/>
+    <use href="#s" transform="translate(140,19) scale(1,-1)"/>
+    <use href="#s" transform="translate(140,49) scale(1,-1)"/>
+    <use href="#s" transform="translate(154,31)"/>
+    <use href="#s" transform="translate(154,61)"/>
+    <use href="#s" transform="translate(168,19) scale(1,-1)"/>
+    <use href="#s" transform="translate(168,49) scale(1,-1)"/>
+    <use href="#s" transform="translate(182,31)"/>
+    <use href="#s" transform="translate(182,61)"/>
+    <use href="#s" transform="translate(196,19) scale(1,-1)"/>
+    <use href="#s" transform="translate(196,49) scale(1,-1)"/>
+    <use href="#s" transform="translate(210,31)"/>
+    <use href="#s" transform="translate(210,61)"/>
+    <use href="#s" transform="translate(224,19) scale(1,-1)"/>
+    <use href="#s" transform="translate(224,49) scale(1,-1)"/>
+    <use href="#s" transform="translate(238,31)"/>
+    <use href="#s" transform="translate(238,61)"/>
+    <use href="#s" transform="translate(252,19) scale(1,-1)"/>
+    <use href="#s" transform="translate(252,49) scale(1,-1)"/>
+    <use href="#s" transform="translate(266,31)"/>
+    <use href="#s" transform="translate(266,61)"/>
+
+    <!-- Parting: A returns to center y=40, B diverges downward -->
+    <use href="#s" transform="translate(280,21) scale(1,-1)"/>
+    <use href="#s" transform="translate(280,52) scale(1,-1)"/>
+    <use href="#s" transform="translate(294,36)"/>
+    <use href="#s" transform="translate(294,70)"/>
+    <use href="#s" transform="translate(308,27) scale(1,-1)"/>
+    <use href="#s" transform="translate(308,67) scale(1,-1)"/>
+    <use href="#s" transform="translate(322,42)"/>
+    <use href="#s" transform="translate(336,32) scale(1,-1)"/>
+    <use href="#s" transform="translate(350,46)"/>
+  </g>
+</svg>
