@@ -345,12 +345,20 @@
             if (window.innerWidth < 768) {
                 openPhoto();
             } else {
-                var authorTerm = document.querySelector('.therapy-hero-author .term');
-                if (authorTerm) authorTerm.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+                var soMnoyEl = document.getElementById('со-мной');
+                if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
             }
         });
         document.querySelectorAll('.menu-container a.logo').forEach(function(el) {
-            el.addEventListener('click', function(e) { if (window.innerWidth < 768) { e.preventDefault(); openPhoto(); } });
+            el.addEventListener('click', function(e) {
+                if (window.innerWidth < 768) {
+                    e.preventDefault(); openPhoto();
+                } else if (window.innerWidth < 1440) {
+                    e.preventDefault();
+                    var soMnoyEl = document.getElementById('со-мной');
+                    if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+                }
+            });
         });
         var soMnoy = document.getElementById('со-мной');
         if (soMnoy) soMnoy.addEventListener('click', function(e) {
