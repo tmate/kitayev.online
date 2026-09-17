@@ -345,6 +345,7 @@
             if (window.innerWidth < 768) {
                 openPhoto();
             } else {
+                e.stopPropagation();
                 var soMnoyEl = document.getElementById('со-мной');
                 if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
             }
@@ -355,6 +356,7 @@
                     e.preventDefault(); openPhoto();
                 } else if (window.innerWidth < 1440) {
                     e.preventDefault();
+                    e.stopPropagation();
                     var soMnoyEl = document.getElementById('со-мной');
                     if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
                 }
