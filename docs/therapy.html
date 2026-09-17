@@ -378,7 +378,7 @@
     if (kontaktyLink) {
         kontaktyLink.addEventListener('click', function(e) {
             e.preventDefault();
-            window.scrollTo({ top: 999999, behavior: 'smooth' });
+            document.getElementById('footer').scrollIntoView({ behavior: 'smooth', block: 'end' });
         });
     }
 
