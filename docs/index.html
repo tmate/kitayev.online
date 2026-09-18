@@ -25,6 +25,7 @@
 <header id="top" class="menu-container">
     <div class="menu">
         <a class="logo" href="/">Aлександр&nbsp;Китаев</a>
+        <a class="mobile header-about-mobile" href="#">Обо&nbsp;мне</a>
         <a class="mobile header-cta" href="#footer">Контакты</a>
         <a class="desktop header-about" href="#">Обо мне</a>
         <a class="tablet desktop header-cta" href="#footer">Контакты</a>
@@ -334,6 +335,15 @@
     }
 </script>
 <script>
+    document.querySelectorAll('.header-about-mobile').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var photo = document.querySelector('.therapy-hero-photo');
+            if (photo) photo.dispatchEvent(new MouseEvent('click', { bubbles: false }));
+        });
+    });
+
     document.querySelectorAll('.header-about').forEach(function(el) {
         el.addEventListener('click', function(e) {
             e.preventDefault();

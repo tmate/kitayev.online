@@ -1574,24 +1574,28 @@
 
     .menu {
       .h3();
-      .grid();
+      padding: 16px 10px;
+      width: 360px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
 
       .logo {
         color: @color-black;
-        grid-column: 1;
         text-decoration: none;
+        flex: 1;
       }
 
-      .menu-button {
-        grid-column: 4;
-        cursor: pointer;
+      .header-about-mobile {
+        color: @color-black;
+        text-decoration: none;
+        margin-left: 12px;
       }
 
       .header-cta {
-        grid-column: 4;
-        text-align: right;
         text-decoration: none;
         color: @color-black;
+        &::before { content: "·"; margin: 0 6px; }
       }
     }
 
