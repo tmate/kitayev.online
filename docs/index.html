@@ -25,49 +25,11 @@
 <header id="top" class="menu-container">
     <div class="menu">
         <a class="logo" href="/">Aлександр&nbsp;Китаев</a>
-        <nav class="desktop menu-items">
-            <a class="menu-item" href="/#about">Обо мне</a>
-            <a class="menu-item" href="/#inquiry">Зачем терапия вам</a>
-            <a class="menu-item" href="/#process">Как это работает</a>
-            <a class="menu-item" href="/#solution">Что мы будем делать</a>
-            <a class="menu-item" href="/#conditions">Условия и цена</a>
-        </nav>
         <a class="mobile header-cta" href="#footer">Контакты</a>
         <a class="desktop header-about" href="#">Обо мне</a>
         <a class="tablet desktop header-cta" href="#footer">Контакты</a>
     </div>
 
-    <div class="mobile tablet hidden mobile-menu" id="mobile-menu">
-        <div class="tablet mobile-menu-shadow"></div>
-        <div class="mobile-menu-inner">
-            <a class="logo" href="/">Aлександр&nbsp;Китаев</a>
-            <a class="menu-button">&times;</a>
-
-            <nav class="menu-items">
-                <a class="menu-item" href="/#about">Обо мне</a>
-                <a class="menu-item" href="/#inquiry">Зачем терапия вам</a>
-                <a class="menu-item" href="/#process">Как это работает</a>
-                <a class="menu-item" href="/#solution">Что мы будем делать</a>
-                <a class="menu-item" href="/#conditions">Условия и цена</a>
-
-                <a class="mobile menu-item game" target="_blank" rel="noopener" href="https://kitayev.online/life">
-                    <span>И</span>
-                    <span>Г</span>
-                    <span>Р</span>
-                    <span>А</span>
-                </a>
-            </nav>
-
-            <div class="btn-group">
-                <a class="btn btn-text btn-primary" target="_blank" rel="noopener" href="https://wa.me/420606112191"
-                   title="Напишите на WhatsApp"><span>Задать вопрос / записаться</span></a>
-                <a class="btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
-                   title="Напишите на WhatsApp"><img width="40" height="40" src="images/whatsapp.svg" alt="WhatsApp"/></a>
-                <a class="btn" target="_blank" rel="noopener" href="https://t.me/kitajev" title="Напишите в Telegram"><img
-                        width="40" height="40" src="images/telegram.svg" alt="Telegram"/></a>
-            </div>
-        </div>
-    </div>
 </header>
 
 <section class="therapy-hero-container">
@@ -128,10 +90,6 @@
             <div class="therapy-intro">
               <p>Для того чтобы вам попасть из вашей <span class="therapy-emphasis">точки А</span> в вашу <span class="therapy-emphasis">точку Б</span> мы с вами вступим в отношения особого вида.</>
               <p>Эти отношения называются терапевтическими - именно в них возможны существенные устойчивые изменения вашего состояния.</p>
-              <!--
-              <p>В отношениях всегда меняются оба участника и благодаря особым условиям терапевтических отношений, в них изменения
-                  направлены в сторону вашего благополучия.</p>
-              -->
              </div>
         </div>
 
@@ -376,27 +334,6 @@
     }
 </script>
 <script>
-    function toggleMenu(e) {
-        e.stopPropagation();
-        document.getElementById("mobile-menu").classList.toggle("hidden");
-    }
-
-    document.querySelectorAll('.menu-button').forEach(el => {
-        el.addEventListener('click', e => toggleMenu(e));
-    });
-
-    document.querySelectorAll('.mobile-menu-shadow').forEach(el => el.addEventListener('click', (e) => {
-        document.getElementById("mobile-menu").classList.toggle("hidden");
-    }));
-
-    document.querySelectorAll('.mobile-menu nav a').forEach(el => el.addEventListener('click', () => {
-        document.getElementById("mobile-menu").classList.toggle("hidden");
-    }));
-
-    document.querySelectorAll('.mobile-menu .logo').forEach(el => el.addEventListener('click', () => {
-        document.getElementById("mobile-menu").classList.toggle("hidden");
-    }));
-
     document.querySelectorAll('.header-about').forEach(function(el) {
         el.addEventListener('click', function(e) {
             e.preventDefault();
@@ -411,13 +348,6 @@
             e.preventDefault();
             document.getElementById('footer').scrollIntoView({ behavior: 'smooth', block: 'end' });
         });
-    });
-
-    document.querySelector('body').addEventListener('keydown', (e) => {
-        const isMenuShown = !document.getElementById("mobile-menu").classList.contains("hidden");
-        if (isMenuShown && e.key === 'Escape') {
-            toggleMenu(e);
-        }
     });
 </script>
 
