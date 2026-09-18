@@ -669,6 +669,8 @@
       .header {
         .h1();
         grid-column: 1 / -1;
+
+        .header-pretext { display: none; }
       }
     }
   }
@@ -1360,6 +1362,8 @@
         .h1();
         grid-column: 1 / span 5;
         align-self: center;
+
+        .header-pretext { display: none; }
       }
 
       .therapy-hero-photo {
@@ -2107,6 +2111,11 @@
         .h1();
         grid-column: 1 / span 3;
         align-self: center;
+
+        .header-pretext {
+          .make-h2(18px);
+          display: block;
+        }
       }
 
       .therapy-hero-photo {
