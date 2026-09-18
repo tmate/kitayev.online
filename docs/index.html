@@ -27,10 +27,14 @@
         <a class="logo" href="/">Aлександр&nbsp;Китаев</a>
         <a class="mobile header-about-mobile" href="#">Обо&nbsp;мне</a>
         <a class="mobile header-cta" href="#footer">Контакты</a>
-        <a class="desktop header-about" href="#">Обо мне</a>
+        <a class="tablet desktop header-about" href="#">Обо мне</a>
         <a class="tablet desktop header-cta" href="#footer">Контакты</a>
     </div>
 
+    <span id="со-мной" class="term" style="display:none"
+        data-title="Обо мне"
+        data-text="Меня зовут Александр Китаев и это моя страничка о терапии, которую я с неугасающим интересом практикую с 2018 года.&lt;br/&gt;&lt;br/&gt;Сейчас мне 49 лет, я родился в Ленинграде, а с 1999 года постоянно живу в Праге.&lt;br/&gt;&lt;br/&gt;Я люблю свою работу и люблю делать её хорошо.&lt;br/&gt;&lt;br/&gt;&lt;span class=&quot;term-section-header&quot;&gt;Моё образование&lt;/span&gt;&lt;br/&gt;&lt;b&gt;2017–2020&lt;/b&gt; Санкт-Петербургский Институт Гештальта — программа профессиональной переквалификации&lt;br/&gt;&lt;b&gt;2017–2020&lt;/b&gt; Санкт-Петербургский Институт Гештальта — первая и вторая ступени подготовки гештальт-терапевтов по программе EAGT&lt;br/&gt;&lt;b&gt;2017–2023&lt;/b&gt; Московский Гештальт Институт — летние обучающие интенсивы&lt;br/&gt;&lt;b&gt;2023–2025&lt;/b&gt; Итальянский Институт Гештальта — двухлетняя программа повышения квалификации под руководством Маргариты Спаньолло Лобб&lt;br/&gt;&lt;b&gt;2023&lt;/b&gt; Итальянский Институт Гештальта — специализация по работе в полевой парадигме&lt;br/&gt;&lt;b&gt;2024–2025&lt;/b&gt; Международный Институт Гештальта — специализация по ведению групп&lt;br/&gt;&lt;b&gt;2025&lt;/b&gt; Курс: глубинная работа с нарциссической травмой под руководством Константина Логинова&lt;br/&gt;&lt;b&gt;2026&lt;/b&gt; Курс: Доула Смерти — сопровождение умирающих и горюющих людей&lt;br/&gt;&lt;br/&gt;Психолог — моя вторая профессия, по первому образованию я программист.&lt;br/&gt;В работе психолога связь с сообществом и обучение — важные опоры, поэтому каждый год я выбираю самое интересное из того, чему можно поучиться."
+    ></span>
 </header>
 
 <section class="therapy-hero-container">
@@ -308,7 +312,7 @@
             } else {
                 e.stopPropagation();
                 var soMnoyEl = document.getElementById('со-мной');
-                if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+                if (soMnoyEl && window.showTermPopupNear) window.showTermPopupNear(soMnoyEl, heroPhoto);
             }
         });
         document.querySelectorAll('.menu-container a.logo').forEach(function(el) {
@@ -319,13 +323,9 @@
                     e.preventDefault();
                     e.stopPropagation();
                     var soMnoyEl = document.getElementById('со-мной');
-                    if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+                    if (soMnoyEl && window.showTermPopupNear) window.showTermPopupNear(soMnoyEl, el);
                 }
             });
-        });
-        var soMnoy = document.getElementById('со-мной');
-        if (soMnoy) soMnoy.addEventListener('click', function(e) {
-            if (window.innerWidth < 768) { e.stopPropagation(); openPhoto(); }
         });
         backBtn.addEventListener('click', function() { history.back(); });
         closeBtn.addEventListener('click', function() { history.back(); });
@@ -350,7 +350,7 @@
             e.preventDefault();
             e.stopPropagation();
             var soMnoyEl = document.getElementById('со-мной');
-            if (soMnoyEl) soMnoyEl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+            if (soMnoyEl && window.showTermPopupNear) window.showTermPopupNear(soMnoyEl, el);
         });
     });
 

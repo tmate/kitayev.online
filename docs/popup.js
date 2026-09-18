@@ -89,4 +89,9 @@
   });
 
   window.addEventListener('scroll', hide, { passive: true });
+
+  window.showTermPopupNear = function(term, anchorEl) {
+    show(term);
+    if (anchorEl && window.innerWidth >= 768) place(anchorEl);
+  };
 })();
