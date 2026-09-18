@@ -350,11 +350,16 @@
         });
     });
 
-    document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"]').forEach(function(link) {
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function(link) {
         link.addEventListener('click', function() {
-            var href = link.getAttribute('href');
-            var service = href.indexOf('wa.me') !== -1 ? 'whatsapp' : 'telegram';
-            gtag('event', 'outbound_click', { link_url: href, service: service });
+            gtag('event', 'outbound_click', { link_url: link.getAttribute('href'), service: 'whatsapp' });
+            gtag('event', 'conversion', { send_to: 'AW-18429826672/1rwCCKG5v_wcEPCsg9RE' });
+        });
+    });
+    document.querySelectorAll('a[href*="t.me"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+            gtag('event', 'outbound_click', { link_url: link.getAttribute('href'), service: 'telegram' });
+            gtag('event', 'conversion', { send_to: 'AW-18429826672/zITnCInsv_wcEPCsg9RE' });
         });
     });
 </script>
