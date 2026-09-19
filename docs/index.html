@@ -153,7 +153,7 @@
     <div class="footer">
         <div class="btn-group">
             <a class="desktop btn btn-text btn-light" target="_blank" rel="noopener" href="https://wa.me/420606112191"
-               title="Напишите на WhatsApp"><span>Записаться</span></a>
+               title="Напишите на WhatsApp"><span>Записаться или задать вопрос</span></a>
             <a class="mobile tablet btn btn-text btn-light" target="_blank" rel="noopener" href="https://wa.me/420606112191"
                title="Напишите на WhatsApp"><span>Записаться / задать вопрос</span></a>
             <a class="desktop tablet btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
@@ -204,9 +204,14 @@
         popupAboutHeader.style.cssText = 'font-family:InterBold,serif;font-size:16px;letter-spacing:0.05em;text-transform:uppercase;line-height:130%;padding:12px 24px 4px;color:#000;';
 
         var bioContent = document.createElement('div');
-        bioContent.style.cssText = 'font-family:Inter,serif;font-size:14px;line-height:165%;color:#000;padding:0 24px 48px;';
+        bioContent.style.cssText = 'font-family:Inter,serif;font-weight:normal;font-size:14px;letter-spacing:0;line-height:165%;color:#000;padding:0 24px 48px;';
         var bioEl = document.getElementById('with-me');
-        if (bioEl) bioContent.innerHTML = bioEl.dataset.text;
+        if (bioEl) {
+            bioContent.innerHTML = bioEl.dataset.text;
+            bioContent.querySelectorAll('.term-section-header').forEach(function(el) {
+                el.style.cssText = 'font-family:InterBold,serif;font-size:16px;letter-spacing:0.05em;text-transform:uppercase;line-height:130%;display:block;margin-top:16px;margin-bottom:4px;';
+            });
+        }
 
         contentArea.appendChild(popupImg);
         contentArea.appendChild(popupAboutHeader);
