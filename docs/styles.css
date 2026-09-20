@@ -807,18 +807,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+1)::before {
-    background-image: url('images/bullet1.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+2)::before {
-    background-image: url('images/bullet2.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+3)::before {
-    background-image: url('images/bullet3.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+0)::before {
-    background-image: url('images/bullet4.svg');
+    background-image: var(--bullet-img);
   }
   .therapy-container .therapy .therapy-photo {
     grid-column: 9 / -1;
@@ -1691,18 +1680,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+1)::before {
-    background-image: url('images/bullet1.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+2)::before {
-    background-image: url('images/bullet2.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+3)::before {
-    background-image: url('images/bullet3.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+0)::before {
-    background-image: url('images/bullet4.svg');
+    background-image: var(--bullet-img);
   }
   .therapy-cta-container {
     background-color: #919E90;
@@ -2652,18 +2630,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+1)::before {
-    background-image: url('images/bullet1.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+2)::before {
-    background-image: url('images/bullet2.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+3)::before {
-    background-image: url('images/bullet3.svg');
-  }
-  .therapy-container .therapy .therapy-section .therapy-bullets .therapy-bullet:nth-child(4n+0)::before {
-    background-image: url('images/bullet4.svg');
+    background-image: var(--bullet-img);
   }
   .therapy-container .therapy .therapy-section.therapy-section--beige {
     position: relative;

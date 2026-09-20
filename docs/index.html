@@ -328,6 +328,17 @@
             gtag('event', 'conversion', { send_to: 'AW-18429826672/zITnCInsv_wcEPCsg9RE' });
         });
     });
+
+    (function() {
+        var imgs = ['images/bullet1.svg','images/bullet2.svg','images/bullet3.svg','images/bullet4.svg'];
+        var last = -1;
+        document.querySelectorAll('.therapy-bullet').forEach(function(el) {
+            var idx;
+            do { idx = Math.floor(Math.random() * imgs.length); } while (idx === last && imgs.length > 1);
+            last = idx;
+            el.style.setProperty('--bullet-img', "url('" + imgs[idx] + "')");
+        });
+    })();
 </script>
 
 </body>
