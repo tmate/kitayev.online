@@ -85,10 +85,10 @@
         <div class="therapy-section">
             <div class="therapy-section-title">В чём подвох</div>
             <div class="therapy-bullets">
-                <div class="therapy-bullet">не пропускать встречи не так-то легко!</div>
-                <div class="therapy-bullet">я не знаю заранее, что именно будет происходить в нашей с вами терапии и как долго она продлится</div>
-                <div class="therapy-bullet">вместе с изменением вашего состояния скорее всего изменятся и ваши отношения с другими людьми</div>
-                <div class="therapy-bullet">есть много вещей <span class="term"
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet1.svg')">не пропускать встречи не так-то легко!</div>
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet2.svg')">я не знаю заранее, что именно будет происходить в нашей с вами терапии и как долго она продлится</div>
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet3.svg')">вместе с изменением вашего состояния скорее всего изменятся и ваши отношения с другими людьми</div>
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet4.svg')">есть много вещей <span class="term"
                     data-title="Цена вопроса"
                     data-text="Терапия это уникальный вид отношений, которые нельзя заменить ничем другим и без которых вполне можно прожить.&lt;br&gt;&lt;br&gt;Если наша работа мной продлится год, то при еженедельных встречах с учётом отпусков вы заплатите примерно 4500 евро.&lt;br&gt;&lt;br&gt;По запросу буду рад поделиться контактами коллег с меньшей ценой часа."
                 >дешевле</span> терапии</div>
@@ -98,11 +98,11 @@
         <div class="therapy-section">
             <div class="therapy-section-title">Я гарантирую</div>
             <div class="therapy-bullets">
-                <div class="therapy-bullet">мою пригодность для этой работы, подтверждённую дипломом психолога и сертификатами гештальт-терапевта</div>
-                <div class="therapy-bullet">признание ограничений - если я пойму, что ваши цели недостижимы в рамках работы со мной,
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet3.svg')">мою пригодность для этой работы, подтверждённую дипломом психолога и сертификатами гештальт-терапевта</div>
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet1.svg')">признание ограничений - если я пойму, что ваши цели недостижимы в рамках работы со мной,
                     то посоветую вам другого специалиста</div>
-                <div class="therapy-bullet">сохранение в тайне факта нашей терапии и её содержания</div>
-                <div class="therapy-bullet">регулярную супервизию моей работы</div>
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet4.svg')">сохранение в тайне факта нашей терапии и её содержания</div>
+                <div class="therapy-bullet" style="--bullet-img:url('images/bullet2.svg')">регулярную супервизию моей работы</div>
             </div>
         </div>
 
@@ -328,17 +328,6 @@
             gtag('event', 'conversion', { send_to: 'AW-18429826672/zITnCInsv_wcEPCsg9RE' });
         });
     });
-
-    (function() {
-        var imgs = ['images/bullet1.svg','images/bullet2.svg','images/bullet3.svg','images/bullet4.svg'];
-        var sequences = [[0,1,2,3],[2,0,3,1]];
-        document.querySelectorAll('.therapy-bullets').forEach(function(group, gi) {
-            var seq = sequences[gi] || sequences[0];
-            group.querySelectorAll('.therapy-bullet').forEach(function(el, i) {
-                el.style.setProperty('--bullet-img', "url('" + imgs[seq[i % seq.length]] + "')");
-            });
-        });
-    })();
 </script>
 
 </body>
