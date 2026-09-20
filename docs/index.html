@@ -331,12 +331,12 @@
 
     (function() {
         var imgs = ['images/bullet1.svg','images/bullet2.svg','images/bullet3.svg','images/bullet4.svg'];
-        var last = -1;
-        document.querySelectorAll('.therapy-bullet').forEach(function(el) {
-            var idx;
-            do { idx = Math.floor(Math.random() * imgs.length); } while (idx === last && imgs.length > 1);
-            last = idx;
-            el.style.setProperty('--bullet-img', "url('" + imgs[idx] + "')");
+        var sequences = [[0,1,2,3],[2,0,3,1]];
+        document.querySelectorAll('.therapy-bullets').forEach(function(group, gi) {
+            var seq = sequences[gi] || sequences[0];
+            group.querySelectorAll('.therapy-bullet').forEach(function(el, i) {
+                el.style.setProperty('--bullet-img', "url('" + imgs[seq[i % seq.length]] + "')");
+            });
         });
     })();
 </script>
