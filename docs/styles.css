@@ -708,6 +708,17 @@
   .footer-container .footer .btn-group .btn-text {
     margin-right: auto;
   }
+  .footer-container .footer .footer-note {
+    grid-column: 7 / -1;
+    margin-top: 20px;
+    font-family: Inter, serif;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 165%;
+  }
+  .footer-container .footer .footer-note a {
+    color: #FAFAFA;
+  }
   .term-overlay {
     display: none !important;
   }
@@ -1561,6 +1572,17 @@
   }
   .footer-container .footer .btn-group .btn-text {
     margin-right: auto;
+  }
+  .footer-container .footer .footer-note {
+    grid-column: 1 / -1;
+    margin-top: 16px;
+    font-family: Inter, serif;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 165%;
+  }
+  .footer-container .footer .footer-note a {
+    color: #FAFAFA;
   }
   .therapy-hero-container {
     background-color: #D9D5D1;
@@ -2470,6 +2492,17 @@
   }
   .footer-container .footer .btn-group .btn-text {
     margin-right: auto;
+  }
+  .footer-container .footer .footer-note {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+    font-family: Inter, serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 165%;
+  }
+  .footer-container .footer .footer-note a {
+    color: #FAFAFA;
   }
   .therapy-hero-container {
     background-color: #D9D5D1;
