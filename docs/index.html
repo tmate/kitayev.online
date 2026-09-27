@@ -19,7 +19,7 @@
     <meta name="description" content="Гештальт-терапия в Праге и онлайн.">
     <meta property="og:title" content="Александр Китаев | Психолог">
     <meta property="og:description" content="Гештальт-терапия в Праге и онлайн.">
-    <meta property="og:image" content="https://kitayev.online/photo3.jpg">
+    <meta property="og:image" content="https://kitayev.online/images/photo4.jpg">
     <meta property="og:url" content="https://kitayev.online/">
     <meta property="og:type" content="website">
     <link rel="stylesheet" type="text/css" href="styles.css"/>
@@ -46,7 +46,7 @@
     <div class="therapy-hero">
         <div class="header"><span class="header-pretext">Рассказываю,<br/></span>Что такое терапия</div>
         <div class="mobile tablet therapy-hero-photo">
-            <img src="photo3.jpg" alt="Александр Китаев"/>
+            <img src="images/photo4.jpg" alt="Александр Китаев"/>
             <span class="photo-popup-close">&times;</span>
         </div>
     </div>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="desktop therapy-photo">
-            <img src="photo3.jpg" alt="Александр Китаев"/>
+            <img src="images/photo4.jpg" alt="Александр Китаев"/>
         </div>
 
     </div>
@@ -198,7 +198,7 @@
         contentArea.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:auto;';
 
         var popupImg = heroPhoto.querySelector('img').cloneNode(true);
-        popupImg.style.cssText = 'display:block;width:100%;height:auto;';
+        popupImg.style.cssText = 'display:block;width:100%;height:auto;max-height:70vh;object-fit:cover;object-position:center 10%;';
 
         var popupAboutHeader = document.createElement('div');
         popupAboutHeader.textContent = '\u041e\u0431\u043e \u043c\u043d\u0435';

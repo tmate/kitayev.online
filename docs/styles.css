@@ -1620,7 +1620,7 @@
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-    object-position: center 15%;
+    object-position: center 5%;
     border-radius: 4px;
   }
   .therapy-hero-container .therapy-hero .therapy-hero-photo .therapy-hero-photo-caption {
@@ -2545,7 +2545,7 @@
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-    object-position: center 15%;
+    object-position: center 5%;
     border-radius: 4px;
   }
   .therapy-hero-container .therapy-hero .therapy-hero-photo .therapy-hero-photo-caption {
