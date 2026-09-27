@@ -671,7 +671,7 @@
         .h1();
         grid-column: 1 / -1;
 
-        .header-pretext { display: none; }
+        .header-line { display: block; }
       }
     }
   }
@@ -1368,14 +1368,14 @@
       .header {
         .h1();
         grid-column: 1 / span 5;
-        align-self: center;
+        align-self: start;
 
-        .header-pretext { display: none; }
+        .header-line { display: block; }
       }
 
       .therapy-hero-photo {
         grid-column: 6 / -1;
-        align-self: center;
+        align-self: start;
         cursor: pointer;
 
         img {
@@ -2118,18 +2118,23 @@
 
       .header {
         .h1();
+        font-size: 17px;
         grid-column: 1 / span 3;
-        align-self: center;
+        align-self: start;
 
-        .header-pretext {
-          .make-h2(18px);
+        .header-line {
           display: block;
+          white-space: nowrap;
+
+          &:not(:first-child) {
+            font-size: 14px;
+          }
         }
       }
 
       .therapy-hero-photo {
         grid-column: 4 / -1;
-        align-self: center;
+        align-self: start;
         cursor: pointer;
 
         img {
