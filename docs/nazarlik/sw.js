@@ -60,7 +60,7 @@ self.addEventListener('fetch', e => {
 self.addEventListener('push', e => {
   let msg = {};
   try { msg = e.data ? e.data.json() : {}; } catch {}
-  e.waitUntil(self.registration.showNotification(msg.title || 'Nazarlik', {
+  e.waitUntil(self.registration.showNotification(msg.title || 'Nəzərlik', {
     body: msg.body || '', icon: './icons/icon-192.png', tag: 'nazarlik', lang: 'en',
   }));
 });
