@@ -1,7 +1,7 @@
 {
   "name": "Nazarlik",
   "short_name": "Nazarlik",
-  "description": "A glass nazarlik you can break and piece back together",
+  "description": "A digital nəzərlik that keeps you safe.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
