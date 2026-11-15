@@ -1,10 +1,10 @@
 // Offline support for the installed app, and notifications. Served as is (public/),
 // next to index.html.
-// The page and blessings.json: network first, so a new version shows up as soon as
-// it is online; the cached copy when offline. Everything else: from the cache once
+// The page (also when the app fetches it to check for a new version) and
+// blessings.json: network first, so a new version shows up as soon as it is online; the cached copy when offline. Everything else: from the cache once
 // fetched (Vite gives built files hashed names, so a cached file never goes stale).
 // Bump VERSION to drop old caches (not needed for normal deploys).
-const VERSION = 2;
+const VERSION = 3;
 const FRESH = /\/blessings\.json$/;
 const CACHE = `nazarlik-v${VERSION}`;
 
@@ -32,7 +32,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
-  const nav = req.mode === 'navigate';
+  // the page itself: a navigation, or the app checking for a new version (main.js)
+  const nav = req.mode === 'navigate' || new URL(req.url).pathname === new URL(self.registration.scope).pathname;
   if (nav || FRESH.test(new URL(req.url).pathname)){
     const key = nav ? './' : req;
     e.respondWith((async () => {
