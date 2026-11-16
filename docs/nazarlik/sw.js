@@ -1,23 +1,40 @@
 // Offline support for the installed app, and notifications. Served as is (public/),
 // next to index.html.
-// The page (also when the app fetches it to check for a new version) and
-// blessings.json: network first, so a new version shows up as soon as it is online; the cached copy when offline. Everything else: from the cache once
-// fetched (Vite gives built files hashed names, so a cached file never goes stale).
+// The page, blessings.json, the manifest and icons (their names don't change between
+// deploys): network first, so a new version shows up as soon as it is online; the
+// cached copy when offline. The built JS and CSS: from the cache once fetched (Vite
+// gives them hashed names, so a cached one never goes stale). When a new page comes
+// in, its files are fetched and the previous version's are dropped, so the cache
+// holds one version and an offline launch always has the page's own scripts.
+// The app's own check for a new version (main.js) goes straight to the network and
+// is not cached: a page whose scripts were never fetched must not be served offline.
 // Bump VERSION to drop old caches (not needed for normal deploys).
-const VERSION = 3;
-const FRESH = /\/blessings\.json$/;
+const VERSION = 4;
+const FRESH = /\/(blessings\.json|manifest\.webmanifest|icons\/[^/]+)$/;
 const CACHE = `nazarlik-v${VERSION}`;
+const scope = () => self.registration.scope;
 
-// The page and what it loads: the built JS and CSS are found by reading index.html,
-// since their names change with every build.
+// What a page loads from here: found by reading it, since built names change with every build.
+const pageFiles = html => [...new Set([...html.matchAll(/(?:src|href)="(\.?\/?(?:assets|icons)\/[^"]+|\.?\/?manifest\.webmanifest)"/g)]
+  .map(m => new URL(m[1], scope()).href))];
+
+// Fetches a new page's built files, then drops those of earlier versions.
+async function keepOnly(cache, html){
+  const built = pageFiles(html).filter(u => u.startsWith(scope() + 'assets/'));
+  const missing = [];
+  for (const u of built) if (!(await cache.match(u))) missing.push(u);
+  await cache.addAll(missing); // throws if offline: then nothing is dropped
+  for (const r of await cache.keys())
+    if (r.url.startsWith(scope() + 'assets/') && !built.includes(r.url)) await cache.delete(r);
+}
+
 self.addEventListener('install', e => {
   e.waitUntil((async () => {
     const cache = await caches.open(CACHE);
     const res = await fetch('./', { cache: 'no-cache' });
     const html = await res.clone().text();
     await cache.put('./', res);
-    const urls = [...html.matchAll(/(?:src|href)="(\.?\/?(?:assets|icons)\/[^"]+|\.?\/?manifest\.webmanifest)"/g)].map(m => m[1]);
-    await cache.addAll([...new Set(urls)]);
+    await cache.addAll(pageFiles(html));
     await self.skipWaiting();
   })());
 });
@@ -30,17 +47,24 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  const req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
-  // the page itself: a navigation, or the app checking for a new version (main.js)
-  const nav = req.mode === 'navigate' || new URL(req.url).pathname === new URL(self.registration.scope).pathname;
-  if (nav || FRESH.test(new URL(req.url).pathname)){
+  const req = e.request, url = new URL(req.url);
+  if (req.method !== 'GET' || url.origin !== location.origin) return;
+  const nav = req.mode === 'navigate', root = new URL(scope()).pathname;
+  const isPage = url.pathname === root || url.pathname === root + 'index.html';
+  if (!nav && url.pathname === root) return; // the update check
+  if (nav || FRESH.test(url.pathname)){
     const key = nav ? './' : req;
+    // only the app page itself goes under './': not a JSON or image opened in a tab
+    const keep = res => res.ok && (!nav || (isPage && (res.headers.get('Content-Type') || '').includes('text/html')));
     e.respondWith((async () => {
       const cache = await caches.open(CACHE);
       try {
-        const res = await fetch(req, nav ? undefined : { cache: 'no-cache' });
-        if (res.ok) cache.put(key, res.clone());
+        // past the HTTP cache too, so a reload for a new version gets the new page
+        const res = await fetch(req, { cache: 'no-cache' });
+        if (keep(res)){
+          await cache.put(key, res.clone());
+          if (nav) e.waitUntil(res.clone().text().then(html => keepOnly(cache, html)).catch(() => {}));
+        }
         return res;
       } catch {
         return (await cache.match(key)) || Response.error();
@@ -57,12 +81,15 @@ self.addEventListener('fetch', e => {
   })());
 });
 
-// Notifications from the push server (push/): { title, body }.
+// Notifications from the push server (push/): { title, body, tag?, lang? }. A broadcast
+// has its own tag, so it doesn't replace an unread "your nəzərlik broke" one.
 self.addEventListener('push', e => {
   let msg = {};
   try { msg = e.data ? e.data.json() : {}; } catch {}
   e.waitUntil(self.registration.showNotification(msg.title || 'Nəzərlik', {
-    body: msg.body || '', icon: './icons/icon-192.png', tag: 'nazarlik', lang: 'en',
+    body: msg.body || '', icon: './icons/icon-192.png', tag: /^nazarlik(-[a-z]+)?$/.test(msg.tag) ? msg.tag : 'nazarlik',
+    renotify: true, // a new one replacing an unread one with the same tag still alerts
+    lang: typeof msg.lang === 'string' ? msg.lang : '',
   }));
 });
 
