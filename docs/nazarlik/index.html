@@ -1,22 +1,113 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alexander Kitayev</title>
-<link rel="canonical" href="https://kitayev.online/">
-<meta http-equiv="refresh" content="0; url=https://kitayev.online/">
-<meta name="robots" content="noindex">
-<script>location.replace('https://kitayev.online/' + location.search);</script>
-<style>
-  :root { color-scheme: light dark; --bg: #f6f1e7; --fg: #2b2620; --link: #1f4fa3; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #1d1b18; --fg: #ece6da; --link: #8fb4ff; } }
-  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 0 16px;
-    background: var(--bg); color: var(--fg); font: 18px/1.5 system-ui, sans-serif; text-align: center; }
-  a { color: var(--link); }
-</style>
+    <!-- Google tag (gtag.js), as on the main page: counts visits, ?ref=app among them (the app's author link) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18429826672"></script>
+    <script>
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);}
+       gtag('js', new Date());
+
+       gtag('config', 'AW-18429826672');
+    </script>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="../images/bullet2.svg" />
+
+    <title>Nəzərlik | Александр Китаев</title>
+    <meta name="description" content="Nəzərlik — некоммерческий проект психолога Александра Китаева.">
+    <meta property="og:title" content="Nəzərlik | Александр Китаев">
+    <meta property="og:description" content="Nəzərlik — некоммерческий проект психолога Александра Китаева.">
+    <meta property="og:image" content="https://kitayev.online/nazarlik/nazarlik.png">
+    <meta property="og:url" content="https://kitayev.online/nazarlik/">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://kitayev.online/nazarlik/">
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <style>
+        /* the disk has no background of its own: shown whole, not cropped like the photo */
+        .nazarlik-page .therapy-hero-photo, .nazarlik-page .therapy-photo { cursor: default; }
+        .nazarlik-page .therapy-hero-photo img, .nazarlik-page .therapy-photo img { object-fit: contain; object-position: center; }
+        /* the two ways to start it, each a line of its own */
+        .nazarlik-page .launch { display: grid; gap: 4px; }
+        .nazarlik-page .launch-label { display: block; font-family: InterBold, serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+        .nazarlik-page .launch a { overflow-wrap: anywhere; }
+        .nazarlik-page .signature { margin-top: 8px; }
+    </style>
 </head>
-<body>
-<p><a href="https://kitayev.online/">kitayev.online</a></p>
+
+<body class="nazarlik-page">
+
+<header id="top" class="menu-container">
+    <div class="menu">
+        <a class="logo" href="/">Александр&nbsp;Китаев</a>
+        <a class="mobile header-about-mobile" href="/">Обо&nbsp;мне</a>
+        <a class="mobile header-cta" href="#footer">Контакты</a>
+        <a class="tablet desktop header-about" href="/">Обо мне</a>
+        <a class="tablet desktop header-cta" href="#footer">Контакты</a>
+    </div>
+</header>
+
+<section class="therapy-hero-container">
+    <div class="therapy-hero">
+        <div class="header"><span class="header-line">Nəzərlik</span> <span class="header-line">цифровой оберег</span> <span class="header-line">от сглаза</span></div>
+        <div class="mobile tablet therapy-hero-photo">
+            <img src="nazarlik.png" alt="Синий стеклянный оберег от сглаза"/>
+        </div>
+    </div>
+</section>
+
+<section class="therapy-container">
+    <div class="therapy">
+
+        <div class="therapy-section">
+            <div class="therapy-section-title">Приветствую!</div>
+            <div class="therapy-intro">
+                <p>Я психолог, это моя ежедневная работа.
+                В свободное время я создаю некоммерческие проекты, одним из которых вы, похоже, заинтересовались.</p>
+                <p>Если вам интересна моя работа, загляните на <a href="/">мой сайт</a>.</p>
+                <p>Если хотите почитать мой блог, то добро пожаловать в <a href="https://t.me/askhumanbeing" target="_blank" rel="noopener">телеграм-канал</a>.</p>
+            </div>
+        </div>
+
+        <div class="therapy-section">
+            <div class="therapy-section-title">Как запустить Nəzərlik</div>
+            <div class="therapy-intro">
+                <p class="launch"><span class="launch-label">Внутри Telegram</span>
+                    <a href="https://t.me/nazarlik_bot?startapp" target="_blank" rel="noopener">t.me/nazarlik_bot</a></p>
+                <p class="launch"><span class="launch-label">В браузере или на телефоне</span>
+                    <a href="https://nazarlik.online/" target="_blank" rel="noopener">nazarlik.online</a></p>
+            </div>
+        </div>
+
+        <div class="therapy-section">
+            <div class="therapy-section-title">Остались вопросы?</div>
+            <div class="therapy-intro">
+                <p>Напишите мне в <a href="https://t.me/kitajev" target="_blank" rel="noopener">Telegram</a> или в <a href="https://wa.me/420606112191" target="_blank" rel="noopener">WhatsApp</a>.</p>
+                <p class="signature">Александр Китаев,<br/>психолог, гештальт-терапевт.</p>
+            </div>
+        </div>
+
+        <div class="desktop therapy-photo">
+            <img src="nazarlik.png" alt="Синий стеклянный оберег от сглаза"/>
+        </div>
+
+    </div>
+</section>
+
+<section id="footer" class="footer-container">
+    <div class="footer">
+        <div class="btn-group">
+            <a class="btn btn-text btn-light" target="_blank" rel="noopener" href="https://t.me/kitajev"
+               title="Напишите в Telegram"><span>Задать вопрос</span></a>
+            <a class="desktop tablet btn" target="_blank" rel="noopener" href="https://wa.me/420606112191"
+               title="Напишите на WhatsApp"><img width="40" height="40" src="../images/whatsapp-w.svg" alt="WhatsApp"/></a>
+            <a class="desktop tablet mobile btn" target="_blank" rel="noopener" href="https://t.me/kitajev"
+               title="Напишите в Telegram"><img width="40" height="40" src="../images/telegram-w.svg" alt="Telegram"/></a>
+        </div>
+        <div class="footer-note">Может быть интересно - мой <a href="https://t.me/askhumanbeing" target="_blank" rel="noopener" class="tg-channel-link">telegram канал</a> о терапии.</div>
+    </div>
+</section>
+
 </body>
 </html>
